@@ -38,7 +38,7 @@ tail -n +2 input-data.csv | while IFS=, read -r name username; do
   echo "{
   \"username\": \"$username\",
   \"page_number\": 1,
-  \"limit\": 8
+  \"limit\": 3
 }" | apify call apimaestro/linkedin-profile-posts --silent --output-dataset > "$output_file"
 
   echo "Completed: $output_file"

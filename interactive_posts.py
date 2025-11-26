@@ -637,9 +637,13 @@ class MainScreen(Screen):
             "matching_elements": marked_posts_data
         }
 
+        # Create output directory if it doesn't exist
+        output_dir = Path("output")
+        output_dir.mkdir(exist_ok=True)
+
         # Generate filename
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"marked_posts_{timestamp}.json"
+        filename = output_dir / f"marked_posts_{timestamp}.json"
 
         try:
             with open(filename, 'w') as f:

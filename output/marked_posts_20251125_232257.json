@@ -1,0 +1,1136 @@
+{
+  "search": {
+    "date": "2025-11-25T23:22:57.717730",
+    "query_string": "invent"
+  },
+  "matching_elements": [
+    {
+      "ame": "sessions",
+      "urn": {
+        "activity_urn": "7399213567289425920",
+        "share_urn": "7399192155342299136",
+        "ugcPost_urn": null
+      },
+      "full_urn": "urn:li:activity:7399192156592168960",
+      "posted_at": {
+        "date": "2025-11-25 23:33:05",
+        "relative": "3 hours ago \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1764109985182
+      },
+      "text": "Heading to re:Invent and have questions or interest in learning more about AWS Graviton? if so be sure to join Paul Reilly and I in our chalk talk on Thursday 12/4 at 11am see: https://s12d.com/CMP329\n\u00a0\u00a0\nCan't make the chalk talk? then check out this meetup opportunity - \"MUP225: Everything you wanted to know about AWS Graviton but were afraid to ask\" on Monday 12/1 at 1pm see: https://s12d.com/MUP225\n\u00a0\u00a0\nAnd if neither of those work then just reach out and we'll figure out how to connect while at re:Invent :-)\n\n#AWS #Graviton #AWSreInvent #CMP329 #MUP225",
+      "url": "https://www.linkedin.com/posts/jeffunderhill_aws-graviton-awsreinvent-activity-7399192156592168960-uHd6?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGF_kMsBcIdFqD-EebaaVM0SRkgPbl6QbMw",
+      "post_type": "repost",
+      "author": {
+        "first_name": "Jeff",
+        "last_name": "Underhill",
+        "headline": "EC2 Business Development, at Amazon Web Services",
+        "username": "jeffunderhill",
+        "profile_url": "https://www.linkedin.com/in/jeffunderhill?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAAAAKLYoB5gpp82X9lIyo_Huk3qNqQW3xVWU",
+        "profile_picture": "https://media.licdn.com/dms/image/v2/C5603AQFUzwMOQH7sxw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1528481257516?e=1766016000&v=beta&t=92S8wWcKBfzqAWc8CvcrCOM7oA8nRr0TguodYGclEHc"
+      },
+      "stats": {
+        "total_reactions": 8,
+        "like": 4,
+        "support": 0,
+        "love": 0,
+        "insight": 0,
+        "celebrate": 4,
+        "funny": 0,
+        "comments": 0,
+        "reposts": 3
+      },
+      "media": {
+        "type": "image",
+        "url": "https://media.licdn.com/dms/image/v2/D5622AQFRdHokaG0hhw/feedshare-shrink_2048_1536/B56Zq81_8BHIAw-/0/1764104878965?e=1766016000&v=beta&t=P2hwoajHrVjm6-P-R0UlZVzqcnmdmA63nI5Kb2jkjmA",
+        "images": [
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D5622AQFRdHokaG0hhw/feedshare-shrink_2048_1536/B56Zq81_8BHIAw-/0/1764104878965?e=1766016000&v=beta&t=P2hwoajHrVjm6-P-R0UlZVzqcnmdmA63nI5Kb2jkjmA",
+            "width": 2048,
+            "height": 1152
+          }
+        ]
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjczNzg5Mjg0Mzg5MDYwODUzNzYtMTc1OTI3MzYzMzY2OQ==",
+      "datetime_obj": "2025-11-25T23:33:05",
+      "_searchable": "jeffunderhill  heading to re:invent and have questions or interest in learning more about aws graviton? if so be sure to join paul reilly and i in our chalk talk on thursday 12/4 at 11am see: https://s12d.com/cmp329\n\u00a0\u00a0\ncan't make the chalk talk? then check out this meetup opportunity - \"mup225: everything you wanted to know about aws graviton but were afraid to ask\" on monday 12/1 at 1pm see: https://s12d.com/mup225\n\u00a0\u00a0\nand if neither of those work then just reach out and we'll figure out how to connect while at re:invent :-)\n\n#aws #graviton #awsreinvent #cmp329 #mup225"
+    },
+    {
+      "ame": "sessions",
+      "urn": {
+        "activity_urn": "7399117555401027584",
+        "share_urn": "7399117554608422913",
+        "ugcPost_urn": null
+      },
+      "full_urn": "urn:li:activity:7399117555401027584",
+      "posted_at": {
+        "date": "2025-11-25 17:11:34",
+        "relative": "2 hours ago \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1764087094164
+      },
+      "text": "A great take from Werner. The role of the developer is evolving fast, and AI is giving builders more leverage than ever. \n\nExcited to hear more next week at re:Invent. These predictions are essential reading before Las Vegas.",
+      "url": "https://www.linkedin.com/posts/mattgarman_tech-predictions-for-2026-and-beyond-activity-7399117555401027584-TXzW?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGHAhfUBL18yjRLUFWvsXQWrVfXGu1sFJWg",
+      "post_type": "quote",
+      "author": {
+        "first_name": "Matt",
+        "last_name": "Garman",
+        "headline": "CEO at Amazon Web Services (AWS)",
+        "username": "mattgarman",
+        "profile_url": "https://www.linkedin.com/in/mattgarman?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAAAAIod8BxUdn-sU2ASLUVB0gAwBYjdhypOE",
+        "profile_picture": "https://media.licdn.com/dms/image/v2/D5603AQHV-sD7Ff-bAA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724637814046?e=1765411200&v=beta&t=SkE7x598UIbp5-J6N4_9XyVvkv8HdcqgwnfSAsGtU20"
+      },
+      "stats": {
+        "total_reactions": 110,
+        "like": 97,
+        "support": 0,
+        "love": 0,
+        "insight": 13,
+        "celebrate": 0,
+        "funny": 0,
+        "comments": 1,
+        "reposts": 5
+      },
+      "reshared_post": {
+        "urn": {
+          "activity_urn": "7399037690698158080",
+          "share_urn": "7399037687858634752",
+          "ugcPost_urn": null
+        },
+        "posted_at": {
+          "date": "2025-11-25 11:54:12",
+          "relative": "7 hours ago \u2022 Visible to anyone on or off LinkedIn",
+          "timestamp": 1764068052935
+        },
+        "text": "Throughout history, the pattern repeats: new tools emerge and human capability gets amplified. We're entering a new era where interdisciplinary collaboration drives discovery at a rapid pace\u2014an era where AI is in the human loop, not the other way around. \n\nThis is creating massive opportunities to solve problems that truly matter. And in the coming year, I see this shift impacting everything. From how we combat loneliness and administer care to those that need it most, to how developers design and build systems, and most importantly, how we educate ourselves in a time of rapid change. \n\nRead my full tech predictions for 2026 and beyond https://lnkd.in/eHjPnxYB",
+        "url": "https://www.linkedin.com/posts/wernervogels_tech-predictions-for-2026-and-beyond-activity-7399037690698158080-AfL5?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGHAhfUBL18yjRLUFWvsXQWrVfXGu1sFJWg",
+        "post_type": "regular",
+        "author": {
+          "first_name": "Werner",
+          "last_name": "Vogels",
+          "headline": "VP & CTO at Amazon.com",
+          "username": "wernervogels",
+          "profile_url": "https://www.linkedin.com/in/wernervogels?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAAAAxvZ4B0e3NQwqdMJGjzf-s_gTP0iGq6iU",
+          "profile_picture": "https://media.licdn.com/dms/image/v2/D4E03AQHIob-ddfQMDQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1706865242777?e=1765411200&v=beta&t=wjs6-BgwE1jj1FpzsnNR7KlyZURdfjH_vqdhEhbf-8U"
+        },
+        "stats": {
+          "total_reactions": 0,
+          "like": 0,
+          "support": 0,
+          "love": 0,
+          "insight": 0,
+          "celebrate": 0,
+          "funny": 0,
+          "comments": 0,
+          "reposts": 0
+        },
+        "media": {
+          "type": "image",
+          "url": "https://media.licdn.com/dms/image/sync/v2/D4E27AQGjK2hjjjBVKQ/articleshare-shrink_1280_800/B4EZq6n1wdJgAQ-/0/1764067598023?e=1764702000&v=beta&t=ffjpkTcYWFmSPaf2DnvG8mCLOkcWe7oWddo0oRvEkY0"
+        },
+        "article": {
+          "url": "https://www.allthingsdistributed.com/2025/11/tech-predictions-for-2026-and-beyond.html",
+          "title": "Tech predictions for 2026 and beyond",
+          "subtitle": "allthingsdistributed.com",
+          "thumbnail": "https://media.licdn.com/dms/image/sync/v2/D4E27AQGjK2hjjjBVKQ/articleshare-shrink_1280_800/B4EZq6n1wdJgAQ-/0/1764067598023?e=1764702000&v=beta&t=ffjpkTcYWFmSPaf2DnvG8mCLOkcWe7oWddo0oRvEkY0"
+        }
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjcyOTIwMTg0MjAzOTEyNTYwNjQtMTczODU1MjY3MDU0Ng==",
+      "datetime_obj": "2025-11-25T17:11:34",
+      "_searchable": "mattgarman  a great take from werner. the role of the developer is evolving fast, and ai is giving builders more leverage than ever. \n\nexcited to hear more next week at re:invent. these predictions are essential reading before las vegas."
+    },
+    {
+      "ame": "preinvent",
+      "urn": {
+        "activity_urn": "7398986397547921408",
+        "share_urn": "7398919086396633089",
+        "ugcPost_urn": null
+      },
+      "full_urn": "urn:li:activity:7398986397547921408",
+      "posted_at": {
+        "date": "2025-11-25 08:30:23",
+        "relative": "10 hours ago \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1764055823695
+      },
+      "text": "Here are the biggest pre:Invent serverless announcements that you may have missed, so far. Did I miss anything?\n\nI shared my thoughts on why they matter, when to use them and some gotchas to look out for here \ud83d\udc49 https://lnkd.in/eTfUYjnM",
+      "url": "https://www.linkedin.com/posts/theburningmonk_here-are-the-biggest-preinvent-serverless-activity-7398986397547921408-TfKr?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGGDiekBxERo5NlzjLcMJswHsySHke5K__c",
+      "post_type": "regular",
+      "author": {
+        "first_name": "Yan",
+        "last_name": "Cui",
+        "headline": "I teach AWS and serverless | AWS Serverless Hero | Consultant",
+        "username": "theburningmonk",
+        "profile_url": "https://www.linkedin.com/in/theburningmonk?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAAAOBv7IBqweEbyG--h7NDdtNJDUpWM4m2EY",
+        "profile_picture": "https://media.licdn.com/dms/image/v2/D4E03AQHUXp4HOM1SLQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1693141518983?e=1765411200&v=beta&t=A7yAmGlsBppO5fbkidEjnG1MEUthlszPuWzqdp5u8oI"
+      },
+      "stats": {
+        "total_reactions": 407,
+        "like": 351,
+        "support": 1,
+        "love": 25,
+        "insight": 12,
+        "celebrate": 18,
+        "funny": 0,
+        "comments": 15,
+        "reposts": 45
+      },
+      "media": {
+        "type": "image",
+        "url": "https://media.licdn.com/dms/image/v2/D4E22AQEM_nuLPKejNQ/feedshare-shrink_2048_1536/B4EZq49spAGYAw-/0/1764039774349?e=1765411200&v=beta&t=yG5k-1bLwpNYhrcuD7rt5iQr2KS6H-hTEYIT-JXj-rc",
+        "images": [
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D4E22AQEM_nuLPKejNQ/feedshare-shrink_2048_1536/B4EZq49spAGYAw-/0/1764039774349?e=1765411200&v=beta&t=yG5k-1bLwpNYhrcuD7rt5iQr2KS6H-hTEYIT-JXj-rc",
+            "width": 1188,
+            "height": 1478
+          }
+        ]
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjczNTUxNjQ1NjQxMjYxMzgzNjgtMTc1MzYwNzg4NDQxMA==",
+      "datetime_obj": "2025-11-25T08:30:23",
+      "_searchable": "theburningmonk  here are the biggest pre:invent serverless announcements that you may have missed, so far. did i miss anything?\n\ni shared my thoughts on why they matter, when to use them and some gotchas to look out for here \ud83d\udc49 https://lnkd.in/etfuyjnm"
+    },
+    {
+      "ame": "sessions",
+      "urn": {
+        "activity_urn": "7398793841312550914",
+        "share_urn": "7381272627580993536",
+        "ugcPost_urn": null
+      },
+      "full_urn": "urn:li:activity:7398793841312550914",
+      "posted_at": {
+        "date": "2025-11-24 19:45:14",
+        "relative": "1 day ago \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1764009914711
+      },
+      "text": "Last reminder for Andy Brown and mines session \"COP401 | Advanced analytics with AWS Cost and Usage Reports\" at #AWSreInvent\n\nhttps://lnkd.in/eYaJphj2\n\nJoin this engaging code talk to dive deep into advanced analytics techniques using #AWSCostAndUsageReports. You'll discover how to transform raw cost data into actionable insights, optimize your cloud spending, and build sophisticated reporting solutions. Learn to leverage powerful analytics tools to uncover hidden cost patterns, create custom dashboards, and implement automated cost monitoring workflows. This session will equip you with practical skills to maximize your cloud investment and drive financial efficiency across your organization. \ud83d\udca1\n\n#AWS #DataAnalytics #CloudFinancialManagement #AWSreInvent",
+      "url": "https://www.linkedin.com/posts/awssteph_awsreinvent-awscostandusagereports-aws-activity-7398793841312550914-1Vas?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGEhyIMBoNrlXXL6gaBu97GTDsvtmZs-onY",
+      "post_type": "regular",
+      "author": {
+        "first_name": "Steph",
+        "last_name": "Gooch",
+        "headline": "Sr. Optimization Architect Advocate in OPTICS at Amazon Web Services (AWS) & Host of The Keys to AWS Optimization on Twitch",
+        "username": "awssteph",
+        "profile_url": "https://www.linkedin.com/in/awssteph?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAABAA39oBV4LFLDvI5PaAo34eizj7cUxa9ko",
+        "profile_picture": "https://media.licdn.com/dms/image/v2/D4E03AQGocRW_2aeqfQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1689072125948?e=1765411200&v=beta&t=KmFzyMncvBO1VRyaF-pVKk96_2vNkB0OEXFN8AfOscM"
+      },
+      "stats": {
+        "total_reactions": 56,
+        "like": 49,
+        "support": 1,
+        "love": 0,
+        "insight": 0,
+        "celebrate": 6,
+        "funny": 0,
+        "comments": 0,
+        "reposts": 2
+      },
+      "media": {
+        "type": "image",
+        "url": "https://media.licdn.com/dms/image/v2/D4E22AQExkwe8mhC2nQ/feedshare-shrink_2048_1536/B4EZm.MV0tIkAw-/0/1759832531240?e=1765411200&v=beta&t=T2YNnVE7LospL6g3_iuWTbxa4AEsMbCbeur_m34E92A",
+        "images": [
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D4E22AQExkwe8mhC2nQ/feedshare-shrink_2048_1536/B4EZm.MV0tIkAw-/0/1759832531240?e=1765411200&v=beta&t=T2YNnVE7LospL6g3_iuWTbxa4AEsMbCbeur_m34E92A",
+            "width": 1080,
+            "height": 1080
+          }
+        ]
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjczNjIxNTQzMzE1ODU4MTQ1MjgtMTc1NTI3NDM3NDgzNQ==",
+      "datetime_obj": "2025-11-24T19:45:14",
+      "_searchable": "awssteph  last reminder for andy brown and mines session \"cop401 | advanced analytics with aws cost and usage reports\" at #awsreinvent\n\nhttps://lnkd.in/eyajphj2\n\njoin this engaging code talk to dive deep into advanced analytics techniques using #awscostandusagereports. you'll discover how to transform raw cost data into actionable insights, optimize your cloud spending, and build sophisticated reporting solutions. learn to leverage powerful analytics tools to uncover hidden cost patterns, create custom dashboards, and implement automated cost monitoring workflows. this session will equip you with practical skills to maximize your cloud investment and drive financial efficiency across your organization. \ud83d\udca1\n\n#aws #dataanalytics #cloudfinancialmanagement #awsreinvent"
+    },
+    {
+      "ame": "preinvent",
+      "urn": {
+        "activity_urn": "7398756900743385089",
+        "share_urn": "7398744145248542720",
+        "ugcPost_urn": null
+      },
+      "full_urn": "urn:li:activity:7398744146930192384",
+      "posted_at": {
+        "date": "2025-11-24 17:18:27",
+        "relative": "1 day ago \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1764001107393
+      },
+      "text": "\ud83d\ude80 AWS Cost Monitoring, and specifically AWS Cost Anomaly Detection, had not just one, but TWO(!) launches for pre-re:Invent. On Friday we continued our investment in the underlying AI/ML models powering Cost \nAnomaly Detection, improving precision, recall, and latency with each iteration.\n\n\ud83d\udccb What We Launched\n\u25a0 Enhanced ML detection algorithm using rolling 24-hour windows \n\u25a0 Improved accuracy by accounting for workloads with different morning and evening usage patterns\n\n\ud83d\udca1 Key Benefits:\n\u25a0 Faster anomaly identification: Rolling windows eliminate delays from waiting for actual cost to accumulate during incomplete calendar days\n\u25a0 More accurate detection: Compares costs against similar times of day for better pattern recognition\n\n\ud83d\udd17 Read the What's New post: https://lnkd.in/euwkzrXZ\n\nHuge thanks to the incredible team behind this launch! To name a few..\n\nJunrong Yan Jonathan Cen Divya Arora Keaton Mueller Claudio Georgete Neto Debojyoti Ghosh Lu Zhang Zixiao Wang   Sergio Daniel Moreno Puentes  Shubir Kapoor Dela Kobe A. Durga Pawani Reddy Basireddy  Edward Dinki  Eliza Knight Emily Yi Jacob Vacheresse Jennifer Huang  Leo Razoumov Noel Vazquez Tina Yun Bowen Wang  Som Chatterjee Jijo Philip  \n\nTwo launches in one week - and we're just getting started. Looking forward to seeing how these improvements help customers stay ahead of unexpected costs with even greater speed and accuracy.\n\n#AWS #CostAnomalyDetection #MachineLearning #FinOps #CloudFinancialManagement #CloudCostOptimization #AWSLaunch #CustomerObsession #AIMLProductManagement",
+      "url": "https://www.linkedin.com/posts/fredriktunvall_aws-costanomalydetection-machinelearning-activity-7398744146930192384-Lqfz?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGEgTLAB2PTCcYUWyZTAmmvWsq14C_I5ZOc",
+      "post_type": "repost",
+      "author": {
+        "first_name": "Fredrik",
+        "last_name": "Tunvall",
+        "headline": "Product Leader @ Amazon | Applied AI/ML & Analytics | Customer-Facing SaaS & Large-Scale Data | Cost Monitoring & Alerting Portfolio Owner",
+        "username": "fredriktunvall",
+        "profile_url": "https://www.linkedin.com/in/fredriktunvall?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAAATOMAkB4Gvlr9Snv6ktdIF5HwPSaHc47JI",
+        "profile_picture": "https://media.licdn.com/dms/image/v2/D4E03AQE2hemrTU4Tww/profile-displayphoto-crop_800_800/B4EZnOQSRSHMAI-/0/1760102004189?e=1766016000&v=beta&t=Jkpn_ncJi9lg2H6aRUavT_kZgqm5vHjYfgZpNL6f6Yk"
+      },
+      "stats": {
+        "total_reactions": 26,
+        "like": 18,
+        "support": 0,
+        "love": 2,
+        "insight": 1,
+        "celebrate": 5,
+        "funny": 0,
+        "comments": 2,
+        "reposts": 3
+      },
+      "media": {
+        "type": "image",
+        "url": "https://media.licdn.com/dms/image/v2/D4E22AQGkqqj_aYbBZA/feedshare-shrink_800/B4EZq2emF0KgAg-/0/1763998065694?e=1766016000&v=beta&t=knOrsq_1Q12oGds503NNYXaohvrcREG0d1D1gyuJEGo",
+        "images": [
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D4E22AQGkqqj_aYbBZA/feedshare-shrink_800/B4EZq2emF0KgAg-/0/1763998065694?e=1766016000&v=beta&t=knOrsq_1Q12oGds503NNYXaohvrcREG0d1D1gyuJEGo",
+            "width": 750,
+            "height": 500
+          }
+        ]
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjczNDU5MzYzMTU4OTg1NjQ2MDgtMTc1MTQwNzY5ODU4MQ==",
+      "datetime_obj": "2025-11-24T17:18:27",
+      "_searchable": "fredriktunvall  \ud83d\ude80 aws cost monitoring, and specifically aws cost anomaly detection, had not just one, but two(!) launches for pre-re:invent. on friday we continued our investment in the underlying ai/ml models powering cost \nanomaly detection, improving precision, recall, and latency with each iteration.\n\n\ud83d\udccb what we launched\n\u25a0 enhanced ml detection algorithm using rolling 24-hour windows \n\u25a0 improved accuracy by accounting for workloads with different morning and evening usage patterns\n\n\ud83d\udca1 key benefits:\n\u25a0 faster anomaly identification: rolling windows eliminate delays from waiting for actual cost to accumulate during incomplete calendar days\n\u25a0 more accurate detection: compares costs against similar times of day for better pattern recognition\n\n\ud83d\udd17 read the what's new post: https://lnkd.in/euwkzrxz\n\nhuge thanks to the incredible team behind this launch! to name a few..\n\njunrong yan jonathan cen divya arora keaton mueller claudio georgete neto debojyoti ghosh lu zhang zixiao wang   sergio daniel moreno puentes  shubir kapoor dela kobe a. durga pawani reddy basireddy  edward dinki  eliza knight emily yi jacob vacheresse jennifer huang  leo razoumov noel vazquez tina yun bowen wang  som chatterjee jijo philip  \n\ntwo launches in one week - and we're just getting started. looking forward to seeing how these improvements help customers stay ahead of unexpected costs with even greater speed and accuracy.\n\n#aws #costanomalydetection #machinelearning #finops #cloudfinancialmanagement #cloudcostoptimization #awslaunch #customerobsession #aimlproductmanagement"
+    },
+    {
+      "ame": "physical",
+      "urn": {
+        "activity_urn": "7398747023203655682",
+        "share_urn": null,
+        "ugcPost_urn": "7398746965297041408"
+      },
+      "full_urn": "urn:li:ugcPost:7398746965297041408",
+      "posted_at": {
+        "date": "2025-11-24 16:39:12",
+        "relative": "1 day ago \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1763998752404
+      },
+      "text": "I'll be bringing a bunch of floppy disks \ud83d\udcbe over to Amazon Web Services (AWS) re:Invent! \ud83e\udd73 Gonna hand them out to folks along with a NFC sticker so you can easily share your contact info with the people you meet. But first ... I need to wipe all these disks! \ud83d\ude05",
+      "url": "https://www.linkedin.com/posts/darko-mesaros_ill-be-bringing-a-bunch-of-floppy-disks-activity-7398747023203655682-FSJO?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGGZ4H0B8rA2ZDBVITJxbe9gkYnwvAOSeIE",
+      "post_type": "regular",
+      "author": {
+        "first_name": "Darko",
+        "last_name": "Mesaro\u0161",
+        "headline": "Principal Developer Advocate at Amazon Web Services (AWS)| System Administrator | Vintage Computing aficionado | Twitch Streamer",
+        "username": "darko-mesaros",
+        "profile_url": "https://www.linkedin.com/in/darko-mesaros?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAAAS5dqMBHaRM4kjWX_jRMs5gI1zKfoSUSmg",
+        "profile_picture": "https://media.licdn.com/dms/image/v2/D5603AQFQdJCZ7wH09g/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1727979167558?e=1765411200&v=beta&t=aNn9Qx2_EKdhkWwFgydwSuUnO66uQWi521CJEk0z5pM"
+      },
+      "stats": {
+        "total_reactions": 289,
+        "like": 208,
+        "support": 2,
+        "love": 31,
+        "insight": 0,
+        "celebrate": 8,
+        "funny": 40,
+        "comments": 66,
+        "reposts": 5
+      },
+      "media": {
+        "type": "video",
+        "url": "https://dms.licdn.com/playlist/vid/v2/D5605AQG0kWFbuSr9Jw/mp4-720p-30fp-crf28/B56Zq2hK.WJYCI-/0/1763998750239?e=1764702000&v=beta&t=J8fQkwjnYC5uVZU-ClMIEwec9OQHzcncePZU8uCisRk",
+        "thumbnail": "https://media.licdn.com/dms/image/v2/D5605AQG0kWFbuSr9Jw/videocover-high/B56Zq2hK.WJYBU-/0/1763998742588?e=1764702000&v=beta&t=hRHkGxFK-KdYv-42P6PqYWNJNByW1xdMZ2CjY107-H0"
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjczNTQ0ODU1NzUxNzA2MDUwNTYtMTc1MzQ0NjAwMDg0Ng==",
+      "datetime_obj": "2025-11-24T16:39:12",
+      "_searchable": "darko-mesaros  i'll be bringing a bunch of floppy disks \ud83d\udcbe over to amazon web services (aws) re:invent! \ud83e\udd73 gonna hand them out to folks along with a nfc sticker so you can easily share your contact info with the people you meet. but first ... i need to wipe all these disks! \ud83d\ude05"
+    },
+    {
+      "ame": "sessions",
+      "urn": {
+        "activity_urn": "7398714543452971008",
+        "share_urn": "7398648669199171584",
+        "ugcPost_urn": null
+      },
+      "full_urn": "urn:li:activity:7398714543452971008",
+      "posted_at": {
+        "date": "2025-11-24 14:30:08",
+        "relative": "1 day ago \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1763991008628
+      },
+      "text": "\ud83c\udfa4 I\u2019m excited to be speaking at \"The Future of FinOps: Intelligent Automation in the Age of Scale\u201d happening during AWS re:Invent:\n\n\ud83d\uddd3\ufe0f Monday, December 1 | \ud83d\udd56 7:00 PM PST\n\ud83d\udccd Private Suite-\u00a0Las Vegas (location shared upon confirmation)\n\nHosted by Wiv.ai, in partnership with CloudHealth, Xebia, CyberArk, and Amazon Web Services (AWS), this invite-only panel will bring together FinOps and platform leaders to discuss how automation, observability, and smart workflows are reshaping cloud efficiency at scale.\n\nI\u2019ll be joining an amazing lineup:\n\u2728 Mudit Gupta (Xebia)\n\u2728 Lucas Paratore (CloudHealth)\n\u2728 Uri Eliyahu (CyberArk)\n\u2728 Roni \u200fKarp (Wiv.ai)\n\nIf you\u2019re heading to re:Invent and want to start your week with good food, great people, and real talk about the future of FinOps, request your seat below.\n\n\ud83d\udc49 https://lnkd.in/dknt7x59",
+      "url": "https://www.linkedin.com/posts/judith-lehner-9b89873_im-excited-to-be-speaking-at-the-future-activity-7398714543452971008-D7cJ?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGBjV6kBgFKLzbCqEioKJrwATdk_DREbeco",
+      "post_type": "regular",
+      "author": {
+        "first_name": "Judith",
+        "last_name": "Lehner",
+        "headline": "Principal Technical Account Manager at Amazon Web Services (AWS)",
+        "username": "judith-lehner-9b89873",
+        "profile_url": "https://www.linkedin.com/in/judith-lehner-9b89873?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAAACtmNwBW97IYSJ5Ei1B_opuFH1Uh9egfuQ",
+        "profile_picture": "https://media.licdn.com/dms/image/v2/D4D03AQHXVi9eRvCe_Q/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1718652296337?e=1766016000&v=beta&t=J5TUKhZoSgS-uTWTBBk49jpwZFQL6HFTh08VvT7PJIc"
+      },
+      "stats": {
+        "total_reactions": 104,
+        "like": 86,
+        "support": 0,
+        "love": 7,
+        "insight": 0,
+        "celebrate": 11,
+        "funny": 0,
+        "comments": 5,
+        "reposts": 2
+      },
+      "media": {
+        "type": "image",
+        "url": "https://media.licdn.com/dms/image/v2/D4D22AQEGva0iiSbs9Q/feedshare-shrink_2048_1536/B4DZq1HwdSHwAw-/0/1763975301616?e=1766016000&v=beta&t=P1WHQzT9OTk2tOul-8AyAJv328fqAzLwVu8VbhnGEX8",
+        "images": [
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D4D22AQEGva0iiSbs9Q/feedshare-shrink_2048_1536/B4DZq1HwdSHwAw-/0/1763975301616?e=1766016000&v=beta&t=P1WHQzT9OTk2tOul-8AyAJv328fqAzLwVu8VbhnGEX8",
+            "width": 1080,
+            "height": 1080
+          }
+        ]
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjY5MDIzNTc2MTg3ODcyMzc4ODgtMTY0NTY1MDI5NTkwNA==",
+      "datetime_obj": "2025-11-24T14:30:08",
+      "_searchable": "judith-lehner-9b89873  \ud83c\udfa4 i\u2019m excited to be speaking at \"the future of finops: intelligent automation in the age of scale\u201d happening during aws re:invent:\n\n\ud83d\uddd3\ufe0f monday, december 1 | \ud83d\udd56 7:00 pm pst\n\ud83d\udccd private suite-\u00a0las vegas (location shared upon confirmation)\n\nhosted by wiv.ai, in partnership with cloudhealth, xebia, cyberark, and amazon web services (aws), this invite-only panel will bring together finops and platform leaders to discuss how automation, observability, and smart workflows are reshaping cloud efficiency at scale.\n\ni\u2019ll be joining an amazing lineup:\n\u2728 mudit gupta (xebia)\n\u2728 lucas paratore (cloudhealth)\n\u2728 uri eliyahu (cyberark)\n\u2728 roni \u200fkarp (wiv.ai)\n\nif you\u2019re heading to re:invent and want to start your week with good food, great people, and real talk about the future of finops, request your seat below.\n\n\ud83d\udc49 https://lnkd.in/dknt7x59"
+    },
+    {
+      "ame": "sessions",
+      "urn": {
+        "activity_urn": "7398589673583042560",
+        "share_urn": "7398484498192949248",
+        "ugcPost_urn": null
+      },
+      "full_urn": "urn:li:activity:7398484499375796226",
+      "posted_at": {
+        "date": "2025-11-24 06:13:57",
+        "relative": "2 days ago \u2022 Edited \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1763961237331
+      },
+      "text": "#AWSreInvent promises to be an exciting week with keynotes, breakouts, demos, workshops, and more. I'm excited to present the #CloudOperations Innovation Talk \"Ops in the AI age: Innovating together for faster, more efficient operations\" with Jeff Barr, Vice President and Chief Evangelist at Amazon Web Services (AWS), where we'll cover all things generative and agentic AI. From the expansive Expo to intimate one-on-one engagements, there are plenty of opportunities to connect with AWS teams, partners, and customers. See you at re:Invent 2025 in Las Vegas from December 1 to 5!\n#GenerativeAI #Innovation #DigitalTransformation #TechLeadership #CloudComputing",
+      "url": "https://www.linkedin.com/posts/nandiniramani_awsreinvent-cloudoperations-generativeai-activity-7398484499375796226-go8I?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGCABdkBthXjZgdDcpBStruMr5CkXT6mTKc",
+      "post_type": "repost",
+      "author": {
+        "first_name": "Nandini",
+        "last_name": "Ramani",
+        "headline": "Vice President at Amazon Web Services (AWS)",
+        "username": "nandiniramani",
+        "profile_url": "https://www.linkedin.com/in/nandiniramani?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAAAAWmOcBKD35TKMGAYYpqHydw98OeqmOsak",
+        "profile_picture": "https://media.licdn.com/dms/image/v2/C5603AQG3hH3KKHmyEQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1524756779042?e=1766016000&v=beta&t=pGkcmN5bE3gfJDnN9VS0W3pJLJq4SyD3Xp_p7tumT5o"
+      },
+      "stats": {
+        "total_reactions": 214,
+        "like": 189,
+        "support": 1,
+        "love": 9,
+        "insight": 0,
+        "celebrate": 15,
+        "funny": 0,
+        "comments": 0,
+        "reposts": 12
+      },
+      "media": {
+        "type": "image",
+        "url": "https://media.licdn.com/dms/image/v2/D4E22AQG8ZxeOOn0lgA/feedshare-shrink_2048_1536/B4EZqyycpkGYAw-/0/1763936161162?e=1766016000&v=beta&t=xaO97EW4bMQj5Ciprz3E1pn6HfpNifLSuJszf4mkOiY",
+        "images": [
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D4E22AQG8ZxeOOn0lgA/feedshare-shrink_2048_1536/B4EZqyycpkGYAw-/0/1763936161162?e=1766016000&v=beta&t=xaO97EW4bMQj5Ciprz3E1pn6HfpNifLSuJszf4mkOiY",
+            "width": 1536,
+            "height": 1536
+          }
+        ]
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjczODg2MzI5NjE4NDk1NTY5OTItMTc2MTU4NzM3MjI0MQ==",
+      "datetime_obj": "2025-11-24T06:13:57",
+      "_searchable": "nandiniramani  #awsreinvent promises to be an exciting week with keynotes, breakouts, demos, workshops, and more. i'm excited to present the #cloudoperations innovation talk \"ops in the ai age: innovating together for faster, more efficient operations\" with jeff barr, vice president and chief evangelist at amazon web services (aws), where we'll cover all things generative and agentic ai. from the expansive expo to intimate one-on-one engagements, there are plenty of opportunities to connect with aws teams, partners, and customers. see you at re:invent 2025 in las vegas from december 1 to 5!\n#generativeai #innovation #digitaltransformation #techleadership #cloudcomputing"
+    },
+    {
+      "ame": "sessions",
+      "urn": {
+        "activity_urn": "7398537625394892800",
+        "share_urn": "7398505930146922496",
+        "ugcPost_urn": null
+      },
+      "full_urn": "urn:li:activity:7398505931363430403",
+      "posted_at": {
+        "date": "2025-11-24 02:47:08",
+        "relative": "2 days ago \u2022 Edited \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1763948828076
+      },
+      "text": "I\u2019m excited to share that I\u2019ll be on the ground in Las Vegas for #AWSreinvent 2025, and this year is a big one for Temporal Technologies.\n\nIf you\u2019re interested in the intersection of GenAI, durable execution, and resilience, come find us. We're running a packed lineup of sessions all week, including:\n\n\ud83d\udd39 Better Together: Building Resilient Agents at Scale with AgentCore + Temporal\nTue, Dec 2 | 1:00\u20132:30 PM PT | HaSalon, Palazzo \n\n\ud83d\udd39 Building Reliable Systems with EKS, Grafana Labs, and Temporal\nThu, Dec 4 | 1:00\u20132:30 PM PT | HaSalon, Palazzo \n\n\ud83d\udd39 Deploying Enterprise Agents: Resilient and Built for the Real World\nTue, Dec 2 | 3:25\u20133:55 PM | Developer Pavilion, Expo Floor\n\n\ud83d\udd39Building Reliable AI Systems: Temporal Workflows with Strands Agents on AWS\nWed, Dec 3 | 12:40\u20131:10 PM | Developer Pavilion, Expo Floor\n\n\ud83d\udd39 Durable Execution w/ New Relic (New Relic Booth #247)\nWed, Dec 3 | 3:30\u20133:45 PM\n\nWhether you\u2019re building AI agents, re-architecting critical workflows, or scaling cloud-native systems, swing by Booth #1382 or the HaSalon to see how Temporal is becoming a force multiplier for AWS customers.\n\nSing up for a session or book a meeting with me or anyone at Temporal through our Platinum sponsorship at the AWS Open Source Hangout in the Hasalon. Link in the description.\n\n\n#generativeAI #AWS #AgenticAI #opensource #AWSreinvent",
+      "url": "https://www.linkedin.com/posts/chris-branigan_awsreinvent-generativeai-aws-activity-7398505931363430403-qNkd?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGF_kMsBcIdFqD-EebaaVM0SRkgPbl6QbMw",
+      "post_type": "repost",
+      "author": {
+        "first_name": "Chris",
+        "last_name": "Branigan",
+        "headline": "Global Cloud Alliances | Strategic Partnerships & GTM | Ex-AWS",
+        "username": "chris-branigan",
+        "profile_url": "https://www.linkedin.com/in/chris-branigan?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAACnpsrMBpig4ivTWLwgjVDm47hKXcNKk5-I",
+        "profile_picture": "https://media.licdn.com/dms/image/v2/C5603AQHyHbF54SpppQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1650302290098?e=1766016000&v=beta&t=TxgmvQyNrmhb5tFXnh2m_iHRSZmrn6-B0i81hdN9VXQ"
+      },
+      "stats": {
+        "total_reactions": 44,
+        "like": 37,
+        "support": 0,
+        "love": 2,
+        "insight": 0,
+        "celebrate": 5,
+        "funny": 0,
+        "comments": 1,
+        "reposts": 3
+      },
+      "media": {
+        "type": "image",
+        "url": "https://media.licdn.com/dms/image/v2/D5622AQH1p0uJw5XGIw/feedshare-shrink_2048_1536/B56ZqzF8OoG4Aw-/0/1763941271066?e=1766016000&v=beta&t=kSpm-qbHT8sn-jMrGEmMDaDBhrwOmHb-wPpTkQ6MFaE",
+        "images": [
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D5622AQH1p0uJw5XGIw/feedshare-shrink_2048_1536/B56ZqzF8OoG4Aw-/0/1763941271066?e=1766016000&v=beta&t=kSpm-qbHT8sn-jMrGEmMDaDBhrwOmHb-wPpTkQ6MFaE",
+            "width": 2048,
+            "height": 1149
+          }
+        ]
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjczNzg5Mjg0Mzg5MDYwODUzNzYtMTc1OTI3MzYzMzY2OQ==",
+      "datetime_obj": "2025-11-24T02:47:08",
+      "_searchable": "chris-branigan  i\u2019m excited to share that i\u2019ll be on the ground in las vegas for #awsreinvent 2025, and this year is a big one for temporal technologies.\n\nif you\u2019re interested in the intersection of genai, durable execution, and resilience, come find us. we're running a packed lineup of sessions all week, including:\n\n\ud83d\udd39 better together: building resilient agents at scale with agentcore + temporal\ntue, dec 2 | 1:00\u20132:30 pm pt | hasalon, palazzo \n\n\ud83d\udd39 building reliable systems with eks, grafana labs, and temporal\nthu, dec 4 | 1:00\u20132:30 pm pt | hasalon, palazzo \n\n\ud83d\udd39 deploying enterprise agents: resilient and built for the real world\ntue, dec 2 | 3:25\u20133:55 pm | developer pavilion, expo floor\n\n\ud83d\udd39building reliable ai systems: temporal workflows with strands agents on aws\nwed, dec 3 | 12:40\u20131:10 pm | developer pavilion, expo floor\n\n\ud83d\udd39 durable execution w/ new relic (new relic booth #247)\nwed, dec 3 | 3:30\u20133:45 pm\n\nwhether you\u2019re building ai agents, re-architecting critical workflows, or scaling cloud-native systems, swing by booth #1382 or the hasalon to see how temporal is becoming a force multiplier for aws customers.\n\nsing up for a session or book a meeting with me or anyone at temporal through our platinum sponsorship at the aws open source hangout in the hasalon. link in the description.\n\n\n#generativeai #aws #agenticai #opensource #awsreinvent"
+    },
+    {
+      "ame": "sessions",
+      "urn": {
+        "activity_urn": "7398516967093170177",
+        "share_urn": null,
+        "ugcPost_urn": "7398516901980610560"
+      },
+      "full_urn": "urn:li:ugcPost:7398516901980610560",
+      "posted_at": {
+        "date": "2025-11-24 01:25:02",
+        "relative": "1 day ago \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1763943902753
+      },
+      "text": "We\u2019re just days away from re:Invent 2025, and one of the things I\u2019m looking forward to the most is welcoming Acquired to the event this year. \n\nI\u2019ve been a long-time listener, and I\u2019m excited to join Ben Gilbert and David Rosenthal on stage to talk about what it takes to build enduring companies, especially in this new era of AI. \n\nWe\u2019ll dig into lessons from leaders at Netflix, JPMorgan, and Perplexity\u2014teams that are shaping how AI and cloud will evolve in the years ahead. \n\nI look forward to seeing you there. https://lnkd.in/g42JuJuS",
+      "url": "https://www.linkedin.com/posts/mattgarman_were-just-days-away-from-reinvent-2025-activity-7398516967093170177-bAC9?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGHAhfUBL18yjRLUFWvsXQWrVfXGu1sFJWg",
+      "post_type": "regular",
+      "author": {
+        "first_name": "Matt",
+        "last_name": "Garman",
+        "headline": "CEO at Amazon Web Services (AWS)",
+        "username": "mattgarman",
+        "profile_url": "https://www.linkedin.com/in/mattgarman?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAAAAIod8BxUdn-sU2ASLUVB0gAwBYjdhypOE",
+        "profile_picture": "https://media.licdn.com/dms/image/v2/D5603AQHV-sD7Ff-bAA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724637814046?e=1765411200&v=beta&t=SkE7x598UIbp5-J6N4_9XyVvkv8HdcqgwnfSAsGtU20"
+      },
+      "stats": {
+        "total_reactions": 531,
+        "like": 468,
+        "support": 1,
+        "love": 27,
+        "insight": 6,
+        "celebrate": 29,
+        "funny": 0,
+        "comments": 28,
+        "reposts": 60
+      },
+      "media": {
+        "type": "video",
+        "url": "https://dms.licdn.com/playlist/vid/v2/D5605AQHanT2_9H1hjQ/mp4-720p-30fp-crf28/B56ZqzP9jwG4CM-/0/1763943900370?e=1764702000&v=beta&t=Ij3EYuuCH95JVPzveNk8EUR7M_UWjD-0tVn8eQe6bZU",
+        "thumbnail": "https://media.licdn.com/dms/image/v2/D5605AQHanT2_9H1hjQ/videocover-high/B56ZqzP9jwG4BY-/0/1763943899047?e=1764702000&v=beta&t=RNafVcCfXFQFvHWznuVIcPCHe6bea16Rheh3ym63x8A"
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjcyOTIwMTg0MjAzOTEyNTYwNjQtMTczODU1MjY3MDU0Ng==",
+      "datetime_obj": "2025-11-24T01:25:02",
+      "_searchable": "mattgarman  we\u2019re just days away from re:invent 2025, and one of the things i\u2019m looking forward to the most is welcoming acquired to the event this year. \n\ni\u2019ve been a long-time listener, and i\u2019m excited to join ben gilbert and david rosenthal on stage to talk about what it takes to build enduring companies, especially in this new era of ai. \n\nwe\u2019ll dig into lessons from leaders at netflix, jpmorgan, and perplexity\u2014teams that are shaping how ai and cloud will evolve in the years ahead. \n\ni look forward to seeing you there. https://lnkd.in/g42jujus"
+    },
+    {
+      "ame": "sessions",
+      "urn": {
+        "activity_urn": "7398482883075805184",
+        "share_urn": "7398482881460776960",
+        "ugcPost_urn": null
+      },
+      "full_urn": "urn:li:activity:7398482883075805184",
+      "posted_at": {
+        "date": "2025-11-23 23:09:36",
+        "relative": "2 days ago \u2022 Edited \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1763935776490
+      },
+      "text": "Today, I built a meta-agent that spawns specialized sub-agents.  Each agent is created with their own system prompts, context, tools, and model. This is a powerful way to have an agent offload tasks to save on context while staying focused on a defined goal or series of tasks.\n\nIn this example I asked an agent to \"get the latest news from last Friday\": \n\n1. First, the agent got the current date and time to understand when \"last Friday\" was\n2. Then it fetched the latest AWS news\n3. From there it filtered for news relevant to Strands, AgentCore, MCP, and Agents\n4. After that the agent used the use_agent tool to have sub-agents review the content\n5. It also had the agents extract links to code samples and documentation\n6. Finally the agent provided a structured response\n\nI'll be demoing this live before re:Invent. More details coming soon.\n\n#AIAgents #StrandsAgents #AWS",
+      "url": "https://www.linkedin.com/posts/duanlightfoot_aiagents-strandsagents-aws-activity-7398482883075805184-fjx_?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGIIHNgBSFivADAY7v_ylXjm5ji8XENPtH8",
+      "post_type": "regular",
+      "author": {
+        "first_name": "Du'An",
+        "last_name": "Lightfoot",
+        "headline": "Agentic AI @ AWS | Building Production Multi-Agent Workflows | International Speaker",
+        "username": "duanlightfoot",
+        "profile_url": "https://www.linkedin.com/in/duanlightfoot?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAABkrpO4B2MR0URz9rFRxLHlUy5TWANQwd1Q"
+      },
+      "stats": {
+        "total_reactions": 29,
+        "like": 23,
+        "support": 0,
+        "love": 4,
+        "insight": 1,
+        "celebrate": 1,
+        "funny": 0,
+        "comments": 2,
+        "reposts": 1
+      },
+      "media": {
+        "type": "image",
+        "url": "https://media.licdn.com/dms/image/v2/D4E22AQHRU_-dXS3OWA/feedshare-shrink_2048_1536/B4EZqyw.KvJgAw-/0/1763935775355?e=1766016000&v=beta&t=Z1iSr56J4QgkNcvtj5VbjYNoVFR8fx4whBdZnPee9Ic",
+        "images": [
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D4E22AQHRU_-dXS3OWA/feedshare-shrink_2048_1536/B4EZqyw.KvJgAw-/0/1763935775355?e=1766016000&v=beta&t=Z1iSr56J4QgkNcvtj5VbjYNoVFR8fx4whBdZnPee9Ic",
+            "width": 2048,
+            "height": 1080
+          }
+        ]
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjczNjA5OTU1NzUyMDAyMDI3NTItMTc1NDk5ODEwNTc3NA==",
+      "datetime_obj": "2025-11-23T23:09:36",
+      "_searchable": "duanlightfoot  today, i built a meta-agent that spawns specialized sub-agents.  each agent is created with their own system prompts, context, tools, and model. this is a powerful way to have an agent offload tasks to save on context while staying focused on a defined goal or series of tasks.\n\nin this example i asked an agent to \"get the latest news from last friday\": \n\n1. first, the agent got the current date and time to understand when \"last friday\" was\n2. then it fetched the latest aws news\n3. from there it filtered for news relevant to strands, agentcore, mcp, and agents\n4. after that the agent used the use_agent tool to have sub-agents review the content\n5. it also had the agents extract links to code samples and documentation\n6. finally the agent provided a structured response\n\ni'll be demoing this live before re:invent. more details coming soon.\n\n#aiagents #strandsagents #aws"
+    },
+    {
+      "ame": "sessions",
+      "urn": {
+        "activity_urn": "7398043569002921984",
+        "share_urn": "7398043566683365377",
+        "ugcPost_urn": null
+      },
+      "full_urn": "urn:li:activity:7398043569002921984",
+      "posted_at": {
+        "date": "2025-11-22 18:03:55",
+        "relative": "3 days ago \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1763831035853
+      },
+      "text": "It\u2019s not every day you\u2019re invited to join an AWS VP on stage for an Innovation Talk - huge thanks to Deepak Singh for having me part of his session alongside Brittany Doncaster from Delta Air Lines. Truly an honor!\n\nInnovation Talks are where AWS VPs share the \"why\" behind the technology we\u2019re all building with. Deepak leads the team at AWS building developer experiences powered by generative AI including Kiro, and in this talk, we\u2019ll explore how AI agents are transforming the entire development lifecycle, from prototype to production.\n\nI\u2019ll be sharing some hands-on coding demos with to show what this future looks like in practice. Brittany will bring her perspective as Chief Architect at Delta, and Deepak will walk us through how AWS is designing accessible, secure AI tools that keep developers in control, and his future visions for this space.\n\nIt\u2019s not often you get to demo for a room full of builders while standing next to the VP who\u2019s shaping the future of developer tools at AWS. Grateful for the trust, the team, and the chance to make complex ideas feel tangible!\n\nCatch it on Thursday December 4th, 11:00 AM PST in Palazzo Ballroom B.\u00a0\u00a0\nRSVP \ud83d\udd17 https://bit.ly/inv205\n\n\ud83d\udc69\ud83c\udffb\u200d\ud83d\udcbb Follow me (Brooke Jamieson) to stay in the loop with the latest AWS + AI updates for developers\n\n\ud83d\udccd save + share!\n\n\ud83c\udff7\ufe0f Amazon Web Services (AWS)\n#AWS #reInvent2025 #AIAgents #Kiro #DeveloperExperience #DevTools",
+      "url": "https://www.linkedin.com/posts/brookejamieson_aws-reinvent2025-aiagents-activity-7398043569002921984-PqSy?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGFEf6wBM7k0lEA_TAEN9kdeFKEbNq7yi-k",
+      "post_type": "regular",
+      "author": {
+        "first_name": "Brooke",
+        "last_name": "Jamieson",
+        "headline": "Byte-sized tech tips for AI + AWS",
+        "username": "brookejamieson",
+        "profile_url": "https://www.linkedin.com/in/brookejamieson?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAABgoHhwBqALpFZFfSVV7ADnkKhgZS2EkgdE",
+        "profile_picture": "https://media.licdn.com/dms/image/v2/C4E03AQFBgayl1o8fMA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1517616169745?e=1765411200&v=beta&t=e92jO3PCD0xkD4wtzkEmRy8hAz0w1CLLi_40wsG8l8o"
+      },
+      "stats": {
+        "total_reactions": 207,
+        "like": 171,
+        "support": 1,
+        "love": 14,
+        "insight": 0,
+        "celebrate": 21,
+        "funny": 0,
+        "comments": 10,
+        "reposts": 7
+      },
+      "media": {
+        "type": "image",
+        "url": "https://media.licdn.com/dms/image/v2/D4E22AQEjAn6WkJLmGQ/feedshare-shrink_1280/B4EZqshapIKcAs-/0/1763831034033?e=1765411200&v=beta&t=dt2eawNcOdJYEFtyYeFaNEPKSNe4evdstGOmJUFsvi4",
+        "images": [
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D4E22AQEjAn6WkJLmGQ/feedshare-shrink_1280/B4EZqshapIKcAs-/0/1763831034033?e=1765411200&v=beta&t=dt2eawNcOdJYEFtyYeFaNEPKSNe4evdstGOmJUFsvi4",
+            "width": 800,
+            "height": 450
+          }
+        ]
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjczMTY0OTg4NzEyMDE3MjY0NjQtMTc0NDM4OTI2NDgzNA==",
+      "datetime_obj": "2025-11-22T18:03:55",
+      "_searchable": "brookejamieson  it\u2019s not every day you\u2019re invited to join an aws vp on stage for an innovation talk - huge thanks to deepak singh for having me part of his session alongside brittany doncaster from delta air lines. truly an honor!\n\ninnovation talks are where aws vps share the \"why\" behind the technology we\u2019re all building with. deepak leads the team at aws building developer experiences powered by generative ai including kiro, and in this talk, we\u2019ll explore how ai agents are transforming the entire development lifecycle, from prototype to production.\n\ni\u2019ll be sharing some hands-on coding demos with to show what this future looks like in practice. brittany will bring her perspective as chief architect at delta, and deepak will walk us through how aws is designing accessible, secure ai tools that keep developers in control, and his future visions for this space.\n\nit\u2019s not often you get to demo for a room full of builders while standing next to the vp who\u2019s shaping the future of developer tools at aws. grateful for the trust, the team, and the chance to make complex ideas feel tangible!\n\ncatch it on thursday december 4th, 11:00 am pst in palazzo ballroom b.\u00a0\u00a0\nrsvp \ud83d\udd17 https://bit.ly/inv205\n\n\ud83d\udc69\ud83c\udffb\u200d\ud83d\udcbb follow me (brooke jamieson) to stay in the loop with the latest aws + ai updates for developers\n\n\ud83d\udccd save + share!\n\n\ud83c\udff7\ufe0f amazon web services (aws)\n#aws #reinvent2025 #aiagents #kiro #developerexperience #devtools"
+    },
+    {
+      "urn": {
+        "activity_urn": "7397653849169088517",
+        "share_urn": "7391934842147463168",
+        "ugcPost_urn": null
+      },
+      "full_urn": "urn:li:activity:7391934843221311490",
+      "posted_at": {
+        "date": "2025-11-21 16:15:19",
+        "relative": "2 weeks ago \u2022 Edited \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1763738119404
+      },
+      "text": "Join Amazon Web Services (AWS) Heroes Brian Tarbox and Brian H. Hough  for their session \u2018Red Team vs Blue Team: Securing AI Agents\u2019 at AWS re:Invent! \ud83d\ude80 \n\nAI agents are the next evolution of APIs, but they also bring new security challenges and attack vectors. In their session, the two Heroes will dive into:\n\u27a1\ufe0f Real-world threats like prompt injection, tool abuse, and agent-to-agent escalation\n\u27a1\ufe0f Defensive strategies with rate limiting, encrypted endpoints, and Amazon Bedrock Guardrails\n\u27a1\ufe0f How to build secure-by-default agents using Infrastructure as Code and Zero Trust principles\n\nRegister for AWS re:Invent here \ud83d\udc49 https://hubs.li/Q03RTgY40",
+      "url": "https://www.linkedin.com/posts/caylent_join-amazon-web-services-aws-heroes-brian-activity-7391934843221311490-SLb_?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGFGsNUBM6SNM5jZA2ihjeyaVZ9TGaV9RH0",
+      "post_type": "repost",
+      "author": {
+        "first_name": "Caylent",
+        "headline": "37,761 followers",
+        "profile_url": "https://www.linkedin.com/company/caylent/posts"
+      },
+      "stats": {
+        "total_reactions": 60,
+        "like": 48,
+        "support": 1,
+        "love": 6,
+        "insight": 0,
+        "celebrate": 5,
+        "funny": 0,
+        "comments": 4,
+        "reposts": 6
+      },
+      "media": {
+        "type": "image",
+        "url": "https://media.licdn.com/dms/image/v2/D5610AQEYnO27F6ypcQ/image-shrink_1280/B56ZpVtkapHkAM-/0/1762374600942?e=1764709200&v=beta&t=qJSspyHpX6a5jP_gwYaMt04LZhRthdizi4_8zYFBgSc",
+        "images": [
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D5610AQEYnO27F6ypcQ/image-shrink_1280/B56ZpVtkapHkAM-/0/1762374600942?e=1764709200&v=beta&t=qJSspyHpX6a5jP_gwYaMt04LZhRthdizi4_8zYFBgSc",
+            "width": 1200,
+            "height": 630
+          }
+        ]
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjcyMDQ5MTgyNzEwNjA0MDYyNzItMTcxNzc4NjM3NjY5Mw==",
+      "datetime_obj": "2025-11-21T16:15:19",
+      "_searchable": "  join amazon web services (aws) heroes brian tarbox and brian h. hough  for their session \u2018red team vs blue team: securing ai agents\u2019 at aws re:invent! \ud83d\ude80 \n\nai agents are the next evolution of apis, but they also bring new security challenges and attack vectors. in their session, the two heroes will dive into:\n\u27a1\ufe0f real-world threats like prompt injection, tool abuse, and agent-to-agent escalation\n\u27a1\ufe0f defensive strategies with rate limiting, encrypted endpoints, and amazon bedrock guardrails\n\u27a1\ufe0f how to build secure-by-default agents using infrastructure as code and zero trust principles\n\nregister for aws re:invent here \ud83d\udc49 https://hubs.li/q03rtgy40"
+    },
+    {
+      "ame": "preinvent",
+      "urn": {
+        "activity_urn": "7397597977462312960",
+        "share_urn": null,
+        "ugcPost_urn": "7397596713101869056"
+      },
+      "full_urn": "urn:li:ugcPost:7397596713101869056",
+      "posted_at": {
+        "date": "2025-11-21 12:33:18",
+        "relative": "4 days ago \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1763724798551
+      },
+      "text": "\ud83d\ude80 #CUDOS v5.7 is here \u2013 the #reInvent edition!\n\nThis release brings important edge security insights and waste reduction capabilities that every #FinOps team needs. Because in today's cloud-first world, eliminating waste isn't just about optimization \u2013 it's about operational excellence.\n\nHere's what's new:\n\ud83d\udee1\ufe0f\u00a0\ud835\udc0d\ud835\udc1e\ud835\udc30 \ud835\udc00\ud835\udc16\ud835\udc12 \ud835\udc12\ud835\udc21\ud835\udc22\ud835\udc1e\ud835\udc25\ud835\udc1d & \ud835\udc16\ud835\udc00\ud835\udc05 \ud835\udc12\ud835\udc1e\ud835\udc1c\ud835\udc2d\ud835\udc22\ud835\udc28\ud835\udc27\nComplete visibility into your security spend with actionable waste reduction insights:\n\u2022\u00a0Idle AWS WAF Web ACLs Detection\u00a0\u2013 Identify Web ACLs with zero requests that are costing you money\n\u2022\u00a0Shield Advanced Subscription Consolidation\u00a0\u2013 Get recommendations to optimize Shield subscriptions across payer accounts\n\u2022 Comprehensive spend breakdowns by service, usage type group, account, region, up to resource level details\n\n\ud83d\udcc8\u00a0\ud835\udc04\ud835\udc27\ud835\udc21\ud835\udc1a\ud835\udc27\ud835\udc1c\ud835\udc1e\ud835\udc1d \ud835\udc13\ud835\udc2b\ud835\udc1e\ud835\udc27\ud835\udc1d\ud835\udc2c \ud835\udc00\ud835\udc27\ud835\udc1a\ud835\udc25\ud835\udc32\ud835\udc2c\ud835\udc22\ud835\udc2c\nTrack monthly and weekly trends across any organizational taxonomy dimension \u2013 Business Unit, Environment, Cost Center, or any custom taxonomy you've defined. \n\n\ud83d\udcb8\u00a0\ud835\udc14\ud835\udc27\ud835\udc2e\ud835\udc2c\ud835\udc1e\ud835\udc1d \ud835\udc11\ud835\udc08/\ud835\udc12\ud835\udc0f \ud835\udc02\ud835\udc28\ud835\udc26\ud835\udc26\ud835\udc22\ud835\udc2d\ud835\udc26\ud835\udc1e\ud835\udc27\ud835\udc2d \ud835\udc08\ud835\udc27\ud835\udc2c\ud835\udc22\ud835\udc20\ud835\udc21\ud835\udc2d\ud835\udc2c\nNew section on RI/SP Summary tab to track and eliminate unused commitment waste with detailed ARN-level visibility.\n\n\ud83d\udd0d\u00a0\ud835\udc02\ud835\udc25\ud835\udc28\ud835\udc2e\ud835\udc1d\ud835\udc13\ud835\udc2b\ud835\udc1a\ud835\udc22\ud835\udc25\u00a0\ud835\udc03\ud835\udc2e\ud835\udc29\ud835\udc25\ud835\udc22\ud835\udc1c\ud835\udc1a\ud835\udc2d\ud835\udc1e\u00a0\ud835\udc13\ud835\udc2b\ud835\udc1a\ud835\udc22\ud835\udc25\u00a0\ud835\udc03\ud835\udc1e\ud835\udc2d\ud835\udc1e\ud835\udc1c\ud835\udc2d\ud835\udc22\ud835\udc28\ud835\udc27\nNew\u00a0visuals\u00a0to\u00a0identify\u00a0duplicate\u00a0management\u00a0event\u00a0trails\u00a0across\u00a0accounts\u00a0and\u00a0regions\u00a0\u2013\u00a0another\u00a0hidden\u00a0source\u00a0of\u00a0waste\u00a0that\u00a0adds\u00a0up\u00a0quickly.\n\n\ud83d\udcca\u00a0\ud835\udc00\ud835\udc26\ud835\udc1a\ud835\udc33\ud835\udc28\ud835\udc27 \ud835\udc10\ud835\udc2e\ud835\udc22\ud835\udc1c\ud835\udc24\ud835\udc12\ud835\udc22\ud835\udc20\ud835\udc21\ud835\udc2d \ud835\udc12\ud835\udc2e\ud835\udc22\ud835\udc2d\ud835\udc1e \ud835\udc04\ud835\udc27\ud835\udc21\ud835\udc1a\ud835\udc27\ud835\udc1c\ud835\udc1e\ud835\udc26\ud835\udc1e\ud835\udc27\ud835\udc2d\ud835\udc2c\nEnhanced Analytics tab with Reader Pro and Author Pro user insights, plus Q Questions usage tracking.\n\n\ud83c\udfaf\u00a0\ud835\udc16\ud835\udc21\ud835\udc32 \ud835\udc2d\ud835\udc21\ud835\udc22\ud835\udc2c \ud835\udc26\ud835\udc1a\ud835\udc2d\ud835\udc2d\ud835\udc1e\ud835\udc2b\ud835\udc2c \ud835\udc1f\ud835\udc28\ud835\udc2b #FinOps:\nWaste reduction is the fastest path to cost optimization. These new insights help you identify and eliminate hidden costs in security services \u2013 often overlooked but significant contributors to cloud spend. Every idle Web ACL and redundant Shield subscription directly impacts your bottom line.\n\n\ud83d\udcda Full changelog - https://lnkd.in/emwXMZMH\n\ud83d\udcca Explore demo dashboard - https://lnkd.in/eF2QWNYn\n\ud83d\udee0\ufe0f Update CUDOS - https://lnkd.in/eDmYJpey\n\u2728\u00a0Add your organizational taxonomy to CUDOS - https://lnkd.in/e7MYMGwz\n\n\ud83e\udd1d This release is a result of fantastic collaboration with Brenno Passanha. Also many thanks to folks who provided valuable feedback Chris Pates, William Fairbrother, Andrew C. Christopher Jen Brian McEntire, AWS  Mylen Rath Anand Gaurav Lo\u00efc Fournier Iakov Gan  and many many others\n\n#FinOps never ends! \ud83d\udd04\n\n\ud83d\udc4b See you at #reInvent",
+      "url": "https://www.linkedin.com/posts/yuriy-prykhodko_cudos-reinvent-finops-ugcPost-7397596713101869056-4_jt?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGEgTLAB2PTCcYUWyZTAmmvWsq14C_I5ZOc",
+      "post_type": "repost",
+      "author": {
+        "first_name": "Yuriy",
+        "last_name": "Prykhodko",
+        "headline": "Principal Technologist @ AWS | Head of Cloud Intelligence Dashboards | Cloud FinOps SME | Expert in Cloud Native Architectures",
+        "username": "yuriy-prykhodko",
+        "profile_url": "https://www.linkedin.com/in/yuriy-prykhodko?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAAAWOCacBIslYk2R7BtjJbkP5vFqglcoz59M",
+        "profile_picture": "https://media.licdn.com/dms/image/v2/D4E03AQGPZveQ9S8UyA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1688232833069?e=1766016000&v=beta&t=1cXynb3gZ9JHilrb_3Ogi47dQLbicYVqIsseSvFWbX0"
+      },
+      "stats": {
+        "total_reactions": 293,
+        "like": 227,
+        "support": 1,
+        "love": 17,
+        "insight": 4,
+        "celebrate": 44,
+        "funny": 0,
+        "comments": 13,
+        "reposts": 43
+      },
+      "media": {
+        "type": "images",
+        "url": "https://media.licdn.com/dms/image/v2/D4E22AQGC1oWUcEWb-A/feedshare-shrink_2048_1536/B4EZqmLAKqIUAw-/0/1763724495614?e=1766016000&v=beta&t=lt1iUDFPPgrRB2kFlOJaR0ZFvUbvKRMxc0VGDFCn4XU",
+        "images": [
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D4E22AQGC1oWUcEWb-A/feedshare-shrink_2048_1536/B4EZqmLAKqIUAw-/0/1763724495614?e=1766016000&v=beta&t=lt1iUDFPPgrRB2kFlOJaR0ZFvUbvKRMxc0VGDFCn4XU",
+            "width": 2048,
+            "height": 843
+          },
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D4E22AQHI4BNQt0OqNQ/feedshare-shrink_2048_1536/B4EZqmLALWIwAw-/0/1763724495346?e=1766016000&v=beta&t=TzVQUAq8w5jH5qIWN0a_QAWx5XcFwXflBIOh3uyp-ow",
+            "width": 2048,
+            "height": 685
+          },
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D4E22AQGD5cuRMkQLEg/feedshare-shrink_2048_1536/B4EZqmLAHeIoAw-/0/1763724494759?e=1766016000&v=beta&t=Rq6EsujX6foD4fPHUr1g1X92MPClaIVmd-PdjVXst2I",
+            "width": 2048,
+            "height": 495
+          },
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D4E22AQHPjnM2cNdUzg/feedshare-shrink_2048_1536/B4EZqmLAHmKcA0-/0/1763724495942?e=1766016000&v=beta&t=w4cznAhKGilY2NScIF8lEDxkTceYV80L5U-4tmM7a5I",
+            "width": 1362,
+            "height": 1144
+          },
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D4E22AQGYCiz5623crg/feedshare-shrink_2048_1536/B4EZqmLAH8GYAw-/0/1763724494966?e=1766016000&v=beta&t=917QTQpPBouvK_hUWEDptS_6N5wSfsVp427FF5B2B1E",
+            "width": 1578,
+            "height": 1128
+          },
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D4E22AQHkS1dBtNj_0A/feedshare-shrink_2048_1536/B4EZqmLAJ0KMAw-/0/1763724494695?e=1766016000&v=beta&t=wzm0m85vvCOv9Ilmz2nR8R7lU6-tE7SS4phHilUYS-c",
+            "width": 1912,
+            "height": 706
+          },
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D4E22AQG-lsxXytQfVg/feedshare-shrink_2048_1536/B4EZqmLAIjHUAw-/0/1763724494329?e=1766016000&v=beta&t=2guNokE8KHYaDjI_vE5OOCnwz1VOmEbdbc9XHHjForc",
+            "width": 2008,
+            "height": 654
+          }
+        ]
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjczNDU5MzYzMTU4OTg1NjQ2MDgtMTc1MTQwNzY5ODU4MQ==",
+      "datetime_obj": "2025-11-21T12:33:18",
+      "_searchable": "yuriy-prykhodko  \ud83d\ude80 #cudos v5.7 is here \u2013 the #reinvent edition!\n\nthis release brings important edge security insights and waste reduction capabilities that every #finops team needs. because in today's cloud-first world, eliminating waste isn't just about optimization \u2013 it's about operational excellence.\n\nhere's what's new:\n\ud83d\udee1\ufe0f\u00a0\ud835\udc0d\ud835\udc1e\ud835\udc30 \ud835\udc00\ud835\udc16\ud835\udc12 \ud835\udc12\ud835\udc21\ud835\udc22\ud835\udc1e\ud835\udc25\ud835\udc1d & \ud835\udc16\ud835\udc00\ud835\udc05 \ud835\udc12\ud835\udc1e\ud835\udc1c\ud835\udc2d\ud835\udc22\ud835\udc28\ud835\udc27\ncomplete visibility into your security spend with actionable waste reduction insights:\n\u2022\u00a0idle aws waf web acls detection\u00a0\u2013 identify web acls with zero requests that are costing you money\n\u2022\u00a0shield advanced subscription consolidation\u00a0\u2013 get recommendations to optimize shield subscriptions across payer accounts\n\u2022 comprehensive spend breakdowns by service, usage type group, account, region, up to resource level details\n\n\ud83d\udcc8\u00a0\ud835\udc04\ud835\udc27\ud835\udc21\ud835\udc1a\ud835\udc27\ud835\udc1c\ud835\udc1e\ud835\udc1d \ud835\udc13\ud835\udc2b\ud835\udc1e\ud835\udc27\ud835\udc1d\ud835\udc2c \ud835\udc00\ud835\udc27\ud835\udc1a\ud835\udc25\ud835\udc32\ud835\udc2c\ud835\udc22\ud835\udc2c\ntrack monthly and weekly trends across any organizational taxonomy dimension \u2013 business unit, environment, cost center, or any custom taxonomy you've defined. \n\n\ud83d\udcb8\u00a0\ud835\udc14\ud835\udc27\ud835\udc2e\ud835\udc2c\ud835\udc1e\ud835\udc1d \ud835\udc11\ud835\udc08/\ud835\udc12\ud835\udc0f \ud835\udc02\ud835\udc28\ud835\udc26\ud835\udc26\ud835\udc22\ud835\udc2d\ud835\udc26\ud835\udc1e\ud835\udc27\ud835\udc2d \ud835\udc08\ud835\udc27\ud835\udc2c\ud835\udc22\ud835\udc20\ud835\udc21\ud835\udc2d\ud835\udc2c\nnew section on ri/sp summary tab to track and eliminate unused commitment waste with detailed arn-level visibility.\n\n\ud83d\udd0d\u00a0\ud835\udc02\ud835\udc25\ud835\udc28\ud835\udc2e\ud835\udc1d\ud835\udc13\ud835\udc2b\ud835\udc1a\ud835\udc22\ud835\udc25\u00a0\ud835\udc03\ud835\udc2e\ud835\udc29\ud835\udc25\ud835\udc22\ud835\udc1c\ud835\udc1a\ud835\udc2d\ud835\udc1e\u00a0\ud835\udc13\ud835\udc2b\ud835\udc1a\ud835\udc22\ud835\udc25\u00a0\ud835\udc03\ud835\udc1e\ud835\udc2d\ud835\udc1e\ud835\udc1c\ud835\udc2d\ud835\udc22\ud835\udc28\ud835\udc27\nnew\u00a0visuals\u00a0to\u00a0identify\u00a0duplicate\u00a0management\u00a0event\u00a0trails\u00a0across\u00a0accounts\u00a0and\u00a0regions\u00a0\u2013\u00a0another\u00a0hidden\u00a0source\u00a0of\u00a0waste\u00a0that\u00a0adds\u00a0up\u00a0quickly.\n\n\ud83d\udcca\u00a0\ud835\udc00\ud835\udc26\ud835\udc1a\ud835\udc33\ud835\udc28\ud835\udc27 \ud835\udc10\ud835\udc2e\ud835\udc22\ud835\udc1c\ud835\udc24\ud835\udc12\ud835\udc22\ud835\udc20\ud835\udc21\ud835\udc2d \ud835\udc12\ud835\udc2e\ud835\udc22\ud835\udc2d\ud835\udc1e \ud835\udc04\ud835\udc27\ud835\udc21\ud835\udc1a\ud835\udc27\ud835\udc1c\ud835\udc1e\ud835\udc26\ud835\udc1e\ud835\udc27\ud835\udc2d\ud835\udc2c\nenhanced analytics tab with reader pro and author pro user insights, plus q questions usage tracking.\n\n\ud83c\udfaf\u00a0\ud835\udc16\ud835\udc21\ud835\udc32 \ud835\udc2d\ud835\udc21\ud835\udc22\ud835\udc2c \ud835\udc26\ud835\udc1a\ud835\udc2d\ud835\udc2d\ud835\udc1e\ud835\udc2b\ud835\udc2c \ud835\udc1f\ud835\udc28\ud835\udc2b #finops:\nwaste reduction is the fastest path to cost optimization. these new insights help you identify and eliminate hidden costs in security services \u2013 often overlooked but significant contributors to cloud spend. every idle web acl and redundant shield subscription directly impacts your bottom line.\n\n\ud83d\udcda full changelog - https://lnkd.in/emwxmzmh\n\ud83d\udcca explore demo dashboard - https://lnkd.in/ef2qwnyn\n\ud83d\udee0\ufe0f update cudos - https://lnkd.in/edmyjpey\n\u2728\u00a0add your organizational taxonomy to cudos - https://lnkd.in/e7mymgwz\n\n\ud83e\udd1d this release is a result of fantastic collaboration with brenno passanha. also many thanks to folks who provided valuable feedback chris pates, william fairbrother, andrew c. christopher jen brian mcentire, aws  mylen rath anand gaurav lo\u00efc fournier iakov gan  and many many others\n\n#finops never ends! \ud83d\udd04\n\n\ud83d\udc4b see you at #reinvent"
+    },
+    {
+      "ame": "preinvent",
+      "urn": {
+        "activity_urn": "7397355428268965888",
+        "share_urn": "7397056932789940224",
+        "ugcPost_urn": null
+      },
+      "full_urn": "urn:li:activity:7397056933402337280",
+      "posted_at": {
+        "date": "2025-11-20 20:29:30",
+        "relative": "6 days ago \u2022 Edited \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1763666970317
+      },
+      "text": "I have built a number of features and services in Amazon over the many years. Some of the most impactful ones make it easy to do something but every now and then we launch something that is totally a game changer that makes a previously \"almost\" impossible thing easy. I am specially proud of the team for Tenant Isolation in Lambda. Now you can build a SaaS and have secure environments for each of your customers as needed. Great for agents or  sensitive workloads where you don't want to share memory/CPU between your customers. Previously, you had to create isolated compute environments to achieve this which makes building this isolation exorbitantly expensive to run and maintain. Now you write a Lambda function and invoke it with a \"tenant id\" to get an isolated compute for that tenant. Easy as Lambda :). Read about it below and since we're already in re:Invent launch season, sign up for the Serverless events if you can - we are launching some other big things in a couple of weeks that you wouldn't want to miss!\n\nhttps://lnkd.in/gYHCbnht",
+      "url": "https://www.linkedin.com/posts/ahmedusmankhalid_streamlined-multi-tenant-application-development-activity-7397056933402337280-HIDC?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGIFN5kB054jbTTas9HtPFZkZfshLn-2dnY",
+      "post_type": "repost",
+      "author": {
+        "first_name": "Ahmed",
+        "last_name": "Usman Khalid",
+        "headline": "Director and General Manager at Amazon Web Services (AWS) - AWS Serverless (Lambda, EventBridge, Step Functions)",
+        "username": "ahmedusmankhalid",
+        "profile_url": "https://www.linkedin.com/in/ahmedusmankhalid?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAAACcI5EBgAjchA1SJNhwnLIxCa0wVc8I_AQ",
+        "profile_picture": "https://media.licdn.com/dms/image/v2/D5603AQGh17EnVaPt-g/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1667843552872?e=1766016000&v=beta&t=bjhvbfdQYZ7bZgZDBCIHg-F9t4VHmj5itFxnuSu3TK4"
+      },
+      "stats": {
+        "total_reactions": 231,
+        "like": 172,
+        "support": 0,
+        "love": 20,
+        "insight": 2,
+        "celebrate": 37,
+        "funny": 0,
+        "comments": 17,
+        "reposts": 18
+      },
+      "media": {
+        "type": "image",
+        "url": "https://media.licdn.com/dms/image/sync/v2/D4E27AQFWN5iiyxwuTg/articleshare-shrink_800/B4EZqdiV2vIwAI-/0/1763579617831?e=1764727200&v=beta&t=CflD8-vVde69s8lLe_iHWwaW9td_NhtH_1qRF4c_cH8"
+      },
+      "article": {
+        "url": "https://aws.amazon.com/blogs/aws/streamlined-multi-tenant-application-development-with-tenant-isolation-mode-in-aws-lambda/",
+        "title": "Streamlined multi-tenant application development with tenant isolation mode in AWS Lambda | Amazon Web Services",
+        "subtitle": "aws.amazon.com",
+        "thumbnail": "https://media.licdn.com/dms/image/sync/v2/D4E27AQFWN5iiyxwuTg/articleshare-shrink_800/B4EZqdiV2vIwAI-/0/1763579617831?e=1764727200&v=beta&t=CflD8-vVde69s8lLe_iHWwaW9td_NhtH_1qRF4c_cH8"
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjczMjUzMDM5MzUwNjQyMjc4NDEtMTc0NjQ4ODU1NTY2OQ==",
+      "datetime_obj": "2025-11-20T20:29:30",
+      "_searchable": "ahmedusmankhalid  i have built a number of features and services in amazon over the many years. some of the most impactful ones make it easy to do something but every now and then we launch something that is totally a game changer that makes a previously \"almost\" impossible thing easy. i am specially proud of the team for tenant isolation in lambda. now you can build a saas and have secure environments for each of your customers as needed. great for agents or  sensitive workloads where you don't want to share memory/cpu between your customers. previously, you had to create isolated compute environments to achieve this which makes building this isolation exorbitantly expensive to run and maintain. now you write a lambda function and invoke it with a \"tenant id\" to get an isolated compute for that tenant. easy as lambda :). read about it below and since we're already in re:invent launch season, sign up for the serverless events if you can - we are launching some other big things in a couple of weeks that you wouldn't want to miss!\n\nhttps://lnkd.in/gyhcbnht"
+    },
+    {
+      "ame": "preinvent",
+      "urn": {
+        "activity_urn": "7397227235407044608",
+        "share_urn": "7397227234287165440",
+        "ugcPost_urn": null
+      },
+      "full_urn": "urn:li:activity:7397227235407044608",
+      "posted_at": {
+        "date": "2025-11-20 12:00:06",
+        "relative": "5 days ago \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1763636406757
+      },
+      "text": "This is the biggest pre:Invent announcement so far. Multi-attribute GSI for DynamoDB is a huge win! No more building your own composite keys for GSIs and having to backfill every time you need a new composite key.\n\nNow you just include the separate attributes in the key schema and add them to your queries, and voila!\n\nI'm still looking for the gotchas, but so far it looks good. If you spot anything that worries you about this, please share in the comments.\n\nAnnouncement: https://lnkd.in/evy5bRUf\n\nDeveloper guide: https://lnkd.in/exwy8fti",
+      "url": "https://www.linkedin.com/posts/theburningmonk_this-is-the-biggest-preinvent-announcement-activity-7397227235407044608-ncxi?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGGDiekBxERo5NlzjLcMJswHsySHke5K__c",
+      "post_type": "regular",
+      "author": {
+        "first_name": "Yan",
+        "last_name": "Cui",
+        "headline": "I teach AWS and serverless | AWS Serverless Hero | Consultant",
+        "username": "theburningmonk",
+        "profile_url": "https://www.linkedin.com/in/theburningmonk?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAAAOBv7IBqweEbyG--h7NDdtNJDUpWM4m2EY",
+        "profile_picture": "https://media.licdn.com/dms/image/v2/D4E03AQHUXp4HOM1SLQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1693141518983?e=1765411200&v=beta&t=A7yAmGlsBppO5fbkidEjnG1MEUthlszPuWzqdp5u8oI"
+      },
+      "stats": {
+        "total_reactions": 859,
+        "like": 685,
+        "support": 1,
+        "love": 29,
+        "insight": 64,
+        "celebrate": 80,
+        "funny": 0,
+        "comments": 34,
+        "reposts": 80
+      },
+      "media": {
+        "type": "image",
+        "url": "https://media.licdn.com/dms/image/v2/D4E22AQGJ146DuwonRQ/feedshare-shrink_2048_1536/B4EZqg699zJ0Aw-/0/1763636405441?e=1765411200&v=beta&t=lZetg29NNy-JXdGHx3HX6xsR_7jUPo-iNFH_Q8nQd2s",
+        "images": [
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D4E22AQGJ146DuwonRQ/feedshare-shrink_2048_1536/B4EZqg699zJ0Aw-/0/1763636405441?e=1765411200&v=beta&t=lZetg29NNy-JXdGHx3HX6xsR_7jUPo-iNFH_Q8nQd2s",
+            "width": 1136,
+            "height": 1394
+          }
+        ]
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjczNTUxNjQ1NjQxMjYxMzgzNjgtMTc1MzYwNzg4NDQxMA==",
+      "datetime_obj": "2025-11-20T12:00:06",
+      "_searchable": "theburningmonk  this is the biggest pre:invent announcement so far. multi-attribute gsi for dynamodb is a huge win! no more building your own composite keys for gsis and having to backfill every time you need a new composite key.\n\nnow you just include the separate attributes in the key schema and add them to your queries, and voila!\n\ni'm still looking for the gotchas, but so far it looks good. if you spot anything that worries you about this, please share in the comments.\n\nannouncement: https://lnkd.in/evy5bruf\n\ndeveloper guide: https://lnkd.in/exwy8fti"
+    },
+    {
+      "ame": "preinvent",
+      "urn": {
+        "activity_urn": "7397071516384894977",
+        "share_urn": "7397071515428540416",
+        "ugcPost_urn": null
+      },
+      "full_urn": "urn:li:activity:7397071516384894977",
+      "posted_at": {
+        "date": "2025-11-20 01:41:20",
+        "relative": "5 days ago \u2022 Edited \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1763599280449
+      },
+      "text": "This has flown under the radar and not got the attention it deserves.\n\nWith IPv6 support Lambda no longer needs NAT gateway for internet connectivity from a private subnet.\n\nThis should simplify many architectures and remove the cost associated with NAT Gateways. This is arguably the best pre:Invent announcement so far.\n\nhttps://lnkd.in/ejXA8z2C",
+      "url": "https://www.linkedin.com/posts/theburningmonk_this-has-flown-under-the-radar-and-not-got-activity-7397071516384894977-lCjK?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGGDiekBxERo5NlzjLcMJswHsySHke5K__c",
+      "post_type": "regular",
+      "author": {
+        "first_name": "Yan",
+        "last_name": "Cui",
+        "headline": "I teach AWS and serverless | AWS Serverless Hero | Consultant",
+        "username": "theburningmonk",
+        "profile_url": "https://www.linkedin.com/in/theburningmonk?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAAAOBv7IBqweEbyG--h7NDdtNJDUpWM4m2EY",
+        "profile_picture": "https://media.licdn.com/dms/image/v2/D4E03AQHUXp4HOM1SLQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1693141518983?e=1765411200&v=beta&t=A7yAmGlsBppO5fbkidEjnG1MEUthlszPuWzqdp5u8oI"
+      },
+      "stats": {
+        "total_reactions": 553,
+        "like": 448,
+        "support": 1,
+        "love": 17,
+        "insight": 57,
+        "celebrate": 30,
+        "funny": 0,
+        "comments": 16,
+        "reposts": 46
+      },
+      "media": {
+        "type": "image",
+        "url": "https://media.licdn.com/dms/image/v2/D4E22AQGgeB8Ryv70Bw/feedshare-shrink_2048_1536/B4EZqetWGyGoAw-/0/1763599279520?e=1765411200&v=beta&t=pEcXKece_9rR7Gd4vDYZbmO5WNm-0Fv6AZsScakQYHs",
+        "images": [
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D4E22AQGgeB8Ryv70Bw/feedshare-shrink_2048_1536/B4EZqetWGyGoAw-/0/1763599279520?e=1765411200&v=beta&t=pEcXKece_9rR7Gd4vDYZbmO5WNm-0Fv6AZsScakQYHs",
+            "width": 1574,
+            "height": 664
+          }
+        ]
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjczNTUxNjQ1NjQxMjYxMzgzNjgtMTc1MzYwNzg4NDQxMA==",
+      "datetime_obj": "2025-11-20T01:41:20",
+      "_searchable": "theburningmonk  this has flown under the radar and not got the attention it deserves.\n\nwith ipv6 support lambda no longer needs nat gateway for internet connectivity from a private subnet.\n\nthis should simplify many architectures and remove the cost associated with nat gateways. this is arguably the best pre:invent announcement so far.\n\nhttps://lnkd.in/ejxa8z2c"
+    },
+    {
+      "urn": {
+        "activity_urn": "7396919253020381185",
+        "share_urn": "7396645634214367232",
+        "ugcPost_urn": null
+      },
+      "full_urn": "urn:li:activity:7396645635627823104",
+      "posted_at": {
+        "date": "2025-11-19 15:36:18",
+        "relative": "6 days ago \u2022 Edited \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1763562978034
+      },
+      "text": "Heading to AWS re:Invent 2025? Join us for an engaging Lightning Talk CMP352) where we'll showcase how organizations can unlock up to 40% better price performance on AWS Graviton using the Graviton Savings Dashboard.\n\nIn this dynamic 20-minute session, we'll demonstrate:\n\u2022 Advanced analytics for workload modernization\n\u2022 Data-driven migration strategies\n\u2022 Real-time cost optimization techniques\n\u2022 Actionable migration planning\n\n\ud83d\udcc5 December 4th, 2025\n\u23f0 1:30 PM PST\n\ud83d\udccd Mandalay Bay\n\ud83d\udeb6\u200d\u2642\ufe0f Walk-in session - no registration required! \n\ud83d\udd17 Session details: https://lnkd.in/efSuxF3G\n\n\ud83d\udca1 Can't make the session? Visit us at the AWS Village Compute Booth (M29/M30)! Meet the team - Rosa Corley, Rajani Guptan, and Bhavik Gandhi - for an interactive live demo. Get hands-on experience with the latest features, ask questions, and discover how to apply these insights to your workloads.\n\nDon't miss this opportunity to transform cost insights into business results. Experience the enhanced AWS Graviton Savings Dashboard and accelerate your modernization journey.\n\n#AWSreinvent #Graviton #CostOptimization #EC2 #AWSCompute",
+      "url": "https://www.linkedin.com/posts/rajani-guptan_awsreinvent-graviton-costoptimization-activity-7396645635627823104-6QaN?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGEhyIMBoNrlXXL6gaBu97GTDsvtmZs-onY",
+      "post_type": "repost",
+      "author": {
+        "first_name": "Rajani",
+        "last_name": "Guptan",
+        "headline": "Senior Technicial Account Manager at Amazon Web Services (AWS)",
+        "username": "rajani-guptan",
+        "profile_url": "https://www.linkedin.com/in/rajani-guptan?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAAATJvqsBnlZCOrQM2LlqGRKzH-zc9qbck5M"
+      },
+      "stats": {
+        "total_reactions": 62,
+        "like": 48,
+        "support": 0,
+        "love": 7,
+        "insight": 0,
+        "celebrate": 7,
+        "funny": 0,
+        "comments": 1,
+        "reposts": 12
+      },
+      "media": {
+        "type": "image",
+        "url": "https://media.licdn.com/dms/image/v2/D4E22AQG57uv4irAyMA/feedshare-shrink_2048_1536/B4EZqYp9QyJ0A0-/0/1763497741740?e=1765411200&v=beta&t=zUO-slkMvePWLJTFOaUgZ3uum7IFJDnWIW3jo0YpFY8",
+        "images": [
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D4E22AQG57uv4irAyMA/feedshare-shrink_2048_1536/B4EZqYp9QyJ0A0-/0/1763497741740?e=1765411200&v=beta&t=zUO-slkMvePWLJTFOaUgZ3uum7IFJDnWIW3jo0YpFY8",
+            "width": 2048,
+            "height": 1152
+          }
+        ]
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjczNjIxNTQzMzE1ODU4MTQ1MjgtMTc1NTI3NDM3NDgzNQ==",
+      "datetime_obj": "2025-11-19T15:36:18",
+      "_searchable": "rajani-guptan  heading to aws re:invent 2025? join us for an engaging lightning talk cmp352) where we'll showcase how organizations can unlock up to 40% better price performance on aws graviton using the graviton savings dashboard.\n\nin this dynamic 20-minute session, we'll demonstrate:\n\u2022 advanced analytics for workload modernization\n\u2022 data-driven migration strategies\n\u2022 real-time cost optimization techniques\n\u2022 actionable migration planning\n\n\ud83d\udcc5 december 4th, 2025\n\u23f0 1:30 pm pst\n\ud83d\udccd mandalay bay\n\ud83d\udeb6\u200d\u2642\ufe0f walk-in session - no registration required! \n\ud83d\udd17 session details: https://lnkd.in/efsuxf3g\n\n\ud83d\udca1 can't make the session? visit us at the aws village compute booth (m29/m30)! meet the team - rosa corley, rajani guptan, and bhavik gandhi - for an interactive live demo. get hands-on experience with the latest features, ask questions, and discover how to apply these insights to your workloads.\n\ndon't miss this opportunity to transform cost insights into business results. experience the enhanced aws graviton savings dashboard and accelerate your modernization journey.\n\n#awsreinvent #graviton #costoptimization #ec2 #awscompute"
+    },
+    {
+      "urn": {
+        "activity_urn": "7396326517506699264",
+        "share_urn": null,
+        "ugcPost_urn": "7396326516772495360"
+      },
+      "full_urn": "urn:li:ugcPost:7396326516772495360",
+      "posted_at": {
+        "date": "2025-11-18 00:20:58",
+        "relative": "1 week ago \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1763421658875
+      },
+      "text": "Over the past year, I\u2019ve had hundreds of conversations with customers about agentic AI. What stands out is the shift from exploring the technology to using it to solve real business problems.\n\nWe\u2019re still early, but the momentum is unmistakable. I\u2019ve shared a few reflections on what we\u2019re seeing today and what\u2019s ahead as we prepare for re:Invent 2025. Excited for what we\u2019ll build together.",
+      "url": "https://www.linkedin.com/posts/swaminathansivasubramanian_over-the-past-year-ive-had-hundreds-of-activity-7396326517506699264-Un26?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGFC3E8Bd8WheK_0jWKwJDI4qA9ywe9lkkA",
+      "post_type": "regular",
+      "author": {
+        "first_name": "Swami",
+        "last_name": "Sivasubramanian",
+        "headline": "VP, AWS Agentic AI",
+        "username": "swaminathansivasubramanian",
+        "profile_url": "https://www.linkedin.com/in/swaminathansivasubramanian?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAAABk5ssBEUmZmcoXx94l0_mCtRraFvx_Rb0"
+      },
+      "stats": {
+        "total_reactions": 591,
+        "like": 533,
+        "support": 2,
+        "love": 22,
+        "insight": 11,
+        "celebrate": 23,
+        "funny": 0,
+        "comments": 14,
+        "reposts": 56
+      },
+      "article": {
+        "url": "https://www.linkedin.com/pulse/beyond-hype-driving-real-business-value-agentic-ai-sivasubramanian-lonnc?trackingId=6D3SzHb2vdWZpiFhUUMMUA%3D%3D",
+        "title": "Beyond the Hype: Driving Real Business Value with Agentic AI",
+        "subtitle": "Swami Sivasubramanian",
+        "thumbnail": "https://media.licdn.com/dms/image/v2/D5612AQFmhnH4B2Pmlg/article-cover_image-shrink_720_1280/B56ZqUFKn9HIAI-/0/1763420973989?e=1766016000&v=beta&t=vnbMHIcKS0-tnI9-nZ3UMAQ3XaZ6m3PltyzMGjMQMXM"
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjczMDI0NDM4OTYyMDUwOTkwMDktMTc0MTAzODI5NzY2MA==",
+      "datetime_obj": "2025-11-18T00:20:58",
+      "_searchable": "swaminathansivasubramanian  over the past year, i\u2019ve had hundreds of conversations with customers about agentic ai. what stands out is the shift from exploring the technology to using it to solve real business problems.\n\nwe\u2019re still early, but the momentum is unmistakable. i\u2019ve shared a few reflections on what we\u2019re seeing today and what\u2019s ahead as we prepare for re:invent 2025. excited for what we\u2019ll build together."
+    },
+    {
+      "urn": {
+        "activity_urn": "7396314801334935553",
+        "share_urn": "7396314800437415937",
+        "ugcPost_urn": null
+      },
+      "full_urn": "urn:li:activity:7396314801334935553",
+      "posted_at": {
+        "date": "2025-11-17 23:34:25",
+        "relative": "1 week ago \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1763418865522
+      },
+      "text": "Interested in learning how to take AWS Compute Optimizer recommendations at scale? Jimmy Yang and Alonso De Cosio are doing a 300 level interactive chalk-talk at Re:invent, Wednesday December 3rd @ 4:30pm. Come prepared to learn how to put a recommendation implementation plan together for your FinOps organization!\nhttps://lnkd.in/guDrycb5\n#finops #cloudoptimization #reinvent",
+      "url": "https://www.linkedin.com/posts/rick-ochs-06469833_aws-events-reinvent-2025-activity-7396314801334935553-seji?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGEM9JoBsMZvVkKXpfpCC1FdRG-vJAGoBjk",
+      "post_type": "regular",
+      "author": {
+        "first_name": "Rick",
+        "last_name": "Ochs",
+        "headline": "Senior Manager at AWS, Cloud Optimization, Finops Foundation Technical Advisory Council",
+        "username": "rick-ochs-06469833",
+        "profile_url": "https://www.linkedin.com/in/rick-ochs-06469833?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAAAcKx0wBHmx9AKrxRV04KoV3DiZBxZVlnVs",
+        "profile_picture": "https://media.licdn.com/dms/image/v2/C5603AQEAfhvb9LFc0A/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1524859527611?e=1765411200&v=beta&t=4MTa-eNimGNVKew8U2fPdrctuKs55owjrW_isMlFuyw"
+      },
+      "stats": {
+        "total_reactions": 47,
+        "like": 42,
+        "support": 1,
+        "love": 1,
+        "insight": 1,
+        "celebrate": 2,
+        "funny": 0,
+        "comments": 0,
+        "reposts": 0
+      },
+      "article": {
+        "url": "https://registration.awsevents.com/flow/awsevents/reinvent2025/eventcatalog/page/eventcatalog?search=cop338",
+        "title": "AWS Events | re:Invent 2025",
+        "subtitle": "registration.awsevents.com"
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjcwMDMwODgyMzAyNzExMTkzNjAtMTY2OTY2NjM0NTE2Ng==",
+      "datetime_obj": "2025-11-17T23:34:25",
+      "_searchable": "rick-ochs-06469833  interested in learning how to take aws compute optimizer recommendations at scale? jimmy yang and alonso de cosio are doing a 300 level interactive chalk-talk at re:invent, wednesday december 3rd @ 4:30pm. come prepared to learn how to put a recommendation implementation plan together for your finops organization!\nhttps://lnkd.in/gudrycb5\n#finops #cloudoptimization #reinvent"
+    },
+    {
+      "ame": "physical",
+      "urn": {
+        "activity_urn": "7391490212021022721",
+        "share_urn": "7391490210234249216",
+        "ugcPost_urn": null
+      },
+      "full_urn": "urn:li:activity:7391490212021022721",
+      "posted_at": {
+        "date": "2025-11-04 16:03:13",
+        "relative": "3 weeks ago \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1762268593793
+      },
+      "text": "You can tell I didn't use AI to write this article title because it breaks every rule there is! \nHere's the thing: re:Invent is chaos! There's so many places to be and people to see, so it's really hard to find time to click between social media, launch blogs, product pages, what's new posts, and docs pages to figure out what a launched service/feature means for your project or codebase. \n\nInstead, this year I am using the AWS Documentation MCP with Kiro to get up-to-date official docs right in my IDE, and then asking Kiro specific questions using the context from my repo to get pinpointed answers. \n\nIn this blog, I show you a real S3 Tables migration example and how to set this up before re:Invent so you can focus on the fun stuff! \n \nClick to read the blog here \ud83d\udd17 https://lnkd.in/eiy2Zaqd\n\nWhat launch are you most excited for this year? \ud83d\udc47\n\n\ud83d\udc69\ud83c\udffb\u200d\ud83d\udcbb Follow me (Brooke Jamieson) to stay in the loop with the latest AWS + AI updates for developers\n\n\ud83d\udccd save + share!\n\n\ud83c\udff7\ufe0f Amazon Web Services (AWS) \u00b7 AWS Developers \u00b7 AWS Events \u00b7 Kiro\n\n#KiroDotDev #reInvent #AWS #DevTools #MCP #KiroIDE",
+      "url": "https://www.linkedin.com/posts/brookejamieson_kirodotdev-reinvent-aws-activity-7391490212021022721-ixyU?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGFEf6wBM7k0lEA_TAEN9kdeFKEbNq7yi-k",
+      "post_type": "regular",
+      "author": {
+        "first_name": "Brooke",
+        "last_name": "Jamieson",
+        "headline": "Byte-sized tech tips for AI + AWS",
+        "username": "brookejamieson",
+        "profile_url": "https://www.linkedin.com/in/brookejamieson?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAABgoHhwBqALpFZFfSVV7ADnkKhgZS2EkgdE",
+        "profile_picture": "https://media.licdn.com/dms/image/v2/C4E03AQFBgayl1o8fMA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1517616169745?e=1765411200&v=beta&t=e92jO3PCD0xkD4wtzkEmRy8hAz0w1CLLi_40wsG8l8o"
+      },
+      "stats": {
+        "total_reactions": 79,
+        "like": 63,
+        "support": 1,
+        "love": 6,
+        "insight": 2,
+        "celebrate": 4,
+        "funny": 3,
+        "comments": 7,
+        "reposts": 4
+      },
+      "media": {
+        "type": "image",
+        "url": "https://media.licdn.com/dms/image/v2/D4E22AQEby8wx4q2IZA/feedshare-shrink_2048_1536/B4EZpPZLfGHoA0-/0/1762268592517?e=1765411200&v=beta&t=jPx6WlkrhwmK5wiaS0od55b9a0tAQXjmEiu82ZA6J74",
+        "images": [
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D4E22AQEby8wx4q2IZA/feedshare-shrink_2048_1536/B4EZpPZLfGHoA0-/0/1762268592517?e=1765411200&v=beta&t=jPx6WlkrhwmK5wiaS0od55b9a0tAQXjmEiu82ZA6J74",
+            "width": 1200,
+            "height": 628
+          }
+        ]
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjczMTY0OTg4NzEyMDE3MjY0NjQtMTc0NDM4OTI2NDgzNA==",
+      "datetime_obj": "2025-11-04T16:03:13",
+      "_searchable": "brookejamieson  you can tell i didn't use ai to write this article title because it breaks every rule there is! \nhere's the thing: re:invent is chaos! there's so many places to be and people to see, so it's really hard to find time to click between social media, launch blogs, product pages, what's new posts, and docs pages to figure out what a launched service/feature means for your project or codebase. \n\ninstead, this year i am using the aws documentation mcp with kiro to get up-to-date official docs right in my ide, and then asking kiro specific questions using the context from my repo to get pinpointed answers. \n\nin this blog, i show you a real s3 tables migration example and how to set this up before re:invent so you can focus on the fun stuff! \n \nclick to read the blog here \ud83d\udd17 https://lnkd.in/eiy2zaqd\n\nwhat launch are you most excited for this year? \ud83d\udc47\n\n\ud83d\udc69\ud83c\udffb\u200d\ud83d\udcbb follow me (brooke jamieson) to stay in the loop with the latest aws + ai updates for developers\n\n\ud83d\udccd save + share!\n\n\ud83c\udff7\ufe0f amazon web services (aws) \u00b7 aws developers \u00b7 aws events \u00b7 kiro\n\n#kirodotdev #reinvent #aws #devtools #mcp #kiroide"
+    },
+    {
+      "urn": {
+        "activity_urn": "7388927707436240896",
+        "share_urn": "7388927705829875712",
+        "ugcPost_urn": null
+      },
+      "full_urn": "urn:li:activity:7388927707436240896",
+      "posted_at": {
+        "date": "2025-10-28 14:20:45",
+        "relative": "0 months ago \u2022 Visible to anyone on or off LinkedIn",
+        "timestamp": 1761657645091
+      },
+      "text": "\ud83d\udcb8 Have you ever built your perfect multi-account environment only to realize that you forgot about cost? \ud83d\ude05 This year at re:Invent Fredrik Tunvall and I will explore strategies and tools for cost governance that can scale with your business. Together with participants of our chalk talk, we'll discuss key governance mechanisms, budget controls and anomaly detection, while also addressing considerations for multi-account environments in AWS Organizations.\n\nWe'll run the session twice! So, if you're attending re:Invent and would like to join (or know someone who would benefit from this talk) - check out the catalog and reserve your seat: https://lnkd.in/eTyWbUST\nEven if you don't get a chance to reserve the seat - there are usually plenty seats available on the day, so just mark the date, time, & location in your calendar - and join us then \ud83d\ude42\n\nI hope to see you there!\n==================\n\n#awscloud #awsreinvent #reinvent #cloudgovernance #cloudcosts #cloudfinancialmanagement #cloudcostgovernance #cloudfinops",
+      "url": "https://www.linkedin.com/posts/nataliya-godunok_awscloud-awsreinvent-reinvent-activity-7388927707436240896-S2qg?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAGFFG7YB2oRN3NncD1LYgzIx4mLmIMO9L2M",
+      "post_type": "regular",
+      "author": {
+        "first_name": "\ud83c\uddfa\ud83c\udde6",
+        "last_name": "\ud83c\uddee\ud83c\uddea Nataliya G.",
+        "headline": "Cloud Optimization, Operations, Architecture || AWS Well-Architected",
+        "username": "nataliya-godunok",
+        "profile_url": "https://www.linkedin.com/in/nataliya-godunok?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAAAFaWxgBvjeIhMjPCZ4odZzJQ10-DXel-1o",
+        "profile_picture": "https://media.licdn.com/dms/image/v2/D4E03AQHCRA2qBzbStA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1726259598741?e=1765411200&v=beta&t=pNEKqfmA7MxHjDNWfrQX4YoYYCBx9HRxWcUdEA8IWOw"
+      },
+      "stats": {
+        "total_reactions": 94,
+        "like": 79,
+        "support": 1,
+        "love": 4,
+        "insight": 0,
+        "celebrate": 10,
+        "funny": 0,
+        "comments": 0,
+        "reposts": 9
+      },
+      "media": {
+        "type": "image",
+        "url": "https://media.licdn.com/dms/image/v2/D4E22AQG67ngcIWCx2w/feedshare-shrink_2048_1536/B4EZoq.l0uHEAw-/0/1761657644398?e=1765411200&v=beta&t=vdbeb0OAWCu6GSBXTnBo7UL81O_8F6MAIv7hg1oR8Jo",
+        "images": [
+          {
+            "url": "https://media.licdn.com/dms/image/v2/D4E22AQG67ngcIWCx2w/feedshare-shrink_2048_1536/B4EZoq.l0uHEAw-/0/1761657644398?e=1765411200&v=beta&t=vdbeb0OAWCu6GSBXTnBo7UL81O_8F6MAIv7hg1oR8Jo",
+            "width": 1530,
+            "height": 1536
+          }
+        ]
+      },
+      "pagination_token": "dXJuOmxpOmFjdGl2aXR5OjcxNTUyNTkxNTI3MjkwNzU3MTItMTcwNTk0NjcyMDI3MA==",
+      "datetime_obj": "2025-10-28T14:20:45",
+      "_searchable": "nataliya-godunok  \ud83d\udcb8 have you ever built your perfect multi-account environment only to realize that you forgot about cost? \ud83d\ude05 this year at re:invent fredrik tunvall and i will explore strategies and tools for cost governance that can scale with your business. together with participants of our chalk talk, we'll discuss key governance mechanisms, budget controls and anomaly detection, while also addressing considerations for multi-account environments in aws organizations.\n\nwe'll run the session twice! so, if you're attending re:invent and would like to join (or know someone who would benefit from this talk) - check out the catalog and reserve your seat: https://lnkd.in/etywbust\neven if you don't get a chance to reserve the seat - there are usually plenty seats available on the day, so just mark the date, time, & location in your calendar - and join us then \ud83d\ude42\n\ni hope to see you there!\n==================\n\n#awscloud #awsreinvent #reinvent #cloudgovernance #cloudcosts #cloudfinancialmanagement #cloudcostgovernance #cloudfinops"
+    }
+  ]
+}

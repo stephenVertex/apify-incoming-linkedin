@@ -64,20 +64,53 @@ python interactive_posts.py
 
 | Key | Action |
 |-----|--------|
-| `‘`/`“` | Navigate through posts |
+| `↑`/`↓` | Navigate through posts |
 | `Enter` | View full post details |
 | `Escape` | Return to list view |
 | `m` | Mark/unmark post for response |
 | `t` | View TODO list (popup) |
+| `s` | Save marked posts to JSON |
 | `q` | Quit and print TODO list |
 | `Ctrl+C` | Quit without printing TODOs |
 
+## Project Structure
+
+```
+social-tui/
+├── data/              # Input data and scraped posts
+│   ├── input-data.csv
+│   └── YYYYMMDD/
+│       └── linkedin/
+│           └── *.json
+├── output/            # Generated files (marked posts, reports)
+├── tests/             # Test files
+├── scripts/           # Utility scripts
+├── docs/              # Documentation
+├── cache/             # Cached images
+├── interactive_posts.py  # Main TUI application
+├── show_posts.py         # Simple table viewer
+├── main.py               # Entry point
+└── run_apify.sh          # LinkedIn scraper script
+```
+
 ## Files
 
+### Core Application
+- `main.py` - Entry point for the application
 - `interactive_posts.py` - Main interactive TUI application
 - `show_posts.py` - Simple table viewer (non-interactive)
+
+### Scripts
 - `run_apify.sh` - Scraper script for fetching LinkedIn posts
-- `input-data.csv` - List of LinkedIn profiles to track (not included in repo)
+- `scripts/` - Utility scripts for data extraction and processing
+
+### Data
+- `data/input-data.csv` - List of LinkedIn profiles to track
+- `data/YYYYMMDD/linkedin/*.json` - Scraped LinkedIn posts
+- `output/` - Generated files (marked posts saved here automatically)
+
+### Documentation
+- `docs/` - Additional documentation files
 
 ## Data Structure
 
@@ -95,3 +128,15 @@ Each JSON file contains an array of post objects with fields like:
 - `author.name`
 - `text`
 - `url`
+- `media` (optional)
+
+### Marked Posts Output
+
+When you mark posts and press `s` to save, they are automatically saved to:
+```
+output/marked_posts_YYYYMMDD_HHMMSS.json
+```
+
+The output includes:
+- Search metadata (date, filter query)
+- Full post data for all marked posts
