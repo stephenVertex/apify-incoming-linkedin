@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 Interactive LinkedIn posts viewer with marking and TODO list functionality.
+Now supports SQLite database backend for deduplication and management.
 """
 
 import json
@@ -10,11 +11,12 @@ import base64
 import sys
 import hashlib
 import subprocess
+import sqlite3
 from pathlib import Path
 from datetime import datetime, timedelta
 from textual.app import App, ComposeResult
-from textual.widgets import DataTable, Footer, Header, Static, Input
-from textual.containers import Container, VerticalScroll
+from textual.widgets import DataTable, Footer, Header, Static, Input, Checkbox
+from textual.containers import Container, VerticalScroll, Horizontal
 from textual.binding import Binding
 from textual.screen import Screen
 from textual import events
@@ -394,7 +396,7 @@ class MainScreen(Screen):
 
     CSS = """
     DataTable {
-        height: 100%;
+        height: 1fr;
     }
 
     #post-detail {
@@ -411,6 +413,21 @@ class MainScreen(Screen):
         border: solid yellow;
         display: none;
     }
+    
+    #status-bar {
+        dock: top;
+        height: 1;
+        background: $surface;
+        color: $text;
+        padding: 0 1;
+    }
+    
+    #controls {
+        dock: top;
+        height: 3;
+        align: right middle;
+        padding: 0 1;
+    }
     """
 
     BINDINGS = [
@@ -420,13 +437,15 @@ class MainScreen(Screen):
         Binding("o", "open_url", "Open URL"),
         Binding("r", "start_filter", "Filter"),
         Binding("s", "save_marked", "Save Marked"),
+        Binding("n", "toggle_new_only", "Toggle New Only"),
         Binding("j", "cursor_down", "Down", show=False),
         Binding("k", "cursor_up", "Up", show=False),
     ]
 
-    def __init__(self, data_dir: str, use_kitty_images: bool = False):
+    def __init__(self, data_source: str, use_db: bool = False, use_kitty_images: bool = False):
         super().__init__()
-        self.data_dir = data_dir
+        self.data_source = data_source
+        self.use_db = use_db
         self.use_kitty_images = use_kitty_images
         self.posts = []
         self.marked_posts = set()
@@ -435,11 +454,13 @@ class MainScreen(Screen):
         self.filter_text = ""
         self.filter_locked = False
         self._filter_timer = None
+        self.show_new_only = False
 
     def compose(self) -> ComposeResult:
         """Create child widgets for the app."""
         yield Header()
         yield Input(placeholder="Type to filter posts...", id="filter-input")
+        yield Static(id="status-bar")
         yield DataTable(cursor_type="row")
         yield Footer()
 
@@ -451,21 +472,62 @@ class MainScreen(Screen):
         table.add_column("Text Preview", key="text")
         table.add_column("Media", key="media")
         table.add_column("Marked", key="marked")
+        table.add_column("New", key="new")
 
         self.load_and_display_posts()
         table.focus()
 
     def load_posts(self) -> list:
-        """Load all posts from JSON files in the specified directory."""
+        """Load posts from DB or JSON files."""
         posts = []
-        json_files = glob.glob(f"{self.data_dir}/*.json")
-
-        for file_path in json_files:
-            with open(file_path, 'r') as f:
-                data = json.load(f)
-                if isinstance(data, list):
-                    posts.extend(data)
-
+        
+        if self.use_db:
+            try:
+                conn = sqlite3.connect(self.data_source)
+                c = conn.cursor()
+                
+                # Get the latest import timestamp (exact) to define "new"
+                c.execute("SELECT MAX(imported_at) FROM posts")
+                latest_import_timestamp = c.fetchone()[0]
+                
+                query = "SELECT json_data, first_seen_at, imported_at FROM posts"
+                params = []
+                
+                if self.show_new_only and latest_import_timestamp:
+                    # If showing new only, filter by the exact latest import timestamp
+                    query += " WHERE imported_at = ?"
+                    params.append(latest_import_timestamp)
+                
+                c.execute(query, params)
+                rows = c.fetchall()
+                
+                for row in rows:
+                    post = json.loads(row[0])
+                    post['_first_seen_at'] = row[1]
+                    # Mark as new if it belongs to the latest import batch
+                    if latest_import_timestamp and row[2] == latest_import_timestamp:
+                        post['_is_new'] = True
+                    else:
+                        post['_is_new'] = False
+                    posts.append(post)
+                    
+                conn.close()
+                
+                if self.show_new_only:
+                    self.notify(f"Showing {len(posts)} new posts from {latest_import_timestamp}")
+                    
+            except Exception as e:
+                self.notify(f"Error loading from DB: {e}", severity="error")
+                return []
+        else:
+            # Legacy file loading
+            json_files = glob.glob(f"{self.data_source}/*.json")
+            for file_path in json_files:
+                with open(file_path, 'r') as f:
+                    data = json.load(f)
+                    if isinstance(data, list):
+                        posts.extend(data)
+                        
         return posts
 
     def parse_date(self, date_str: str) -> datetime:
@@ -475,37 +537,66 @@ class MainScreen(Screen):
         except:
             return datetime.min
 
+    def update_status_bar(self, count: int, total: int):
+        """Update the status bar with post counts."""
+        status_bar = self.query_one("#status-bar", Static)
+        filter_status = " (New Only)" if self.show_new_only else ""
+        if self.filter_text:
+            filter_status += f" (Filter: '{self.filter_text}')"
+            
+        status_bar.update(f"Showing {count} of {total} posts{filter_status}")
+
     def load_and_display_posts(self):
         """Load posts and populate the table."""
         self.posts = self.load_posts()
+        total_loaded = len(self.posts)
 
-        # Calculate date threshold (30 days ago)
-        thirty_days_ago = datetime.now() - timedelta(days=30)
+        # Calculate date threshold (30 days ago) - only apply if NOT in "new only" mode
+        # If showing new only, we want to see them regardless of age
+        if not self.show_new_only:
+            thirty_days_ago = datetime.now() - timedelta(days=30)
+            
+            # Filter and sort posts
+            filtered_posts = []
+            for post in self.posts:
+                date_str = post.get("posted_at", {}).get("date", "")
+                datetime_obj = self.parse_date(date_str)
 
-        # Filter and sort posts
-        filtered_posts = []
-        for post in self.posts:
-            date_str = post.get("posted_at", {}).get("date", "")
-            datetime_obj = self.parse_date(date_str)
-
-            if datetime_obj >= thirty_days_ago:
-                post["datetime_obj"] = datetime_obj
-                # Pre-compute searchable text for performance
+                if datetime_obj >= thirty_days_ago:
+                    post["datetime_obj"] = datetime_obj
+                    # Pre-compute searchable text for performance
+                    author = post.get("author", {})
+                    text = post.get("text", "")
+                    username = author.get("username", "")
+                    name = author.get("name", "")
+                    post["_searchable"] = f"{username} {name} {text}".lower()
+                    filtered_posts.append(post)
+            self.posts = filtered_posts
+        else:
+             # For new posts, still add datetime_obj for sorting
+            for post in self.posts:
+                date_str = post.get("posted_at", {}).get("date", "")
+                post["datetime_obj"] = self.parse_date(date_str)
+                # Pre-compute searchable text
                 author = post.get("author", {})
                 text = post.get("text", "")
                 username = author.get("username", "")
                 name = author.get("name", "")
                 post["_searchable"] = f"{username} {name} {text}".lower()
-                filtered_posts.append(post)
+
 
         # Sort by date, newest first
-        filtered_posts.sort(key=lambda x: x.get("datetime_obj", datetime.min), reverse=True)
-        self.posts = filtered_posts
+        self.posts.sort(key=lambda x: x.get("datetime_obj", datetime.min), reverse=True)
 
         # Populate table
         table = self.query_one(DataTable)
+        table.clear()
+        self.post_index_map.clear()
+        
         for idx, post in enumerate(self.posts):
             self._add_post_to_table(idx, post, table)
+            
+        self.update_status_bar(len(self.posts), total_loaded)
 
     def on_data_table_row_selected(self, event):
         """Handle row selection (Enter key)."""
@@ -580,6 +671,17 @@ class MainScreen(Screen):
         filter_input.focus()
         filter_input.value = ""
         self.filter_text = ""
+
+    def action_toggle_new_only(self):
+        """Toggle showing only new posts."""
+        if not self.use_db:
+            self.notify("New posts filter only available with database backend", severity="warning")
+            return
+            
+        self.show_new_only = not self.show_new_only
+        status = "ON" if self.show_new_only else "OFF"
+        self.notify(f"Show New Only: {status}")
+        self.load_and_display_posts()
 
     def on_input_changed(self, event: Input.Changed) -> None:
         """Handle input changes for filtering with debouncing."""
@@ -666,10 +768,12 @@ class MainScreen(Screen):
         table.clear()
         self.post_index_map.clear()
 
+        count = 0
         if not self.filter_text:
             # No filter, show all posts
             for idx, post in enumerate(self.posts):
                 self._add_post_to_table(idx, post, table)
+            count = len(self.posts)
         else:
             # Use simple substring matching for speed
             filter_lower = self.filter_text.lower()
@@ -680,6 +784,9 @@ class MainScreen(Screen):
                 # Simple substring match (very fast)
                 if filter_lower in searchable:
                     self._add_post_to_table(idx, post, table)
+                    count += 1
+                    
+        self.update_status_bar(count, len(self.posts))
 
     def _add_post_to_table(self, idx: int, post: dict, table: DataTable):
         """Helper to add a post row to the table."""
@@ -700,8 +807,11 @@ class MainScreen(Screen):
 
         # Check if post is marked
         marked_indicator = "✅" if idx in self.marked_posts else ""
+        
+        # Check if post is new
+        new_indicator = "🆕" if post.get("_is_new") else ""
 
-        row_key = table.add_row(date_str, username, text_preview, media_indicator, marked_indicator)
+        row_key = table.add_row(date_str, username, text_preview, media_indicator, marked_indicator, new_indicator)
         self.post_index_map[row_key] = idx
 
     def action_quit_with_todos(self):
@@ -741,13 +851,14 @@ class LinkedInPostsApp(App):
         Binding("ctrl+c", "quit", "Quit"),
     ]
 
-    def __init__(self, data_dir: str, use_kitty_images: bool = False):
+    def __init__(self, data_source: str, use_db: bool = False, use_kitty_images: bool = False):
         super().__init__()
-        self.data_dir = data_dir
+        self.data_source = data_source
+        self.use_db = use_db
         self.use_kitty_images = use_kitty_images
 
     def on_mount(self) -> None:
-        self.push_screen(MainScreen(self.data_dir, self.use_kitty_images))
+        self.push_screen(MainScreen(self.data_source, self.use_db, self.use_kitty_images))
 
     def compose(self) -> ComposeResult:
         # Empty compose as we push the main screen immediately
@@ -765,15 +876,36 @@ def main():
         help="Disable display of images using Kitty terminal graphics"
     )
     parser.set_defaults(kitty_images=True)
-    parser.add_argument(
+    
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
         "--data-dir",
-        default="data/20251125/linkedin",
-        help="Directory containing LinkedIn post JSON files (default: data/20251125/linkedin)"
+        help="Directory containing LinkedIn post JSON files (legacy mode)"
+    )
+    group.add_argument(
+        "--db",
+        default="data/posts.db",
+        help="Path to SQLite database (default: data/posts.db)"
     )
 
     args = parser.parse_args()
+    
+    # Determine mode
+    if args.data_dir:
+        data_source = args.data_dir
+        use_db = False
+    else:
+        # Check if DB exists
+        if Path(args.db).exists():
+            data_source = args.db
+            use_db = True
+        else:
+            # Fallback to default data dir if DB doesn't exist
+            data_source = "data/20251125/linkedin"
+            use_db = False
+            print(f"Database not found at {args.db}, falling back to {data_source}")
 
-    app = LinkedInPostsApp(args.data_dir, use_kitty_images=args.kitty_images)
+    app = LinkedInPostsApp(data_source, use_db=use_db, use_kitty_images=args.kitty_images)
     app.run()
 
 
