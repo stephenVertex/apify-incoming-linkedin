@@ -204,6 +204,7 @@ class RawJsonScreen(Screen):
 
     BINDINGS = [
         Binding("escape", "dismiss", "Back", priority=True),
+        Binding("c", "copy_json", "Copy JSON"),
     ]
 
     def __init__(self, post_data: dict):
@@ -230,6 +231,20 @@ class RawJsonScreen(Screen):
     def action_dismiss(self):
         """Return to previous screen."""
         self.app.pop_screen()
+
+    def action_copy_json(self):
+        """Copy raw JSON to clipboard."""
+        json_str = self._format_json()
+        try:
+            # Use pbcopy on macOS to copy to clipboard
+            process = subprocess.run(
+                ['pbcopy'],
+                input=json_str.encode('utf-8'),
+                check=True
+            )
+            self.notify("JSON copied to clipboard!", severity="information")
+        except Exception as e:
+            self.notify(f"Error copying to clipboard: {e}", severity="error")
 
 
 class PostDetailScreen(Screen):
