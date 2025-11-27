@@ -7,9 +7,18 @@ Interactive TUI application for viewing and managing LinkedIn posts from JSON da
 - **Interactive Table View**: Browse LinkedIn posts in a clean table interface
 - **Navigate**: Use arrow keys to move through posts
 - **View Details**: Press `Enter` to see full post content
-- **Mark Posts**: Press `m` to mark posts for follow-up
+- **Multi-Action Marking**: Press `m` to quickly mark posts with 'save' action, or `M` to select multiple actions:
+  - Queue for repost
+  - Autoreact (like, celebrate, love)
+  - Autocomment
+  - Manual comment
+  - Autorepost with thoughts
+  - Manual repost with thoughts
+  - Save for later
+- **Mark from Detail View**: Mark posts with actions while viewing full post details
 - **View TODOs**: Press `t` to see all marked posts in a popup
-- **Export TODOs**: Press `q` to quit and print TODO list to terminal
+- **Export TODOs**: Press `q` to quit and print TODO list with action metadata to terminal
+- **Save Marked Posts**: Press `s` to export marked posts with action metadata to JSON
 
 ## Installation
 
@@ -62,16 +71,45 @@ python interactive_posts.py
 
 ## Key Bindings
 
+### Main Table View
+
 | Key | Action |
 |-----|--------|
-| `↑`/`↓` | Navigate through posts |
+| `↑`/`↓` or `j`/`k` | Navigate through posts |
 | `Enter` | View full post details |
-| `Escape` | Return to list view |
-| `m` | Mark/unmark post for response |
+| `m` | Quick mark/unmark post with 'save' action |
+| `M` (Shift+m) | Mark with multiple actions (opens action modal) |
 | `t` | View TODO list (popup) |
-| `s` | Save marked posts to JSON |
+| `s` | Save marked posts to JSON file |
+| `r` | Start filtering posts |
+| `n` | Toggle showing only new posts (DB mode only) |
+| `o` | Open post URL in browser |
 | `q` | Quit and print TODO list |
 | `Ctrl+C` | Quit without printing TODOs |
+
+### Post Detail View
+
+| Key | Action |
+|-----|--------|
+| `Escape` | Return to list view |
+| `m` | Quick mark/unmark post with 'save' action |
+| `M` (Shift+m) | Mark with multiple actions (opens action modal) |
+| `o` | Open post URL in browser |
+| `r` | Show raw JSON data |
+| `i` | View image(s) in terminal (Kitty terminal only) |
+
+### Action Selection Modal
+
+| Key | Action |
+|-----|--------|
+| `q` | Toggle "Queue for repost" |
+| `a` | Toggle "Autoreact" |
+| `c` | Toggle "Autocomment" |
+| `n` | Toggle "Manual comment" |
+| `t` | Toggle "Autorepost with thoughts" |
+| `r` | Toggle "Manual repost with thoughts" |
+| `s` | Toggle "Save" |
+| `Escape` | Close modal and save selections |
 
 ## Project Structure
 
@@ -140,3 +178,19 @@ output/marked_posts_YYYYMMDD_HHMMSS.json
 The output includes:
 - Search metadata (date, filter query)
 - Full post data for all marked posts
+- Action metadata for each post with:
+  - Selected actions (e.g., `["q", "a"]` for queue and autoreact)
+  - Timestamp when the post was marked
+
+#### Action Codes
+
+Marked posts display action codes in the "Marked" column:
+- `q` - Queue for repost
+- `a` - Autoreact
+- `c` - Autocomment
+- `n` - Manual comment
+- `t` - Autorepost with thoughts
+- `r` - Manual repost with thoughts
+- `s` - Save
+
+Multiple actions are shown together (e.g., `aq` means autoreact and queue for repost).

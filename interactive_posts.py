@@ -240,11 +240,17 @@ class PostDetailScreen(Screen):
         Binding("r", "show_raw", "Raw JSON"),
         Binding("i", "show_image", "View Image"),
         Binding("o", "open_url", "Open URL"),
+        Binding("m", "mark_post", "Mark Post (Save)"),
+        Binding("M", "mark_with_actions", "Mark with Actions", key_display="shift+m"),
     ]
 
-    def __init__(self, post_data: dict, use_kitty_images: bool = False):
+    def __init__(self, post_data: dict, post_idx: int, current_actions: set,
+                 update_callback, use_kitty_images: bool = False):
         super().__init__()
         self.post_data = post_data
+        self.post_idx = post_idx
+        self.current_actions = current_actions
+        self.update_callback = update_callback
         self.use_kitty_images = use_kitty_images
 
     def compose(self) -> ComposeResult:
@@ -264,10 +270,20 @@ class PostDetailScreen(Screen):
             f"[bold cyan]Author:[/bold cyan] {author.get('username', 'N/A')}",
             f"[bold cyan]Name:[/bold cyan] {author.get('name', 'N/A')}",
             f"[bold cyan]URL:[/bold cyan] {self.post_data.get('url', 'N/A')}",
+        ]
+
+        # Add marked status
+        if self.current_actions:
+            actions_display = ''.join(sorted(self.current_actions))
+            lines.append(f"[bold cyan]Marked:[/bold cyan] [bold green]{actions_display}[/bold green]")
+        else:
+            lines.append(f"[bold cyan]Marked:[/bold cyan] No")
+
+        lines.extend([
             "",
             "[bold cyan]Text:[/bold cyan]",
             self.post_data.get("text", "No text available."),
-        ]
+        ])
 
         # Add media information
         media = self.post_data.get("media", {})
@@ -280,7 +296,7 @@ class PostDetailScreen(Screen):
                     lines.append(f"[dim]Image URL: {media.get('url')}[/dim]")
                 elif media.get("type") == "images":
                     lines.append(f"[dim]{len(media.get('images', []))} Images[/dim]")
-                
+
                 if self.use_kitty_images:
                     lines.append("[yellow]Press 'i' to view image(s) in terminal[/yellow]")
 
@@ -335,6 +351,40 @@ class PostDetailScreen(Screen):
         url = self.post_data.get("url")
         if url:
             subprocess.run(["open", url])
+
+    def action_mark_post(self):
+        """Mark/unmark the current post with 'save' action only."""
+        if self.current_actions:
+            # Unmark the post completely
+            self.current_actions = set()
+            self.update_callback(self.post_idx, None)
+        else:
+            # Mark with 'save' action only
+            self.current_actions = {'s'}
+            self.update_callback(self.post_idx, self.current_actions)
+
+        # Update the display
+        detail_widget = self.query_one("#post-detail", Static)
+        detail_widget.update(self._format_post())
+
+    def action_mark_with_actions(self):
+        """Open modal to mark the current post with multiple actions."""
+        def handle_actions(selected_actions):
+            """Handle the selected actions from the modal."""
+            if selected_actions:
+                self.current_actions = selected_actions
+                self.update_callback(self.post_idx, selected_actions)
+            else:
+                # If no actions selected, unmark the post
+                self.current_actions = set()
+                self.update_callback(self.post_idx, None)
+
+            # Update the display
+            detail_widget = self.query_one("#post-detail", Static)
+            detail_widget.update(self._format_post())
+
+        modal = ActionModal(self.current_actions.copy())
+        self.app.push_screen(modal, handle_actions)
 
 
 class TodoScreen(Screen):
@@ -701,7 +751,34 @@ class MainScreen(Screen):
         if row_key is not None and row_key in self.post_index_map:
             post_idx = self.post_index_map[row_key]
             post = self.posts[post_idx]
-            self.app.push_screen(PostDetailScreen(post, self.use_kitty_images))
+
+            # Get current actions if post is marked
+            current_actions = set()
+            if post_idx in self.marked_posts:
+                current_actions = self.marked_posts[post_idx]["actions"].copy()
+
+            # Create update callback
+            def update_mark(idx, actions):
+                self._update_post_mark(idx, actions, row_key)
+
+            self.app.push_screen(PostDetailScreen(
+                post, post_idx, current_actions, update_mark, self.use_kitty_images
+            ))
+
+    def _update_post_mark(self, post_idx: int, actions: set, row_key=None):
+        """Update the mark status of a post and refresh the table if needed."""
+        if actions:
+            self.marked_posts[post_idx] = {
+                "actions": actions,
+                "timestamp": datetime.now()
+            }
+        elif post_idx in self.marked_posts:
+            del self.marked_posts[post_idx]
+
+        # Update table cell if we have the row_key (coming from table view)
+        if row_key:
+            table = self.query_one(DataTable)
+            table.update_cell(row_key, "marked", self._format_actions_display(actions) if actions else "")
 
     def action_mark_post(self):
         """Mark/unmark the current post with 'save' action only."""
