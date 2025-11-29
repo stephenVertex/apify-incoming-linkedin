@@ -607,6 +607,7 @@ class MainScreen(Screen):
     BINDINGS = [
         Binding("q", "quit_with_todos", "Quit & Show TODOs", priority=True),
         Binding("t", "view_todos", "View TODOs", priority=True),
+        Binding("p", "show_profiles", "Manage Profiles"),
         Binding("m", "mark_post", "Mark Post (Save)"),
         Binding("M", "mark_with_actions", "Mark with Actions", key_display="shift+m"),
         Binding("o", "open_url", "Open URL"),
@@ -891,6 +892,13 @@ class MainScreen(Screen):
         """Show TODO list in a popup screen."""
         marked_posts_data = [self.posts[idx] for idx in sorted(self.marked_posts.keys())]
         self.app.push_screen(TodoScreen(marked_posts_data))
+
+    def action_show_profiles(self):
+        """Show profile management screen."""
+        from profile_ui import ProfileManagementScreen
+        # Use the same database path as the posts
+        db_path = self.data_source if self.use_db else "data/posts.db"
+        self.app.push_screen(ProfileManagementScreen(db_path))
 
     def action_open_url(self):
         """Open the URL of the currently selected post in the default browser."""
