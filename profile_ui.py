@@ -51,9 +51,6 @@ class AddProfileModal(Screen):
 
     def __init__(self):
         super().__init__()
-        self.username = ""
-        self.name = ""
-        self.notes = ""
 
     def compose(self) -> ComposeResult:
         """Create the modal content."""
