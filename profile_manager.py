@@ -170,7 +170,9 @@ class ProfileManager:
         try:
             if active_only:
                 cursor.execute("""
-                    SELECT p.*, COUNT(posts.post_id) as post_count
+                    SELECT p.profile_id, p.username, p.name, p.platform, p.is_active,
+                           p.notes, p.last_synced_at, p.created_at, p.updated_at,
+                           COUNT(posts.post_id) as post_count
                     FROM profiles p
                     LEFT JOIN posts ON p.username = posts.author_username
                     WHERE p.is_active = 1
@@ -179,7 +181,9 @@ class ProfileManager:
                 """)
             else:
                 cursor.execute("""
-                    SELECT p.*, COUNT(posts.post_id) as post_count
+                    SELECT p.profile_id, p.username, p.name, p.platform, p.is_active,
+                           p.notes, p.last_synced_at, p.created_at, p.updated_at,
+                           COUNT(posts.post_id) as post_count
                     FROM profiles p
                     LEFT JOIN posts ON p.username = posts.author_username
                     GROUP BY p.profile_id
@@ -241,7 +245,9 @@ class ProfileManager:
                 # Profile must have ALL tags (AND)
                 placeholders = ','.join('?' * len(tag_names))
                 cursor.execute(f"""
-                    SELECT p.*, COUNT(posts.post_id) as post_count
+                    SELECT p.profile_id, p.username, p.name, p.platform, p.is_active,
+                           p.notes, p.last_synced_at, p.created_at, p.updated_at,
+                           COUNT(posts.post_id) as post_count
                     FROM profiles p
                     LEFT JOIN posts ON p.username = posts.author_username
                     WHERE (
