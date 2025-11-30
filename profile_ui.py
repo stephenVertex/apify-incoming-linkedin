@@ -232,7 +232,7 @@ class TagProfileModal(Screen):
         self.profile = profile
         self.tag_manager = tag_manager
         self.all_tags = tag_manager.get_all_tags()
-        self.profile_tag_ids = {tag['id'] for tag in tag_manager.get_profile_tags(profile['profile_id'])}
+        self.profile_tag_ids = {tag['tag_id'] for tag in tag_manager.get_profile_tags(profile['profile_id'])}
         self.selected_tag_ids = self.profile_tag_ids.copy()
 
     def compose(self) -> ComposeResult:
@@ -252,7 +252,7 @@ class TagProfileModal(Screen):
 
         lines = []
         for idx, tag in enumerate(self.all_tags, 1):
-            is_selected = tag['id'] in self.selected_tag_ids
+            is_selected = tag['tag_id'] in self.selected_tag_ids
             checkbox = "[✓]" if is_selected else "[ ]"
             style = f"bold {tag['color']}" if is_selected else tag['color']
             lines.append(f"[{style}]{checkbox} ({idx}) - {tag['name']}[/{style}]")
@@ -265,10 +265,10 @@ class TagProfileModal(Screen):
             idx = int(event.key) - 1
             if 0 <= idx < len(self.all_tags):
                 tag = self.all_tags[idx]
-                if tag['id'] in self.selected_tag_ids:
-                    self.selected_tag_ids.remove(tag['id'])
+                if tag['tag_id'] in self.selected_tag_ids:
+                    self.selected_tag_ids.remove(tag['tag_id'])
                 else:
-                    self.selected_tag_ids.add(tag['id'])
+                    self.selected_tag_ids.add(tag['tag_id'])
 
                 # Update display
                 tag_list = self.query_one("#tag-list", Static)
@@ -384,7 +384,7 @@ class CreateTagModal(Screen):
             try:
                 color = self.COLORS[self.selected_color_idx]
                 tag_id = self.tag_manager.add_tag(tag_name, color)
-                self.dismiss({"id": tag_id, "name": tag_name, "color": color})
+                self.dismiss({"tag_id": tag_id, "name": tag_name, "color": color})
             except sqlite3.IntegrityError:
                 # Tag already exists
                 # Could show error message
@@ -506,7 +506,7 @@ class ManageTagsModal(Screen):
                 # For now, just delete
                 pass
 
-            self.tag_manager.delete_tag(tag['id'])
+            self.tag_manager.delete_tag(tag['tag_id'])
             self.tags_with_counts = self.tag_manager.get_tags_with_counts()
             if self.selected_idx >= len(self.tags_with_counts):
                 self.selected_idx = max(0, len(self.tags_with_counts) - 1)
