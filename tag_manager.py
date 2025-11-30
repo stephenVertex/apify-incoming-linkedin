@@ -1,11 +1,14 @@
-"""Tag management for social-tui profiles."""
+"""Tag management for social-tui profiles with AWS-style identifiers."""
 
 import sqlite3
+from datetime import datetime
 from typing import List, Dict, Optional, Any
+
+from db_utils import generate_aws_id, PREFIX_TAG, PREFIX_PROFILE_TAG
 
 
 class TagManager:
-    """Manages tags and profile-tag relationships."""
+    """Manages tags and profile-tag relationships with AWS-style IDs."""
 
     # Default tag colors
     DEFAULT_COLORS = {
@@ -17,7 +20,7 @@ class TagManager:
         "ml": "red",
     }
 
-    def __init__(self, db_path: str = "data/posts.db"):
+    def __init__(self, db_path: str = "data/posts_v2.db"):
         """Initialize TagManager with database connection.
 
         Args:
@@ -27,9 +30,10 @@ class TagManager:
         self._ensure_default_tags()
 
     def _get_connection(self) -> sqlite3.Connection:
-        """Get database connection with row factory."""
+        """Get database connection with row factory and foreign keys enabled."""
         conn = sqlite3.connect(self.db_path)
         conn.row_factory = sqlite3.Row
+        conn.execute("PRAGMA foreign_keys = ON")
         return conn
 
     def _ensure_default_tags(self):
@@ -43,15 +47,16 @@ class TagManager:
                 color = self.DEFAULT_COLORS.get(tag_name, "white")
                 self.add_tag(tag_name, color)
 
-    def add_tag(self, name: str, color: str = "cyan") -> int:
+    def add_tag(self, name: str, color: str = "cyan", description: str = None) -> str:
         """Add a new tag to the database.
 
         Args:
             name: Tag name (must be unique)
             color: Color for the tag (default: cyan)
+            description: Optional description of the tag
 
         Returns:
-            Tag ID of the newly created tag
+            Tag ID of the newly created tag (AWS-style)
 
         Raises:
             sqlite3.IntegrityError: If tag name already exists
@@ -62,22 +67,22 @@ class TagManager:
         try:
             # Normalize tag name to lowercase
             name = name.lower().strip()
+            tag_id = generate_aws_id(PREFIX_TAG)
 
             cursor.execute("""
-                INSERT INTO tags (name, color)
-                VALUES (?, ?)
-            """, (name, color))
+                INSERT INTO tags (tag_id, name, description, color, created_at)
+                VALUES (?, ?, ?, ?, ?)
+            """, (tag_id, name, description, color, datetime.now().isoformat()))
 
-            tag_id = cursor.lastrowid
             conn.commit()
             return tag_id
         finally:
             conn.close()
 
-    def delete_tag(self, tag_id: int) -> bool:
+    def delete_tag(self, tag_id: str) -> bool:
         """Delete a tag from the database.
 
-        This will also remove all profile-tag associations.
+        This will also remove all profile-tag associations (CASCADE).
 
         Args:
             tag_id: ID of the tag to delete
@@ -89,14 +94,14 @@ class TagManager:
         cursor = conn.cursor()
 
         try:
-            cursor.execute("DELETE FROM tags WHERE id = ?", (tag_id,))
+            cursor.execute("DELETE FROM tags WHERE tag_id = ?", (tag_id,))
             deleted = cursor.rowcount > 0
             conn.commit()
             return deleted
         finally:
             conn.close()
 
-    def rename_tag(self, tag_id: int, new_name: str) -> bool:
+    def rename_tag(self, tag_id: str, new_name: str) -> bool:
         """Rename a tag.
 
         Args:
@@ -117,7 +122,7 @@ class TagManager:
             new_name = new_name.lower().strip()
 
             cursor.execute("""
-                UPDATE tags SET name = ? WHERE id = ?
+                UPDATE tags SET name = ? WHERE tag_id = ?
             """, (new_name, tag_id))
 
             updated = cursor.rowcount > 0
@@ -126,7 +131,7 @@ class TagManager:
         finally:
             conn.close()
 
-    def update_tag_color(self, tag_id: int, color: str) -> bool:
+    def update_tag_color(self, tag_id: str, color: str) -> bool:
         """Update tag color.
 
         Args:
@@ -141,7 +146,7 @@ class TagManager:
 
         try:
             cursor.execute("""
-                UPDATE tags SET color = ? WHERE id = ?
+                UPDATE tags SET color = ? WHERE tag_id = ?
             """, (color, tag_id))
 
             updated = cursor.rowcount > 0
@@ -150,7 +155,31 @@ class TagManager:
         finally:
             conn.close()
 
-    def get_tag_by_id(self, tag_id: int) -> Optional[Dict[str, Any]]:
+    def update_tag_description(self, tag_id: str, description: str) -> bool:
+        """Update tag description.
+
+        Args:
+            tag_id: ID of the tag
+            description: New description for the tag
+
+        Returns:
+            True if tag was updated, False if not found
+        """
+        conn = self._get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("""
+                UPDATE tags SET description = ? WHERE tag_id = ?
+            """, (description, tag_id))
+
+            updated = cursor.rowcount > 0
+            conn.commit()
+            return updated
+        finally:
+            conn.close()
+
+    def get_tag_by_id(self, tag_id: str) -> Optional[Dict[str, Any]]:
         """Get a tag by ID.
 
         Args:
@@ -163,7 +192,7 @@ class TagManager:
         cursor = conn.cursor()
 
         try:
-            cursor.execute("SELECT * FROM tags WHERE id = ?", (tag_id,))
+            cursor.execute("SELECT * FROM tags WHERE tag_id = ?", (tag_id,))
             row = cursor.fetchone()
             return dict(row) if row else None
         finally:
@@ -217,10 +246,10 @@ class TagManager:
 
         try:
             cursor.execute("""
-                SELECT t.*, COUNT(pt.id) as usage_count
+                SELECT t.*, COUNT(pt.profile_tag_id) as usage_count
                 FROM tags t
-                LEFT JOIN profile_tags pt ON t.id = pt.tag_id
-                GROUP BY t.id
+                LEFT JOIN profile_tags pt ON t.tag_id = pt.tag_id
+                GROUP BY t.tag_id
                 ORDER BY t.name
             """)
 
@@ -228,7 +257,7 @@ class TagManager:
         finally:
             conn.close()
 
-    def tag_profile(self, profile_id: int, tag_id: int) -> bool:
+    def tag_profile(self, profile_id: str, tag_id: str) -> bool:
         """Add a tag to a profile.
 
         Args:
@@ -245,10 +274,12 @@ class TagManager:
         cursor = conn.cursor()
 
         try:
+            profile_tag_id = generate_aws_id(PREFIX_PROFILE_TAG)
+
             cursor.execute("""
-                INSERT INTO profile_tags (profile_id, tag_id)
-                VALUES (?, ?)
-            """, (profile_id, tag_id))
+                INSERT INTO profile_tags (profile_tag_id, profile_id, tag_id, created_at)
+                VALUES (?, ?, ?, ?)
+            """, (profile_tag_id, profile_id, tag_id, datetime.now().isoformat()))
 
             conn.commit()
             return True
@@ -258,7 +289,7 @@ class TagManager:
         finally:
             conn.close()
 
-    def untag_profile(self, profile_id: int, tag_id: int) -> bool:
+    def untag_profile(self, profile_id: str, tag_id: str) -> bool:
         """Remove a tag from a profile.
 
         Args:
@@ -283,7 +314,7 @@ class TagManager:
         finally:
             conn.close()
 
-    def get_profile_tags(self, profile_id: int) -> List[Dict[str, Any]]:
+    def get_profile_tags(self, profile_id: str) -> List[Dict[str, Any]]:
         """Get all tags for a specific profile.
 
         Args:
@@ -299,7 +330,7 @@ class TagManager:
             cursor.execute("""
                 SELECT t.*
                 FROM tags t
-                JOIN profile_tags pt ON t.id = pt.tag_id
+                JOIN profile_tags pt ON t.tag_id = pt.tag_id
                 WHERE pt.profile_id = ?
                 ORDER BY t.name
             """, (profile_id,))
@@ -308,7 +339,7 @@ class TagManager:
         finally:
             conn.close()
 
-    def get_profile_tag_names(self, profile_id: int) -> List[str]:
+    def get_profile_tag_names(self, profile_id: str) -> List[str]:
         """Get tag names for a profile.
 
         Args:
@@ -320,7 +351,7 @@ class TagManager:
         tags = self.get_profile_tags(profile_id)
         return [tag['name'] for tag in tags]
 
-    def set_profile_tags(self, profile_id: int, tag_ids: List[int]):
+    def set_profile_tags(self, profile_id: str, tag_ids: List[str]):
         """Set tags for a profile (replaces existing tags).
 
         Args:
@@ -336,21 +367,23 @@ class TagManager:
 
             # Add new tags
             for tag_id in tag_ids:
+                profile_tag_id = generate_aws_id(PREFIX_PROFILE_TAG)
                 cursor.execute("""
-                    INSERT INTO profile_tags (profile_id, tag_id)
-                    VALUES (?, ?)
-                """, (profile_id, tag_id))
+                    INSERT INTO profile_tags (profile_tag_id, profile_id, tag_id, created_at)
+                    VALUES (?, ?, ?, ?)
+                """, (profile_tag_id, profile_id, tag_id, datetime.now().isoformat()))
 
             conn.commit()
         finally:
             conn.close()
 
-    def get_or_create_tag(self, name: str, color: str = "cyan") -> Dict[str, Any]:
+    def get_or_create_tag(self, name: str, color: str = "cyan", description: str = None) -> Dict[str, Any]:
         """Get a tag by name, or create it if it doesn't exist.
 
         Args:
             name: Tag name
             color: Color for the tag if creating new (default: cyan)
+            description: Optional description if creating new
 
         Returns:
             Tag dictionary
@@ -360,12 +393,12 @@ class TagManager:
 
         if not tag:
             # Create new tag
-            tag_id = self.add_tag(name, color)
+            tag_id = self.add_tag(name, color, description)
             tag = self.get_tag_by_id(tag_id)
 
         return tag
 
-    def clear_profile_tags(self, profile_id: int):
+    def clear_profile_tags(self, profile_id: str):
         """Remove all tags from a profile.
 
         Args:
@@ -377,5 +410,29 @@ class TagManager:
         try:
             cursor.execute("DELETE FROM profile_tags WHERE profile_id = ?", (profile_id,))
             conn.commit()
+        finally:
+            conn.close()
+
+    def get_profiles_by_tag(self, tag_id: str) -> List[str]:
+        """Get all profile IDs that have a specific tag.
+
+        Args:
+            tag_id: ID of the tag
+
+        Returns:
+            List of profile IDs
+        """
+        conn = self._get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("""
+                SELECT profile_id
+                FROM profile_tags
+                WHERE tag_id = ?
+                ORDER BY created_at
+            """, (tag_id,))
+
+            return [row['profile_id'] for row in cursor.fetchall()]
         finally:
             conn.close()

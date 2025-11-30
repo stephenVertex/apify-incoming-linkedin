@@ -1,4 +1,4 @@
-"""Profile management for social-tui."""
+"""Profile management for social-tui with AWS-style identifiers."""
 
 import csv
 import sqlite3
@@ -6,101 +6,38 @@ from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Optional, Any
 
+from db_utils import generate_aws_id, PREFIX_PROFILE
+
 
 class ProfileManager:
-    """Manages profile data in SQLite database."""
+    """Manages profile data in SQLite database with AWS-style IDs."""
 
-    def __init__(self, db_path: str = "data/posts.db"):
+    def __init__(self, db_path: str = "data/posts_v2.db"):
         """Initialize ProfileManager with database connection.
 
         Args:
             db_path: Path to SQLite database file
         """
         self.db_path = db_path
-        self._ensure_tables()
 
     def _get_connection(self) -> sqlite3.Connection:
-        """Get database connection with row factory."""
+        """Get database connection with row factory and foreign keys enabled."""
         conn = sqlite3.connect(self.db_path)
         conn.row_factory = sqlite3.Row
+        conn.execute("PRAGMA foreign_keys = ON")
         return conn
 
-    def _ensure_tables(self):
-        """Create profiles, tags, and profile_tags tables if they don't exist."""
-        conn = self._get_connection()
-        cursor = conn.cursor()
-
-        # Create profiles table
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS profiles (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT UNIQUE NOT NULL,
-                name TEXT NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                is_active BOOLEAN DEFAULT 1,
-                notes TEXT,
-                post_count INTEGER DEFAULT 0,
-                last_synced_at TIMESTAMP
-            )
-        """)
-
-        cursor.execute("""
-            CREATE INDEX IF NOT EXISTS idx_profiles_username ON profiles(username)
-        """)
-
-        cursor.execute("""
-            CREATE INDEX IF NOT EXISTS idx_profiles_active ON profiles(is_active)
-        """)
-
-        # Create tags table
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS tags (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT UNIQUE NOT NULL,
-                color TEXT DEFAULT 'cyan',
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        """)
-
-        cursor.execute("""
-            CREATE INDEX IF NOT EXISTS idx_tags_name ON tags(name)
-        """)
-
-        # Create profile_tags junction table
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS profile_tags (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                profile_id INTEGER NOT NULL,
-                tag_id INTEGER NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (profile_id) REFERENCES profiles(id) ON DELETE CASCADE,
-                FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE,
-                UNIQUE(profile_id, tag_id)
-            )
-        """)
-
-        cursor.execute("""
-            CREATE INDEX IF NOT EXISTS idx_profile_tags_profile ON profile_tags(profile_id)
-        """)
-
-        cursor.execute("""
-            CREATE INDEX IF NOT EXISTS idx_profile_tags_tag ON profile_tags(tag_id)
-        """)
-
-        conn.commit()
-        conn.close()
-
-    def add_profile(self, username: str, name: str, notes: str = "") -> int:
+    def add_profile(self, username: str, name: str, notes: str = "", platform: str = "linkedin") -> str:
         """Add a new profile to the database.
 
         Args:
             username: LinkedIn username (unique)
             name: Full name of the profile
             notes: Optional notes about the profile
+            platform: Social platform (default: linkedin)
 
         Returns:
-            Profile ID of the newly created profile
+            Profile ID of the newly created profile (AWS-style)
 
         Raises:
             sqlite3.IntegrityError: If username already exists
@@ -109,18 +46,26 @@ class ProfileManager:
         cursor = conn.cursor()
 
         try:
-            cursor.execute("""
-                INSERT INTO profiles (username, name, notes, updated_at)
-                VALUES (?, ?, ?, ?)
-            """, (username, name, notes, datetime.now()))
+            profile_id = generate_aws_id(PREFIX_PROFILE)
 
-            profile_id = cursor.lastrowid
+            cursor.execute("""
+                INSERT INTO profiles (
+                    profile_id, username, name, platform, notes,
+                    created_at, updated_at
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (
+                profile_id, username, name, platform, notes,
+                datetime.now().isoformat(),
+                datetime.now().isoformat()
+            ))
+
             conn.commit()
             return profile_id
         finally:
             conn.close()
 
-    def delete_profile(self, profile_id: int) -> bool:
+    def delete_profile(self, profile_id: str) -> bool:
         """Delete a profile from the database.
 
         Args:
@@ -133,19 +78,19 @@ class ProfileManager:
         cursor = conn.cursor()
 
         try:
-            cursor.execute("DELETE FROM profiles WHERE id = ?", (profile_id,))
+            cursor.execute("DELETE FROM profiles WHERE profile_id = ?", (profile_id,))
             deleted = cursor.rowcount > 0
             conn.commit()
             return deleted
         finally:
             conn.close()
 
-    def update_profile(self, profile_id: int, **kwargs) -> bool:
+    def update_profile(self, profile_id: str, **kwargs) -> bool:
         """Update profile fields.
 
         Args:
             profile_id: ID of the profile to update
-            **kwargs: Fields to update (username, name, notes, is_active, etc.)
+            **kwargs: Fields to update (username, name, notes, is_active, platform, etc.)
 
         Returns:
             True if profile was updated, False if not found
@@ -154,7 +99,7 @@ class ProfileManager:
             return False
 
         # Always update the updated_at timestamp
-        kwargs['updated_at'] = datetime.now()
+        kwargs['updated_at'] = datetime.now().isoformat()
 
         # Build UPDATE query
         fields = ', '.join(f"{key} = ?" for key in kwargs.keys())
@@ -165,14 +110,14 @@ class ProfileManager:
         cursor = conn.cursor()
 
         try:
-            cursor.execute(f"UPDATE profiles SET {fields} WHERE id = ?", values)
+            cursor.execute(f"UPDATE profiles SET {fields} WHERE profile_id = ?", values)
             updated = cursor.rowcount > 0
             conn.commit()
             return updated
         finally:
             conn.close()
 
-    def get_profile_by_id(self, profile_id: int) -> Optional[Dict[str, Any]]:
+    def get_profile_by_id(self, profile_id: str) -> Optional[Dict[str, Any]]:
         """Get a profile by ID.
 
         Args:
@@ -185,7 +130,7 @@ class ProfileManager:
         cursor = conn.cursor()
 
         try:
-            cursor.execute("SELECT * FROM profiles WHERE id = ?", (profile_id,))
+            cursor.execute("SELECT * FROM profiles WHERE profile_id = ?", (profile_id,))
             row = cursor.fetchone()
             return dict(row) if row else None
         finally:
@@ -248,8 +193,8 @@ class ProfileManager:
             cursor.execute("""
                 SELECT DISTINCT p.*
                 FROM profiles p
-                JOIN profile_tags pt ON p.id = pt.profile_id
-                JOIN tags t ON pt.tag_id = t.id
+                JOIN profile_tags pt ON p.profile_id = pt.profile_id
+                JOIN tags t ON pt.tag_id = t.tag_id
                 WHERE t.name = ?
                 ORDER BY p.name
             """, (tag_name,))
@@ -284,8 +229,8 @@ class ProfileManager:
                     WHERE (
                         SELECT COUNT(DISTINCT t.name)
                         FROM profile_tags pt
-                        JOIN tags t ON pt.tag_id = t.id
-                        WHERE pt.profile_id = p.id AND t.name IN ({placeholders})
+                        JOIN tags t ON pt.tag_id = t.tag_id
+                        WHERE pt.profile_id = p.profile_id AND t.name IN ({placeholders})
                     ) = ?
                     ORDER BY p.name
                 """, tag_names + [len(tag_names)])
@@ -295,8 +240,8 @@ class ProfileManager:
                 cursor.execute(f"""
                     SELECT DISTINCT p.*
                     FROM profiles p
-                    JOIN profile_tags pt ON p.id = pt.profile_id
-                    JOIN tags t ON pt.tag_id = t.id
+                    JOIN profile_tags pt ON p.profile_id = pt.profile_id
+                    JOIN tags t ON pt.tag_id = t.tag_id
                     WHERE t.name IN ({placeholders})
                     ORDER BY p.name
                 """, tag_names)
@@ -338,9 +283,9 @@ class ProfileManager:
                 if existing:
                     # Update existing profile
                     self.update_profile(
-                        existing['id'],
+                        existing['profile_id'],
                         name=name,
-                        last_synced_at=datetime.now()
+                        last_synced_at=datetime.now().isoformat()
                     )
                     stats["updated"] += 1
                 else:
