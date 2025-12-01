@@ -9,6 +9,8 @@ import glob
 import argparse
 import base64
 import sys
+import asyncio
+import websockets
 import hashlib
 import subprocess
 from pathlib import Path
@@ -261,13 +263,49 @@ class PostDetailScreen(Screen):
     ]
 
     def __init__(self, post_data: dict, post_idx: int, current_actions: set,
-                 update_callback, use_kitty_images: bool = False):
+                 update_callback, use_kitty_images: bool = False, websocket_port: int = None):
         super().__init__()
         self.post_data = post_data
         self.post_idx = post_idx
         self.current_actions = current_actions
         self.update_callback = update_callback
         self.use_kitty_images = use_kitty_images
+        self.websocket_port = websocket_port
+
+    def on_mount(self) -> None:
+        """Send post data to websocket on screen mount."""
+        if self.websocket_port:
+            self.app.run_worker(self.send_to_websocket, thread=True)
+
+    async def send_to_websocket(self):
+        """Send post data to the websocket server."""
+        if not self.websocket_port:
+            return
+        
+        uri = f"ws://127.0.0.1:{self.websocket_port}"
+        try:
+            # Use a short timeout for connecting
+            async with websockets.connect(uri, open_timeout=1) as websocket:
+                
+                def json_serializer(obj):
+                    if isinstance(obj, datetime):
+                        return obj.isoformat()
+                    # Add this to handle Path objects if they appear
+                    if isinstance(obj, Path):
+                        return str(obj)
+                    raise TypeError(f"Type {type(obj)} not serializable")
+                
+                payload = json.dumps({
+                    "type": "post_detail",
+                    "data": self.post_data
+                }, default=json_serializer)
+                
+                await websocket.send(payload)
+                self.notify(f"Sent post to visualizer")
+        except (OSError, asyncio.TimeoutError):
+            self.notify(f"Visualizer not connected on port {self.websocket_port}", severity="warning", timeout=5)
+        except Exception as e:
+            self.notify(f"Websocket error: {e}", severity="error")
 
     def compose(self) -> ComposeResult:
         yield Header()
@@ -800,11 +838,12 @@ class MainScreen(Screen):
         Binding("k", "cursor_up", "Up", show=False),
     ]
 
-    def __init__(self, data_source: str, use_db: bool = False, use_kitty_images: bool = False):
+    def __init__(self, data_source: str, use_db: bool = False, use_kitty_images: bool = False, websocket_port: int = None):
         super().__init__()
         self.data_source = data_source
         self.use_db = use_db
         self.use_kitty_images = use_kitty_images
+        self.websocket_port = websocket_port
         self.posts = []
         self.marked_posts = {}  # Maps post_idx to {"actions": set(), "timestamp": datetime}
         self.post_index_map = {}  # Maps row key to post index
@@ -1030,7 +1069,7 @@ class MainScreen(Screen):
                 self._update_post_mark(idx, actions, row_key)
 
             self.app.push_screen(PostDetailScreen(
-                post, post_idx, current_actions, update_mark, self.use_kitty_images
+                post, post_idx, current_actions, update_mark, self.use_kitty_images, self.websocket_port
             ))
 
     def _update_post_mark(self, post_idx: int, actions: set, row_key=None):
@@ -1380,14 +1419,15 @@ class LinkedInPostsApp(App):
         Binding("ctrl+c", "quit", "Quit"),
     ]
 
-    def __init__(self, data_source: str, use_db: bool = False, use_kitty_images: bool = False):
+    def __init__(self, data_source: str, use_db: bool = False, use_kitty_images: bool = False, websocket_port: int = None):
         super().__init__()
         self.data_source = data_source
         self.use_db = use_db
         self.use_kitty_images = use_kitty_images
+        self.websocket_port = websocket_port
 
     def on_mount(self) -> None:
-        self.push_screen(MainScreen(self.data_source, self.use_db, self.use_kitty_images))
+        self.push_screen(MainScreen(self.data_source, self.use_db, self.use_kitty_images, self.websocket_port))
 
     def compose(self) -> ComposeResult:
         # Empty compose as we push the main screen immediately
@@ -1406,6 +1446,12 @@ def main():
     )
     parser.set_defaults(kitty_images=True)
     
+    parser.add_argument(
+        "--websocket-port",
+        type=int,
+        help="Port for the websocket server for external visualization"
+    )
+
     group = parser.add_mutually_exclusive_group()
     group.add_argument(
         "--data-dir",
@@ -1434,7 +1480,12 @@ def main():
             use_db = False
             print(f"Database not found at {args.db}, falling back to {data_source}")
 
-    app = LinkedInPostsApp(data_source, use_db=use_db, use_kitty_images=args.kitty_images)
+    app = LinkedInPostsApp(
+        data_source, 
+        use_db=use_db, 
+        use_kitty_images=args.kitty_images,
+        websocket_port=args.websocket_port
+    )
     app.run()
 
 

@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social TUI Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Social TUI Visualizer</h1>
+            <div id="status">Connecting...</div>
+        </header>
+        <main id="content">
+            <div id="welcome">
+                <h2>Welcome!</h2>
+                <p>This application visualizes post data from the Social TUI application.</p>
+                <p>To get started:</p>
+                <ol>
+                    <li>Run the websocket server: <code>python websocket_server.py</code></li>
+                    <li>Run the TUI with websocket support: <code>./interactive_posts.py --websocket-port 8765</code></li>
+                    <li>Select a post in the TUI to see the details here.</li>
+                </ol>
+            </div>
+            <div id="post-details" class="hidden">
+                <div class="post-header">
+                    <h2 id="post-author"></h2>
+                    <p><a id="post-url" href="#" target="_blank">Open on LinkedIn</a></p>
+                </div>
+                <div class="post-engagement">
+                    <h3>Engagement Timeline</h3>
+                    <canvas id="engagement-chart"></canvas>
+                </div>
+                <div class="post-body">
+                    <div id="post-text"></div>
+                    <div id="post-media"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
