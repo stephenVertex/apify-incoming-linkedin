@@ -960,7 +960,7 @@ class MainScreen(Screen):
                     # Batch query for all engagement history
                     if verbose:
                         self.notify(f"Loading engagement history for {len(post_ids)} posts...", timeout=10)
-                    history_result = client.table('post_engagement_history').select('post_id, downloaded_at, total_reactions, comments, reposts, views').in_('post_id', post_ids).execute()
+                    history_result = client.table('v_post_engagement_history').select('post_id, downloaded_at, reactions, comments, reposts, views').in_('post_id', post_ids).execute()
 
                     logger.info(f"Query to post_engagement_history returned {len(history_result.data)} rows")
 
@@ -1013,10 +1013,12 @@ class MainScreen(Screen):
 
                     # Attach pre-loaded engagement history
                     if row['post_id'] and row['post_id'] in engagement_by_post:
-                        post['engagement_history'] = engagement_by_post[row['post_id']]
+                        # Sort the engagement history by timestamp to ensure correct order
+                        sorted_history = sorted(engagement_by_post[row['post_id']], key=lambda x: x['_downloaded_at'])
+                        post['engagement_history'] = sorted_history
                         # Debug logging for specific problematic post
                         if row['post_id'] == 'p-ed3f094d':
-                            logger.info(f"✓ Attached {len(engagement_by_post[row['post_id']])} snapshots to post p-ed3f094d")
+                            logger.info(f"✓ Attached {len(sorted_history)} snapshots to post p-ed3f094d (sorted)")
                     else:
                         # Debug: Log when engagement history is NOT attached
                         if row['post_id'] == 'p-ed3f094d':
