@@ -13,6 +13,7 @@ import asyncio
 import websockets
 import hashlib
 import subprocess
+import logging
 from pathlib import Path
 from datetime import datetime, timedelta
 from supabase_client import get_supabase_client
@@ -26,6 +27,21 @@ from textual import events
 # Cache directory for downloaded images
 CACHE_DIR = Path("cache/images")
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
+
+# Setup debug logging
+LOG_DIR = Path("log")
+LOG_DIR.mkdir(parents=True, exist_ok=True)
+LOG_FILE = LOG_DIR / "debug.log"
+
+# Configure logging - only to file, not console (to avoid disrupting TUI)
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler(LOG_FILE)
+    ]
+)
+logger = logging.getLogger(__name__)
 
 
 def get_cached_image_path(image_url: str) -> Path:
@@ -338,6 +354,11 @@ class PostDetailScreen(Screen):
         if urn:
             lines.append(f"[bold cyan]Full URN:[/bold cyan] {urn}")
             lines.append("[dim]Press 'u' to copy URN to clipboard[/dim]")
+
+        # Add post_id if available (for debugging)
+        post_id = self.post_data.get('_post_id')
+        if post_id:
+            lines.append(f"[bold cyan]Post ID:[/bold cyan] [dim]{post_id}[/dim]")
 
         # Add marked status
         if self.current_actions:
@@ -915,11 +936,35 @@ class MainScreen(Screen):
                 post_ids = [row['post_id'] for row in rows if row.get('post_id')]
                 engagement_by_post = {}
 
+                # ALWAYS log this to verify debug output is working
+                logger.info("="*60)
+                logger.info("Starting engagement history load")
+                logger.info(f"Total posts loaded: {len(rows)}")
+                logger.info(f"Total post_ids extracted: {len(post_ids)}")
+                logger.info("="*60)
+
                 if post_ids:
+                    # Debug: Check if p-ed3f094d is in the post_ids list
+                    if 'p-ed3f094d' in post_ids:
+                        logger.info(f"p-ed3f094d IS in post_ids list (total: {len(post_ids)} posts)")
+                    else:
+                        logger.warning(f"p-ed3f094d NOT in post_ids list (total: {len(post_ids)} posts)")
+                        logger.debug(f"First 10 post_ids: {post_ids[:10]}")
+
                     # Batch query for all engagement history
+                    # NOTE: Supabase has a default limit of 1000 rows - we need to set a higher limit
                     if verbose:
                         self.notify(f"Loading engagement history for {len(post_ids)} posts...", timeout=10)
-                    history_result = client.table('data_downloads').select('post_id, downloaded_at, stats_json').in_('post_id', post_ids).order('post_id').order('downloaded_at').execute()
+                    history_result = client.table('data_downloads').select('post_id, downloaded_at, stats_json').in_('post_id', post_ids).order('post_id').order('downloaded_at').limit(10000).execute()
+
+                    logger.info(f"Query returned {len(history_result.data)} engagement snapshots")
+
+                    # Check if p-ed3f094d is in the query results
+                    target_snapshots = [r for r in history_result.data if r.get('post_id') == 'p-ed3f094d']
+                    if target_snapshots:
+                        logger.info(f"✓ Found {len(target_snapshots)} snapshots for p-ed3f094d in query results")
+                    else:
+                        logger.warning(f"✗ No snapshots for p-ed3f094d in query results")
 
                     # Group engagement history by post_id
                     if verbose:
@@ -955,6 +1000,16 @@ class MainScreen(Screen):
                     # Attach pre-loaded engagement history
                     if row['post_id'] and row['post_id'] in engagement_by_post:
                         post['engagement_history'] = engagement_by_post[row['post_id']]
+                        # Debug logging for specific problematic post
+                        if row['post_id'] == 'p-ed3f094d':
+                            logger.info(f"✓ Attached {len(engagement_by_post[row['post_id']])} snapshots to post p-ed3f094d")
+                    else:
+                        # Debug: Log when engagement history is NOT attached
+                        if row['post_id'] == 'p-ed3f094d':
+                            logger.error(f"✗ Did NOT attach engagement history to p-ed3f094d")
+                            logger.error(f"  row['post_id']: {row['post_id']}")
+                            logger.error(f"  post_id in engagement_by_post: {row['post_id'] in engagement_by_post}")
+                            logger.error(f"  engagement_by_post keys: {list(engagement_by_post.keys())[:10]}")
 
                     posts.append(post)
 
