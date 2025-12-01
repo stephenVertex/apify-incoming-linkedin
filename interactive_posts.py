@@ -356,7 +356,7 @@ class PostDetailScreen(Screen):
             lines.append("[dim]Press 'u' to copy URN to clipboard[/dim]")
 
         # Add post_id if available (for debugging)
-        post_id = self.post_data.get('_post_id')
+        post_id = self.post_data.get('post_id')
         if post_id:
             lines.append(f"[bold cyan]Post ID:[/bold cyan] [dim]{post_id}[/dim]")
 
@@ -913,34 +913,40 @@ class MainScreen(Screen):
                 latest_result = client.table('posts').select('first_seen_at').order('first_seen_at', desc=True).limit(1).execute()
                 latest_import_timestamp = latest_result.data[0]['first_seen_at'] if latest_result.data else None
 
-                # Build query
-                query = client.table('posts').select('raw_json, first_seen_at, post_id')
+                # Build query for main posts data from the new view
+                main_posts_query = client.table('v_main_post_view').select('*')
 
                 if self.show_new_only and latest_import_timestamp:
-                    # Show all posts from the most recent import batch (within 5 minutes of latest)
-                    # Calculate the cutoff timestamp
                     latest_dt = datetime.fromisoformat(latest_import_timestamp)
                     cutoff_dt = latest_dt - timedelta(minutes=5)
                     cutoff_timestamp = cutoff_dt.isoformat()
-
-                    query = query.gte('first_seen_at', cutoff_timestamp)
+                    main_posts_query = main_posts_query.gte('first_seen_at', cutoff_timestamp)
 
                 if verbose:
-                    self.notify("Loading posts from Supabase...", timeout=10)
-                result = query.execute()
-                rows = result.data
+                    self.notify("Loading posts from Supabase view...", timeout=10)
+                main_posts_result = main_posts_query.execute()
+                main_posts_data = main_posts_result.data
+                
+                # Fetch raw_json separately for post detail screen, keyed by post_id
+                raw_json_map = {}
+                if main_posts_data:
+                    post_ids_for_raw_json = [row['post_id'] for row in main_posts_data]
+                    raw_json_result = client.table('posts').select('post_id, raw_json').in_('post_id', post_ids_for_raw_json).execute()
+                    for row in raw_json_result.data:
+                        raw_json_map[row['post_id']] = row['raw_json']
+
                 if verbose:
-                    self.notify(f"Loaded {len(rows)} posts, now loading engagement history...", timeout=10)
+                    self.notify(f"Loaded {len(main_posts_data)} main posts, now loading engagement history...", timeout=10)
 
                 # Optimize: Load all engagement history in one query (avoid N+1 problem)
-                post_ids = [row['post_id'] for row in rows if row.get('post_id')]
+                post_ids = [row['post_id'] for row in main_posts_data if row.get('post_id')]
                 engagement_by_post = {}
 
                 # ALWAYS log this to verify debug output is working
                 logger.info("="*60)
-                logger.info("Starting engagement history load")
-                logger.info(f"Total posts loaded: {len(rows)}")
-                logger.info(f"Total post_ids extracted: {len(post_ids)}")
+                logger.info("Starting engagement history load for main view")
+                logger.info(f"Total posts loaded for main view: {len(main_posts_data)}")
+                logger.info(f"Total post_ids extracted for engagement: {len(post_ids)}")
                 logger.info("="*60)
 
                 if post_ids:
@@ -952,42 +958,50 @@ class MainScreen(Screen):
                         logger.debug(f"First 10 post_ids: {post_ids[:10]}")
 
                     # Batch query for all engagement history
-                    # NOTE: Supabase has a default limit of 1000 rows - we need to set a higher limit
                     if verbose:
                         self.notify(f"Loading engagement history for {len(post_ids)} posts...", timeout=10)
-                    history_result = client.table('data_downloads').select('post_id, downloaded_at, stats_json').in_('post_id', post_ids).order('post_id').order('downloaded_at').limit(10000).execute()
+                    history_result = client.table('post_engagement_history').select('post_id, downloaded_at, total_reactions, comments, reposts, views').in_('post_id', post_ids).execute()
 
-                    logger.info(f"Query returned {len(history_result.data)} engagement snapshots")
+                    logger.info(f"Query to post_engagement_history returned {len(history_result.data)} rows")
 
                     # Check if p-ed3f094d is in the query results
                     target_snapshots = [r for r in history_result.data if r.get('post_id') == 'p-ed3f094d']
                     if target_snapshots:
-                        logger.info(f"✓ Found {len(target_snapshots)} snapshots for p-ed3f094d in query results")
+                        logger.info(f"✓ Found {len(target_snapshots)} snapshots for p-ed3f094d in final view")
                     else:
-                        logger.warning(f"✗ No snapshots for p-ed3f094d in query results")
+                        logger.warning(f"✗ No snapshots for p-ed3f094d in final view")
 
                     # Group engagement history by post_id
                     if verbose:
-                        self.notify(f"Processing {len(history_result.data)} engagement snapshots...", timeout=5)
+                        self.notify(f"Processing {len(history_result.data)} engagement snapshots from view...", timeout=5)
                     for hist_row in history_result.data:
                         post_id = hist_row['post_id']
                         if post_id not in engagement_by_post:
                             engagement_by_post[post_id] = []
 
-                        try:
-                            stats = json.loads(hist_row['stats_json'])
-                            stats['_downloaded_at'] = hist_row['downloaded_at']
-                            engagement_by_post[post_id].append(stats)
-                        except json.JSONDecodeError:
-                            continue
+                        # Data from the view is already parsed and cleaned
+                        stats = {
+                            'total_reactions': hist_row.get('total_reactions', 0),
+                            'comments': hist_row.get('comments', 0),
+                            'reposts': hist_row.get('reposts', 0),
+                            'views': hist_row.get('views'),
+                            '_downloaded_at': hist_row.get('downloaded_at')
+                        }
+                        engagement_by_post[post_id].append(stats)
 
                 # Process posts with pre-loaded engagement history
                 if verbose:
-                    self.notify(f"Processing {len(rows)} posts...", timeout=5)
-                for row in rows:
-                    post = json.loads(row['raw_json'])
-                    post['_first_seen_at'] = row['first_seen_at']
-                    post['_post_id'] = row['post_id']
+                    self.notify(f"Processing {len(main_posts_data)} posts...", timeout=5)
+                for row in main_posts_data:
+                    # Use raw_json_map to get the full post data
+                    post = json.loads(raw_json_map.get(row['post_id'], '{}'))
+                    post['first_seen_at'] = row['first_seen_at']
+                    post['post_id'] = row['post_id']
+                    post['text_preview'] = row['text_preview']
+                    post['media_indicator'] = row['media_indicator']
+                    post['marked_indicator'] = row['marked_indicator']
+                    post['posted_at_formatted'] = row['posted_at_formatted'] # Add formatted date for table
+                    post['author_username'] = row['author_username']
 
                     # Mark as new if it belongs to the latest import batch (within 5 minutes)
                     if latest_import_timestamp and row['first_seen_at']:
@@ -1034,12 +1048,6 @@ class MainScreen(Screen):
 
         return posts
 
-    def parse_date(self, date_str: str) -> datetime:
-        """Parse date string to datetime object."""
-        try:
-            return datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
-        except:
-            return datetime.min
 
     def update_status_bar(self, count: int, total: int):
         """Update the status bar with post counts."""
@@ -1059,42 +1067,10 @@ class MainScreen(Screen):
         self.posts = self.load_posts(verbose=verbose)
         total_loaded = len(self.posts)
 
-        # Calculate date threshold (30 days ago) - only apply if NOT in "new only" mode
-        # If showing new only, we want to see them regardless of age
-        if not self.show_new_only:
-            thirty_days_ago = datetime.now() - timedelta(days=30)
-            
-            # Filter and sort posts
-            filtered_posts = []
-            for post in self.posts:
-                date_str = post.get("posted_at", {}).get("date", "")
-                datetime_obj = self.parse_date(date_str)
-
-                if datetime_obj >= thirty_days_ago:
-                    post["datetime_obj"] = datetime_obj
-                    # Pre-compute searchable text for performance
-                    author = post.get("author", {})
-                    text = post.get("text", "")
-                    username = author.get("username", "")
-                    name = author.get("name", "")
-                    post["_searchable"] = f"{username} {name} {text}".lower()
-                    filtered_posts.append(post)
-            self.posts = filtered_posts
-        else:
-             # For new posts, still add datetime_obj for sorting
-            for post in self.posts:
-                date_str = post.get("posted_at", {}).get("date", "")
-                post["datetime_obj"] = self.parse_date(date_str)
-                # Pre-compute searchable text
-                author = post.get("author", {})
-                text = post.get("text", "")
-                username = author.get("username", "")
-                name = author.get("name", "")
-                post["_searchable"] = f"{username} {name} {text}".lower()
 
 
-        # Sort by date, newest first
-        self.posts.sort(key=lambda x: x.get("datetime_obj", datetime.min), reverse=True)
+        # Sort by date, newest first (already handled by view, but good for consistency)
+        self.posts.sort(key=lambda x: datetime.fromisoformat(x.get('posted_at_formatted').replace(' ', 'T')), reverse=True)
 
         # Populate table
         table = self.query_one(DataTable)
@@ -1102,7 +1078,16 @@ class MainScreen(Screen):
         self.post_index_map.clear()
         
         for idx, post in enumerate(self.posts):
-            self._add_post_to_table(idx, post, table)
+            # Use pre-formatted data from the view
+            date_str = post.get("posted_at_formatted", "")
+            username = post.get("author_username", "")
+            text_preview = post.get("text_preview", "")
+            media_indicator = post.get("media_indicator", "")
+            marked_indicator = post.get("marked_indicator", "")
+            new_indicator = "🆕" if post.get("_is_new") else ""
+
+            row_key = table.add_row(date_str, username, text_preview, media_indicator, marked_indicator, new_indicator)
+            self.post_index_map[row_key] = idx
             
         self.update_status_bar(len(self.posts), total_loaded)
 
@@ -1383,35 +1368,6 @@ class MainScreen(Screen):
                     
         self.update_status_bar(count, len(self.posts))
 
-    def _add_post_to_table(self, idx: int, post: dict, table: DataTable):
-        """Helper to add a post row to the table."""
-        date_str = post.get("posted_at", {}).get("date", "")
-        username = post.get("author", {}).get("username", "")
-        text = post.get("text", "")
-        text_preview = text[:50] if text else ""
-
-        # Check if post has media
-        media = post.get("media", {})
-        media_indicator = ""
-        if media and media.get("type") in ["image", "images", "video"]:
-            images = media.get("images", [])
-            if images and len(images) > 1:
-                media_indicator = f"📷({len(images)})"
-            else:
-                media_indicator = "📷"
-
-        # Check if post is marked and show action indicators
-        if idx in self.marked_posts:
-            actions = self.marked_posts[idx]["actions"]
-            marked_indicator = self._format_actions_display(actions)
-        else:
-            marked_indicator = ""
-        
-        # Check if post is new
-        new_indicator = "🆕" if post.get("_is_new") else ""
-
-        row_key = table.add_row(date_str, username, text_preview, media_indicator, marked_indicator, new_indicator)
-        self.post_index_map[row_key] = idx
 
     def action_quit_with_todos(self):
         """Print TODO list with action metadata and quit."""
