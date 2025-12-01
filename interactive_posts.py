@@ -807,15 +807,15 @@ class MainScreen(Screen):
         table.add_column("Marked", key="marked")
         table.add_column("New", key="new")
 
-        # Show loading message
-        if self.use_db:
-            self.notify("Loading posts from Supabase...", timeout=30)
-
         self.load_and_display_posts()
         table.focus()
 
-    def load_posts(self) -> list:
-        """Load posts from DB or JSON files."""
+    def load_posts(self, verbose: bool = True) -> list:
+        """Load posts from DB or JSON files.
+
+        Args:
+            verbose: If True, show detailed progress notifications. If False, only show final result.
+        """
         posts = []
 
         if self.use_db:
@@ -823,6 +823,8 @@ class MainScreen(Screen):
                 client = get_supabase_client()
 
                 # Get the latest import timestamp to define "new"
+                if verbose:
+                    self.notify("Checking for latest posts...", timeout=5)
                 latest_result = client.table('posts').select('first_seen_at').order('first_seen_at', desc=True).limit(1).execute()
                 latest_import_timestamp = latest_result.data[0]['first_seen_at'] if latest_result.data else None
 
@@ -838,8 +840,12 @@ class MainScreen(Screen):
 
                     query = query.gte('first_seen_at', cutoff_timestamp)
 
+                if verbose:
+                    self.notify("Loading posts from Supabase...", timeout=10)
                 result = query.execute()
                 rows = result.data
+                if verbose:
+                    self.notify(f"Loaded {len(rows)} posts, now loading engagement history...", timeout=10)
 
                 # Optimize: Load all engagement history in one query (avoid N+1 problem)
                 post_ids = [row['post_id'] for row in rows if row.get('post_id')]
@@ -847,9 +853,13 @@ class MainScreen(Screen):
 
                 if post_ids:
                     # Batch query for all engagement history
+                    if verbose:
+                        self.notify(f"Loading engagement history for {len(post_ids)} posts...", timeout=10)
                     history_result = client.table('data_downloads').select('post_id, downloaded_at, stats_json').in_('post_id', post_ids).order('post_id, downloaded_at').execute()
 
                     # Group engagement history by post_id
+                    if verbose:
+                        self.notify(f"Processing {len(history_result.data)} engagement snapshots...", timeout=5)
                     for hist_row in history_result.data:
                         post_id = hist_row['post_id']
                         if post_id not in engagement_by_post:
@@ -863,6 +873,8 @@ class MainScreen(Screen):
                             continue
 
                 # Process posts with pre-loaded engagement history
+                if verbose:
+                    self.notify(f"Processing {len(rows)} posts...", timeout=5)
                 for row in rows:
                     post = json.loads(row['raw_json'])
                     post['_first_seen_at'] = row['first_seen_at']
@@ -919,9 +931,13 @@ class MainScreen(Screen):
             
         status_bar.update(f"Showing {count} of {total} posts{filter_status}")
 
-    def load_and_display_posts(self):
-        """Load posts and populate the table."""
-        self.posts = self.load_posts()
+    def load_and_display_posts(self, verbose: bool = True):
+        """Load posts and populate the table.
+
+        Args:
+            verbose: If True, show detailed progress notifications. If False, only show final result.
+        """
+        self.posts = self.load_posts(verbose=verbose)
         total_loaded = len(self.posts)
 
         # Calculate date threshold (30 days ago) - only apply if NOT in "new only" mode
@@ -1131,11 +1147,11 @@ class MainScreen(Screen):
         if not self.use_db:
             self.notify("New posts filter only available with database backend", severity="warning")
             return
-            
+
         self.show_new_only = not self.show_new_only
         status = "ON" if self.show_new_only else "OFF"
-        self.notify(f"Show New Only: {status}")
-        self.load_and_display_posts()
+        self.notify(f"Show New Only: {status}", timeout=2)
+        self.load_and_display_posts(verbose=False)
 
     def on_input_changed(self, event: Input.Changed) -> None:
         """Handle input changes for filtering with debouncing."""
