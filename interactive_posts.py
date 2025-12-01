@@ -415,7 +415,7 @@ class PostDetailScreen(Screen):
                 lines.append("├─────────────────┼──────────┼──────────┼────────────┤")
 
                 metric_keys = [
-                    ("Reactions", "total_reactions", "reactions"),
+                    ("Reactions", "reactions", None),
                     ("Comments", "comments", None),
                     ("Reposts", "reposts", "shares"),
                 ]
