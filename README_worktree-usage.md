@@ -79,6 +79,14 @@ ln -s ../shared/data data
 ln -s ../shared/cache cache
 ln -s ../shared/.env .env
 
+# Set up unique websocket port for this worktree
+# Generate unique port: main uses 8765, each worktree adds 5
+WORKTREE_NUM=$(git worktree list | wc -l | tr -d ' ')
+WS_PORT=$((8765 + (WORKTREE_NUM - 1) * 5))
+echo "{\"port\": $WS_PORT}" > ws_config.json
+echo "{\"port\": $WS_PORT}" > web_visualization/ws_config.json
+echo "Websocket port configured: $WS_PORT"
+
 # Verify symlinks
 ls -la data cache .env
 
@@ -91,19 +99,27 @@ code .  # Or your preferred editor
 ```bash
 cd ~/dev/social-tui-dev/main
 
-# Create worktree for S3 upload feature
-git worktree add ../feature-s3-upload -b feature/s3-upload
-cd ../feature-s3-upload && ln -s ../shared/data data && ln -s ../shared/cache cache && ln -s ../shared/.env .env
+# Helper function to create worktree with port config
+create_worktree() {
+    FEATURE_NAME=$1
+    BRANCH_NAME=$2
+    cd ~/dev/social-tui-dev/main
+    git worktree add ../$FEATURE_NAME -b $BRANCH_NAME
+    cd ../$FEATURE_NAME
+    ln -s ../shared/data data
+    ln -s ../shared/cache cache
+    ln -s ../shared/.env .env
+    WORKTREE_NUM=$(git worktree list | wc -l | tr -d ' ')
+    WS_PORT=$((8765 + (WORKTREE_NUM - 1) * 5))
+    echo "{\"port\": $WS_PORT}" > ws_config.json
+    echo "{\"port\": $WS_PORT}" > web_visualization/ws_config.json
+    echo "Created $FEATURE_NAME with websocket port $WS_PORT"
+}
 
-# Create worktree for AI analysis feature
-cd ~/dev/social-tui-dev/main
-git worktree add ../feature-ai-analysis -b feature/ai-analysis
-cd ../feature-ai-analysis && ln -s ../shared/data data && ln -s ../shared/cache cache && ln -s ../shared/.env .env
-
-# Create worktree for YouTube import
-cd ~/dev/social-tui-dev/main
-git worktree add ../feature-youtube-import -b feature/youtube-import
-cd ../feature-youtube-import && ln -s ../shared/data data && ln -s ../shared/cache cache && ln -s ../shared/.env .env
+# Create worktrees
+create_worktree feature-s3-upload feature/s3-upload      # Port 8770
+create_worktree feature-ai-analysis feature/ai-analysis  # Port 8775
+create_worktree feature-youtube-import feature/youtube-import  # Port 8780
 ```
 
 ## Working with Worktrees
@@ -253,6 +269,71 @@ OPENAI_API_KEY=...
 
 **Usage**: All worktrees use the same Supabase database and API keys
 
+## Port Management
+
+### How It Works
+
+Each worktree needs a unique websocket port to run the server simultaneously. The system uses `ws_config.json` files to configure ports:
+
+**Files**:
+- `ws_config.json` - Root-level config read by `websocket_server.py`
+- `web_visualization/ws_config.json` - Config read by the web interface
+
+**Port Assignment**:
+- `main`: 8765 (default)
+- `feature-1`: 8770
+- `feature-2`: 8775
+- `feature-3`: 8780
+- Each additional worktree: +5
+
+### Running Multiple Servers
+
+```bash
+# Terminal 1: Run server in main worktree
+cd ~/dev/social-tui-dev/main
+python websocket_server.py
+# → Starts on port 8765
+
+# Terminal 2: Run server in feature worktree
+cd ~/dev/social-tui-dev/feature-s3-upload
+python websocket_server.py
+# → Starts on port 8770
+
+# Terminal 3: Run TUI in feature worktree
+cd ~/dev/social-tui-dev/feature-s3-upload
+./interactive_posts.py --websocket-port 8770
+```
+
+### Opening Web Interface
+
+Each worktree's web interface automatically connects to its configured port:
+
+```bash
+# Open main worktree's web interface (connects to port 8765)
+open ~/dev/social-tui-dev/main/web_visualization/index.html
+
+# Open feature worktree's web interface (connects to port 8770)
+open ~/dev/social-tui-dev/feature-s3-upload/web_visualization/index.html
+```
+
+### Checking Current Port
+
+```bash
+# View the configured port for current worktree
+cat ws_config.json
+# → {"port": 8770}
+```
+
+### Manual Port Configuration
+
+If you need a specific port:
+
+```bash
+# Set custom port
+echo '{"port": 9000}' > ws_config.json
+echo '{"port": 9000}' > web_visualization/ws_config.json
+```
+
 ## Best Practices
 
 ### 1. Keep Shared Resources Read-Only
@@ -313,6 +394,34 @@ rm -rf ../feature-name
 git worktree prune
 ```
 
+### Port Already in Use
+
+If the websocket server fails to start with "address already in use":
+
+```bash
+# Find what's using the port
+lsof -i :8765
+
+# Kill the process if needed
+kill <PID>
+
+# Or use a different port
+echo '{"port": 8770}' > ws_config.json
+echo '{"port": 8770}' > web_visualization/ws_config.json
+```
+
+### Web Interface Can't Connect
+
+If the browser shows "Disconnected":
+
+1. Check websocket server is running: `ps aux | grep websocket_server`
+2. Verify port matches:
+   ```bash
+   cat ws_config.json
+   cat web_visualization/ws_config.json
+   ```
+3. Check browser console for connection errors
+
 ### Database Conflicts
 
 All worktrees share the same database. If you need isolation:
@@ -333,12 +442,22 @@ Git prevents checking out the same branch in multiple worktrees:
 ## Quick Reference
 
 ```bash
-# Create worktree
+# Create worktree with port config
 git worktree add ../feature-name -b feature/name
-cd ../feature-name && ln -s ../shared/{data,cache,.env} .
+cd ../feature-name
+ln -s ../shared/data data
+ln -s ../shared/cache cache
+ln -s ../shared/.env .env
+WORKTREE_NUM=$(git worktree list | wc -l | tr -d ' ')
+WS_PORT=$((8765 + (WORKTREE_NUM - 1) * 5))
+echo "{\"port\": $WS_PORT}" > ws_config.json
+echo "{\"port\": $WS_PORT}" > web_visualization/ws_config.json
 
 # List worktrees
 git worktree list
+
+# Check configured port
+cat ws_config.json
 
 # Remove worktree
 git worktree remove ../feature-name

@@ -59,3 +59,6 @@ supabase_mcp_cmd.txt
 
 # Log files
 log/
+
+# Websocket configuration (per-worktree)
+ws_config.json
