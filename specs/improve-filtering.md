@@ -1,5 +1,11 @@
 # Improve filtering
 
+**Status:** ✅ Implemented
+**PR:** https://github.com/stephenVertex/social-tui/pull/4
+**Merged:** 2025-12-01
+
+## Original Specification
+
 I would like to have a few 'filter prefixes'
 
 This will be implemented similar to emacs Hydras, which are hierarchical menus.
