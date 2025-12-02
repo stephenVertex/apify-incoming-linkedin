@@ -14,6 +14,7 @@ import websockets
 import hashlib
 import subprocess
 import logging
+import uuid
 from pathlib import Path
 from datetime import datetime, timedelta
 from supabase_client import get_supabase_client
@@ -42,6 +43,55 @@ logging.basicConfig(
     ]
 )
 logger = logging.getLogger(__name__)
+
+
+# Action type mapping
+ACTION_TYPE_MAP = {
+    'w': 'watch_later',
+    's': 'save',
+    'n': 'note',
+    'a': 'auto_summarize_and_post',
+    'k': 'add_to_knowledge_base',
+    'i': 'add_to_inspiration_sources'
+}
+REVERSE_ACTION_TYPE_MAP = {v: k for k, v in ACTION_TYPE_MAP.items()}
+
+
+def sync_actions_to_db(post_id: str, added_actions: set, removed_actions: set):
+    """Sync action changes to Supabase."""
+    try:
+        client = get_supabase_client()
+        
+        # Handle additions
+        for action_key in added_actions:
+            action_type = ACTION_TYPE_MAP.get(action_key)
+            if action_type:
+                try:
+                    # Check if already exists to avoid duplicates (though not unique constrained, it's cleaner)
+                    # For simplicity in this TUI, we just insert. The UUID ensures no PK collision.
+                    client.table('action_queue').insert({
+                        'action_id': str(uuid.uuid4()),
+                        'post_id': post_id,
+                        'action_type': action_type,
+                        'status': 'pending',
+                        'created_at': datetime.now().isoformat()
+                    }).execute()
+                    logger.info(f"Added action {action_type} for {post_id}")
+                except Exception as e:
+                    logger.error(f"Error adding action {action_type} for {post_id}: {e}")
+
+        # Handle removals
+        for action_key in removed_actions:
+            action_type = ACTION_TYPE_MAP.get(action_key)
+            if action_type:
+                try:
+                    client.table('action_queue').delete().eq('post_id', post_id).eq('action_type', action_type).execute()
+                    logger.info(f"Removed action {action_type} for {post_id}")
+                except Exception as e:
+                    logger.error(f"Error removing action {action_type} for {post_id}: {e}")
+                    
+    except Exception as e:
+        logger.error(f"Error in sync_actions_to_db: {e}")
 
 
 def get_cached_image_path(image_url: str) -> Path:
@@ -685,6 +735,9 @@ class ActionModal(Screen):
         'w': {'name': 'Watch Later', 'desc': 'Mark to watch later'},
         's': {'name': 'Save/Archive', 'desc': 'Save for reference'},
         'n': {'name': 'Note', 'desc': 'Add to notes'},
+        'a': {'name': 'Auto-Summarize & Post', 'desc': 'Generate summary and draft social post'},
+        'k': {'name': 'Add to Knowledge Base', 'desc': 'Add video content to knowledge base'},
+        'i': {'name': 'Add to Inspiration Sources', 'desc': 'Add video to inspiration sources'},
     }
 
     CSS = """
@@ -716,6 +769,9 @@ class ActionModal(Screen):
         Binding("w", "toggle_action('w')", show=False),
         Binding("s", "toggle_action('s')", show=False),
         Binding("n", "toggle_action('n')", show=False),
+        Binding("a", "toggle_action('a')", show=False),
+        Binding("k", "toggle_action('k')", show=False),
+        Binding("i", "toggle_action('i')", show=False),
     ]
 
     def __init__(self, selected_actions: set = None):
@@ -732,7 +788,7 @@ class ActionModal(Screen):
     def _format_actions(self) -> str:
         """Format the action list with current selections."""
         lines = []
-        for key in ['w', 's', 'n']:
+        for key in ['w', 's', 'n', 'a', 'k', 'i']:
             action = self.ACTIONS[key]
             is_selected = key in self.selected_actions
             checkbox = "[✓]" if is_selected else "[ ]"
@@ -1033,6 +1089,41 @@ class MainScreen(Screen):
 
                 posts.append(post)
 
+            # Fetch actions from action_queue and attach to posts
+            if posts:
+                if verbose:
+                    self.notify("Loading actions from queue...", timeout=5)
+                
+                post_ids = [p['post_id'] for p in posts if p.get('post_id')]
+                actions_map = {} 
+                
+                if post_ids:
+                    try:
+                        # Fetch actions for these posts
+                        actions_result = client.table('action_queue').select('post_id, action_type').in_('post_id', post_ids).neq('status', 'completed').execute()
+                        
+                        for action_row in actions_result.data:
+                            pid = action_row['post_id']
+                            atype = action_row['action_type']
+                            akey = REVERSE_ACTION_TYPE_MAP.get(atype)
+                            
+                            if pid and akey:
+                                if pid not in actions_map:
+                                    actions_map[pid] = set()
+                                actions_map[pid].add(akey)
+                    except Exception as e:
+                        logger.error(f"Error fetching actions from DB: {e}")
+                            
+                # Attach actions to posts
+                for post in posts:
+                    pid = post.get('post_id')
+                    if pid and pid in actions_map:
+                        post['_db_actions'] = actions_map[pid]
+                        post['marked_indicator'] = ''.join(sorted(actions_map[pid]))
+                    else:
+                        post['_db_actions'] = set()
+                        post['marked_indicator'] = ""
+
             if self.show_new_only:
                 self.notify(f"Loaded {len(posts)} new videos from {latest_import_timestamp}", severity="information")
             else:
@@ -1072,8 +1163,15 @@ class MainScreen(Screen):
         table = self.query_one(DataTable)
         table.clear()
         self.post_index_map.clear()
+        self.marked_posts.clear()
         
         for idx, post in enumerate(self.posts):
+            # Restore marks from DB
+            if post.get('_db_actions'):
+                self.marked_posts[idx] = {
+                    "actions": post['_db_actions'],
+                    "timestamp": datetime.now()
+                }
             date_str = post.get("posted_at_formatted", "")
             username = post.get("author_username", "")
             text_preview = post.get("text_preview", "")
@@ -1108,7 +1206,25 @@ class MainScreen(Screen):
             ))
 
     def _update_post_mark(self, post_idx: int, actions: set, row_key=None):
-        """Update the mark status of a post and refresh the table if needed."""
+        """Update the mark status of a post, sync to DB, and refresh the table if needed."""
+        post = self.posts[post_idx]
+        post_id = post.get('post_id')
+        
+        # Calculate diffs
+        old_actions = set()
+        if post_idx in self.marked_posts:
+            old_actions = self.marked_posts[post_idx]["actions"]
+            
+        new_actions = actions if actions else set()
+        
+        added = new_actions - old_actions
+        removed = old_actions - new_actions
+        
+        # Sync to DB in background
+        if (added or removed) and post_id:
+            self.app.run_worker(lambda: sync_actions_to_db(post_id, added, removed), thread=True)
+
+        # Update local state
         if actions:
             self.marked_posts[post_idx] = {
                 "actions": actions,
@@ -1136,17 +1252,11 @@ class MainScreen(Screen):
                 if row_key in self.post_index_map:
                     post_idx = self.post_index_map[row_key]
 
+                    # Toggle behavior: if marked at all, unmark completely. Else mark with 's'.
                     if post_idx in self.marked_posts:
-                        # Unmark the post completely
-                        del self.marked_posts[post_idx]
-                        table.update_cell(row_key, "marked", "")
+                        self._update_post_mark(post_idx, None, row_key)
                     else:
-                        # Mark with 'save' action only
-                        self.marked_posts[post_idx] = {
-                            "actions": {'s'},
-                            "timestamp": datetime.now()
-                        }
-                        table.update_cell(row_key, "marked", self._format_actions_display({'s'}))
+                        self._update_post_mark(post_idx, {'s'}, row_key)
 
     def _format_actions_display(self, actions: set) -> str:
         """Format action set for display in the marked column."""
@@ -1175,16 +1285,7 @@ class MainScreen(Screen):
                     # Open the action modal with a callback
                     def handle_actions(selected_actions):
                         """Handle the selected actions from the modal."""
-                        if selected_actions:
-                            self.marked_posts[post_idx] = {
-                                "actions": selected_actions,
-                                "timestamp": datetime.now()
-                            }
-                            table.update_cell(row_key, "marked", self._format_actions_display(selected_actions))
-                        elif post_idx in self.marked_posts:
-                            # If no actions selected, unmark the post
-                            del self.marked_posts[post_idx]
-                            table.update_cell(row_key, "marked", "")
+                        self._update_post_mark(post_idx, selected_actions, row_key)
 
                     modal = ActionModal(existing_actions)
                     self.app.push_screen(modal, handle_actions)
@@ -1388,6 +1489,9 @@ class MainScreen(Screen):
             'w': 'Watch Later',
             's': 'Save/Archive',
             'n': 'Note',
+            'a': 'Auto-Summarize & Post',
+            'k': 'Add to Knowledge Base',
+            'i': 'Add to Inspiration Sources',
         }
 
         for idx, post_idx in enumerate(sorted(self.marked_posts.keys()), 1):
