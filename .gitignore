@@ -22,6 +22,9 @@ input-data.csv
 supabase/.branches
 supabase/.temp
 
+# Supabase migrations (database is source of truth via MCP)
+supabase/migrations/
+
 # Cache files
 cache/
 
