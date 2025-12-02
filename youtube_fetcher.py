@@ -1,26 +1,36 @@
 #!/usr/bin/env python3
 """
-Fetches new videos from monitored YouTube channels and saves them to the Supabase database.
+Fetches new videos from monitored YouTube channels using the YouTube Data API
+and saves them to the Supabase database.
 """
 
 import argparse
 import json
-import subprocess
-from datetime import datetime, timezone
+import os
+import uuid
+from datetime import datetime, timezone, timedelta
+
+from dotenv import load_dotenv
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 from supabase_client import get_supabase_client
 
-import uuid
+load_dotenv()
+
+YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
+YOUTUBE_API_SERVICE_NAME = "youtube"
+YOUTUBE_API_VERSION = "v3"
+
+def get_youtube_service():
+    """Builds and returns the YouTube API service."""
+    try:
+        return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=YOUTUBE_API_KEY)
+    except Exception as e:
+        print(f"Error building YouTube service: {e}")
+        return None
 
 def get_active_youtube_channels(client):
-    """
-    Retrieves a list of active YouTube channels from the profiles table.
-
-    Args:
-        client: The Supabase client.
-
-    Returns:
-        A list of profile records for active YouTube channels.
-    """
+    """Retrieves a list of active YouTube channels from the profiles table."""
     try:
         response = client.table('profiles').select('*').eq('platform', 'youtube').eq('is_active', True).execute()
         return response.data
@@ -28,223 +38,214 @@ def get_active_youtube_channels(client):
         print(f"Error fetching active YouTube channels: {e}")
         return []
 
-def fetch_videos_for_channel(channel_url, num_videos=10):
-    """
-    Fetches the latest videos for a given YouTube channel using yt-dlp.
-
-    Args:
-        channel_url: The URL of the YouTube channel.
-        num_videos: The number of recent videos to fetch.
-
-    Returns:
-        A list of dictionaries, where each dictionary represents a video's metadata.
-    """
+def get_channel_uploads_playlist_id(youtube, channel_username):
+    """Gets the ID of the 'uploads' playlist for a given channel username."""
     try:
-        # Step 1: Get a list of video IDs from the channel's main video feed
-        # Using --extractor-args youtube:tab=videos to explicitly target the videos tab
-        list_command = [
-            'yt-dlp',
-            '--flat-playlist',
-            '--print-json',
-            '--extractor-args', 'youtube:tab=videos',
-            '--playlist-end', str(num_videos), # Limit to 'num_videos' directly here for efficiency
-            channel_url
-        ]
-        list_result = subprocess.run(list_command, capture_output=True, text=True, check=True)
+        # The username might not be the channel's custom URL handle, so we search for it
+        search_response = youtube.search().list(
+            q=channel_username,
+            type="channel",
+            part="id,snippet",
+            maxResults=1
+        ).execute()
+
+        if not search_response.get("items"):
+            print(f"  - No channel found for username: {channel_username}")
+            return None
         
-        video_ids_to_fetch = []
-        for line in list_result.stdout.strip().split('\n'):
-            if line:
-                try:
-                    meta = json.loads(line)
-                    if meta.get('_type') == 'url' and meta.get('id'):
-                        video_ids_to_fetch.append(meta['id'])
-                except json.JSONDecodeError:
-                    continue
+        channel_id = search_response["items"][0]["id"]["channelId"]
         
-        if not video_ids_to_fetch:
-            print(f"  - No video IDs found for {channel_url} using tab=videos extractor.")
+        channels_response = youtube.channels().list(
+            id=channel_id,
+            part="contentDetails"
+        ).execute()
+
+        if not channels_response.get("items"):
+            print(f"  - Could not get channel details for ID: {channel_id}")
+            return None
             
-            # Fallback: try without explicit tab for broader compatibility
-            list_command_fallback = [
-                'yt-dlp',
-                '--flat-playlist',
-                '--print-json',
-                '--playlist-end', str(num_videos),
-                channel_url
-            ]
-            list_result_fallback = subprocess.run(list_command_fallback, capture_output=True, text=True, check=True)
-            for line in list_result_fallback.stdout.strip().split('\n'):
-                if line:
-                    try:
-                        meta = json.loads(line)
-                        if meta.get('_type') == 'url' and meta.get('id'):
-                            video_ids_to_fetch.append(meta['id'])
-                    except json.JSONDecodeError:
-                        continue
-            if not video_ids_to_fetch:
-                print(f"  - No video IDs found for {channel_url} with fallback method.")
-                return []
-            else:
-                print(f"  - Found {len(video_ids_to_fetch)} video IDs using fallback method.")
+        return channels_response["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
+    except HttpError as e:
+        print(f"  - An HTTP error {e.resp.status} occurred: {e.content}")
+        return None
 
-        # Step 2: Fetch full metadata for each video ID
-        videos_metadata = []
-        for video_id in video_ids_to_fetch:
-            detail_command = [
-                'yt-dlp',
-                '--dump-json',
-                f"https://www.youtube.com/watch?v={video_id}"
-            ]
-            detail_result = subprocess.run(detail_command, capture_output=True, text=True, check=True)
-            videos_metadata.append(json.loads(detail_result.stdout))
-            
-        return videos_metadata
 
-    except FileNotFoundError:
-        print("Error: yt-dlp is not installed or not in your PATH.")
-        print("Please install it: https://github.com/yt-dlp/yt-dlp")
-        return []
-    except subprocess.CalledProcessError as e:
-        print(f"Error executing yt-dlp for {channel_url}: {e}")
-        print(f"Stderr: {e.stderr}")
-        return []
-    except Exception as e:
-        print(f"An unexpected error occurred while fetching videos for {channel_url}: {e}")
-        return []
-def insert_new_video(client, video_data, channel):
-    """
-    Inserts a new video into the posts and post_media tables if it doesn't exist.
-
-    Args:
-        client: The Supabase client.
-        video_data: A dictionary of video metadata from yt-dlp.
-        channel: The channel profile from the database.
+def fetch_new_videos_from_playlist(youtube, playlist_id, published_after):
+    """Fetches new videos from a playlist published after a specific date."""
+    videos = []
+    next_page_token = None
     
-    Returns:
-        True if a new video was inserted, False otherwise.
-    """
+    try:
+        while True:
+            playlist_response = youtube.playlistItems().list(
+                playlistId=playlist_id,
+                part="snippet",
+                maxResults=50,
+                pageToken=next_page_token
+            ).execute()
+
+            video_ids = [item["snippet"]["resourceId"]["videoId"] for item in playlist_response["items"]]
+
+            if not video_ids:
+                break
+            
+            videos_response = youtube.videos().list(
+                id=",".join(video_ids),
+                part="snippet,statistics,contentDetails"
+            ).execute()
+
+            for item in videos_response["items"]:
+                published_at_dt = datetime.fromisoformat(item["snippet"]["publishedAt"].replace("Z", "+00:00"))
+                if published_at_dt >= published_after:
+                    videos.append(item)
+
+            # Check if the last video on the page is older than our cutoff
+            last_video_published_at = datetime.fromisoformat(
+                videos_response["items"][-1]["snippet"]["publishedAt"].replace("Z", "+00:00")
+            )
+            if last_video_published_at < published_after:
+                break # All subsequent videos will be older
+
+            next_page_token = playlist_response.get("nextPageToken")
+            if not next_page_token:
+                break
+                
+        return videos
+    except HttpError as e:
+        print(f"  - An HTTP error {e.resp.status} occurred: {e.content}")
+        return []
+
+def insert_new_video(client, video_data, channel):
+    """Inserts a new video into the database if it doesn't already exist."""
     video_id = video_data.get('id')
     if not video_id:
         return False
 
-    # Check if video already exists
     try:
         response = client.table('posts').select('post_id').eq('urn', video_id).execute()
         if response.data:
-            # print(f"  - Video '{video_data.get('title')}' already exists. Skipping.")
             return False
     except Exception as e:
         print(f"  - Error checking for existing video: {e}")
         return False
 
-    print(f"  - Inserting new video: {video_data.get('title')}")
+    print(f"  - Inserting new video: {video_data['snippet'].get('title')}")
 
-    # Generate a new post_id
-    post_id = f"p-{uuid.uuid4().hex[:12]}"
+    post_id = f"p-{uuid.uuid4().hex[:8]}"
+    published_at = datetime.fromisoformat(video_data['snippet']['publishedAt'].replace("Z", "+00:00"))
+    stats = video_data.get('statistics', {})
 
-    # Prepare data for 'posts' table
-    posted_at_raw = video_data.get('timestamp', datetime.now().timestamp())
-    posted_at = datetime.fromtimestamp(posted_at_raw, tz=timezone.utc)
-
-    # Filter out videos older than 2025-11-26
-    cutoff_date = datetime(2025, 11, 26, 0, 0, 0, tzinfo=timezone.utc) # UTC for comparison
-    if posted_at < cutoff_date:
-        print(f"  - Video '{video_data.get('title')}' posted on {posted_at.date()} is older than {cutoff_date.date()}. Skipping.")
-        return False
-    
     post_record = {
         'post_id': post_id,
         'urn': video_id,
         'full_urn': f"youtube:video:{video_id}",
         'platform': 'youtube',
-        'posted_at_timestamp': int(posted_at.timestamp()),
+        'posted_at_timestamp': int(published_at.timestamp()),
         'author_username': channel.get('username'),
-        'text_content': f"{video_data.get('title', '')}\n\n{video_data.get('description', '')}",
-        'url': video_data.get('webpage_url'),
+        'text_content': f"{video_data['snippet'].get('title', '')}\n\n{video_data['snippet'].get('description', '')}",
+        'url': f"https://www.youtube.com/watch?v={video_id}",
         'raw_json': json.dumps(video_data),
         'first_seen_at': datetime.now(timezone.utc).isoformat(),
     }
-
-    # Prepare data for 'post_media' table
-    media_id = f"pm-{uuid.uuid4().hex[:12]}"
-    thumbnail = video_data.get('thumbnail')
+    
+    media_id = f"pm-{uuid.uuid4().hex[:8]}"
+    thumbnail_url = video_data['snippet']['thumbnails'].get('high', {}).get('url')
     
     media_record = {
         'media_id': media_id,
         'post_id': post_id,
         'media_type': 'video',
-        'media_url': video_data.get('webpage_url'),
-        'local_file_path': thumbnail, # Store thumbnail URL here for now
-        'width': video_data.get('width'),
-        'height': video_data.get('height'),
+        'media_url': f"https://www.youtube.com/watch?v={video_id}",
+        'local_file_path': thumbnail_url,
     }
 
+    # Create a record for the time-series data
+    download_id = f"d-{uuid.uuid4().hex[:8]}"
+    data_download_record = {
+        'download_id': download_id,
+        'post_id': post_id,
+        'downloaded_at': datetime.now(timezone.utc).isoformat(),
+        'total_reactions': int(stats.get('likeCount', 0)), # Using likes as reactions
+        'stats_json': json.dumps({
+            'views': int(stats.get('viewCount', 0)),
+            'likes': int(stats.get('likeCount', 0)),
+            'comments': int(stats.get('commentCount', 0)),
+        })
+    }
+    
     try:
-        # Insert into posts table
         client.table('posts').insert(post_record).execute()
-
-        # Insert into post_media table
         client.table('post_media').insert(media_record).execute()
-        
+        client.table('data_downloads').insert(data_download_record).execute()
         return True
     except Exception as e:
         print(f"    - Error inserting video into database: {e}")
         return False
 
-
 def main():
-    """Main function to run the YouTube video fetcher."""
-    parser = argparse.ArgumentParser(description="Fetch new videos from YouTube channels.")
+    parser = argparse.ArgumentParser(description="Fetch new videos from YouTube channels using the YouTube Data API.")
     parser.add_argument(
-        "--num-videos",
+        "--days-back",
         type=int,
-        default=10,
-        help="Number of recent videos to check for each channel."
+        default=5,
+        help="Number of days back to check for new videos."
     )
     args = parser.parse_args()
 
-    print("Connecting to Supabase...")
-    client = get_supabase_client()
-    if not client:
-        print("Failed to connect to Supabase. Check your .env file.")
+    if not YOUTUBE_API_KEY:
+        print("Error: YOUTUBE_API_KEY not found in .env file.")
         return
 
-    print("Fetching active YouTube channels...")
-    channels = get_active_youtube_channels(client)
+    supabase_client = get_supabase_client()
+    if not supabase_client:
+        print("Failed to connect to Supabase. Check your .env file.")
+        return
+        
+    youtube_service = get_youtube_service()
+    if not youtube_service:
+        return
+
+    channels = get_active_youtube_channels(supabase_client)
     if not channels:
         print("No active YouTube channels found in the 'profiles' table.")
         return
 
     print(f"Found {len(channels)} active channel(s).")
     new_videos_total = 0
+    
+    cutoff_date = datetime.now(timezone.utc) - timedelta(days=args.days_back)
+    print(f"Fetching videos published on or after: {cutoff_date.strftime('%Y-%m-%d')}")
 
     for channel in channels:
         channel_name = channel.get('name', 'N/A')
         channel_username = channel.get('username')
-        channel_url = f"https://www.youtube.com/{channel_username}"
-        print(f"\n--- Processing channel: {channel_name} ({channel_url}) ---")
+        print(f"\n--- Processing channel: {channel_name} ({channel_username}) ---")
 
-        videos = fetch_videos_for_channel(channel_url, args.num_videos)
+        uploads_playlist_id = get_channel_uploads_playlist_id(youtube_service, channel_username)
+        if not uploads_playlist_id:
+            print(f"  - Could not find uploads playlist for {channel_name}. Skipping.")
+            continue
+            
+        print(f"  - Found uploads playlist ID: {uploads_playlist_id}")
+        
+        videos = fetch_new_videos_from_playlist(youtube_service, uploads_playlist_id, cutoff_date)
         if not videos:
-            print("No videos found or an error occurred.")
+            print("  - No new videos found for this channel in the given time frame.")
             continue
 
-        print(f"Fetched {len(videos)} recent videos. Checking for new content...")
+        print(f"  - Fetched {len(videos)} recent videos. Checking for new content...")
         new_videos_count = 0
-
-        for video in videos:
-            if insert_new_video(client, video, channel):
+        for video in reversed(videos): # Insert oldest first
+            if insert_new_video(supabase_client, video, channel):
                 new_videos_count += 1
         
         if new_videos_count > 0:
             print(f"  -> Inserted {new_videos_count} new video(s) for {channel_name}.")
             new_videos_total += new_videos_count
         else:
-            print("  -> No new videos found for this channel.")
+            print("  -> No new videos found to insert for this channel.")
 
     print(f"\nFinished processing all channels. Inserted a total of {new_videos_total} new videos.")
-
 
 if __name__ == "__main__":
     main()
