@@ -46,6 +46,10 @@ test_*.py
 .gemini/
 .gemini-clipboard/
 
+# Editor temporary files
+\#*\#
+.\#*
+
 # MCP config files
 .mcp.json
 supabase-mcp-config.json
