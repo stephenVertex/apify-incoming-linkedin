@@ -327,7 +327,7 @@ Examples:
         return 1
 
     # Create download run
-    run_id = create_download_run(supabase_client, script_name="update_youtube_stats.py")
+    run_id = create_download_run(supabase_client, script_name="update_youtube_stats.py", platform="youtube")
     print(f"Created download run: {run_id}")
 
     # Query existing videos
