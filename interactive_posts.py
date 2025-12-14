@@ -23,6 +23,7 @@ from textual.containers import Container, VerticalScroll, Horizontal
 from textual.binding import Binding
 from textual.screen import Screen
 from textual import events
+from rapidfuzz import fuzz
 
 # Cache directory for downloaded images
 CACHE_DIR = Path("cache/images")
@@ -1407,6 +1408,39 @@ class MainScreen(Screen):
         self.load_and_display_posts()
         table.focus()
 
+    def _create_searchable_text(self, post: dict) -> str:
+        """Create searchable text from all relevant post fields.
+
+        This combines multiple post fields into a single lowercase string
+        for efficient fuzzy searching with RapidFuzz.
+
+        Args:
+            post: Post dictionary with various fields
+
+        Returns:
+            Lowercase string combining text, author, and other searchable fields
+        """
+        parts = []
+
+        # Add text content (from raw_json)
+        if 'text' in post:
+            parts.append(post['text'])
+
+        # Add author name/username
+        if 'author_username' in post:
+            parts.append(post['author_username'])
+        if 'author' in post and isinstance(post['author'], dict):
+            if 'name' in post['author']:
+                parts.append(post['author']['name'])
+
+        # Could add more fields in the future:
+        # - hashtags
+        # - mentions
+        # - post URL slugs
+        # - etc.
+
+        return ' '.join(parts).lower()
+
     def load_posts(self, verbose: bool = True) -> list:
         """Load posts from DB or JSON files.
 
@@ -1558,6 +1592,9 @@ class MainScreen(Screen):
                         # Mark as not loaded - will be fetched on demand when viewing post detail
                         post['engagement_history'] = []
                         post['_engagement_loaded'] = False
+
+                    # Create searchable text field for efficient filtering with RapidFuzz
+                    post['_searchable'] = self._create_searchable_text(post)
 
                     posts.append(post)
 
@@ -2035,8 +2072,26 @@ class MainScreen(Screen):
                         continue
                 else: # Default content filter or if current_filter_type is not recognized/None
                     searchable = post.get("_searchable", "")
-                    if filter_lower in searchable:
-                        filter_match = True
+                    if searchable:
+                        # Use RapidFuzz for fuzzy matching with hybrid approach:
+                        # - Single word: use partial_ratio for substring/partial word matching
+                        # - Multi-word: check ALL words match individually with partial_ratio
+                        filter_words = filter_lower.strip().split()
+                        threshold = 80  # Minimum score to consider a match (0-100)
+
+                        if len(filter_words) == 1:
+                            # Single word query: direct partial match
+                            score = fuzz.partial_ratio(filter_lower, searchable)
+                            if score >= threshold:
+                                filter_match = True
+                        else:
+                            # Multi-word query: ALL words must match
+                            all_match = all(
+                                fuzz.partial_ratio(word, searchable) >= threshold
+                                for word in filter_words
+                            )
+                            if all_match:
+                                filter_match = True
 
                 if filter_match:
                     self._add_post_to_table(idx, post, table)
