@@ -53,34 +53,41 @@ class AddProfileModal(Screen):
         super().__init__()
 
     @staticmethod
-    def extract_username_from_linkedin_url(input_str: str) -> str:
-        """Extract username from LinkedIn URL or return the input if it's already a username.
+    def parse_profile_input(input_str: str) -> tuple[str, str]:
+        """Extract username and platform from input string.
 
         Args:
-            input_str: Either a LinkedIn URL or a username
+            input_str: URL or username
 
         Returns:
-            The extracted username
+            Tuple of (username, platform)
         """
         input_str = input_str.strip()
+        lower_input = input_str.lower()
 
-        # Check if it looks like a URL
-        if 'linkedin.com/in/' in input_str.lower():
+        # Check for Substack URL
+        if 'substack.com' in lower_input:
+            # Match https://username.substack.com or username.substack.com
+            match = re.search(r'(?:https?://)?([^.]+)\.substack\.com', input_str, re.IGNORECASE)
+            if match:
+                return match.group(1), 'substack'
+
+        # Check for LinkedIn URL
+        if 'linkedin.com/in/' in lower_input:
             # Extract username from URL
-            # Pattern matches: https://www.linkedin.com/in/username/ or similar variations
             match = re.search(r'linkedin\.com/in/([^/?]+)', input_str, re.IGNORECASE)
             if match:
-                return match.group(1)
+                return match.group(1), 'linkedin'
 
-        # If not a URL or no match, return the input as-is (assume it's already a username)
-        return input_str
+        # Default to LinkedIn username if no URL pattern matches
+        return input_str, 'linkedin'
 
     def compose(self) -> ComposeResult:
         """Create the modal content."""
         with Container(id="add-profile-container"):
             yield Static("[bold cyan]Add New Profile[/bold cyan]\n", id="modal-title")
-            yield Label("LinkedIn URL or Username (required):")
-            yield Input(placeholder="e.g., https://linkedin.com/in/stephenvertex or stephenvertex", id="username-input", classes="input-field")
+            yield Label("LinkedIn/Substack URL or Username (required):")
+            yield Input(placeholder="e.g., https://linkedin.com/in/stephenvertex or trilogyai.substack.com", id="username-input", classes="input-field")
             yield Label("Name (required):")
             yield Input(placeholder="e.g., Stephen Douglas", id="name-input", classes="input-field")
             yield Label("Notes (optional):")
@@ -108,10 +115,10 @@ class AddProfileModal(Screen):
                 # Show error (could add error message widget)
                 return
 
-            # Extract username from URL if provided
-            username = self.extract_username_from_linkedin_url(username_or_url)
+            # Extract username and platform
+            username, platform = self.parse_profile_input(username_or_url)
 
-            self.dismiss({"username": username, "name": name, "notes": notes})
+            self.dismiss({"username": username, "name": name, "notes": notes, "platform": platform})
         else:
             self.dismiss(None)
 
@@ -798,7 +805,8 @@ class ProfileManagementScreen(Screen):
                     self.profile_manager.add_profile(
                         result['username'],
                         result['name'],
-                        result['notes']
+                        result['notes'],
+                        platform=result.get('platform', 'linkedin')
                     )
                     self.load_and_display_profiles()
                 except Exception as e:
