@@ -22,6 +22,7 @@ from profile_manager import ProfileManager
 from manage_data import create_download_run, complete_download_run
 
 import time
+import random
 from dateutil import parser as date_parser
 from db_utils import generate_aws_id, PREFIX_POST
 
@@ -73,8 +74,10 @@ def fetch_and_update_substack_analytics():
 
                 for post_obj in posts:
                     total_posts_processed += 1
-                    # Rate limiting protection
-                    time.sleep(1)
+                    
+                    # Randomized delay to behave more like a human and avoid strict rate limits
+                    sleep_time = random.uniform(1.5, 3.0)
+                    time.sleep(sleep_time)
                     
                     post_url = post_obj.url
                     # Use slug for URN if available, else fallback to extracting from URL
@@ -146,7 +149,14 @@ def fetch_and_update_substack_analytics():
                             total_posts_created += 1
 
                     except Exception as e:
-                        print(f"    ✗ Error fetching or updating analytics for {post_url}: {e}")
+                        error_msg = str(e)
+                        print(f"    ✗ Error fetching or updating analytics for {post_url}: {error_msg}")
+                        
+                        # Smart Backoff: If we hit a rate limit, pause significantly
+                        if "429" in error_msg or "Too Many Requests" in error_msg:
+                            print("    ⚠ Rate limit detected. Cooling down for 60 seconds...")
+                            time.sleep(60)
+                        
                         # Optionally log this error to database
             except Exception as e:
                 print(f"✗ Error processing newsletter {username}.substack.com: {e}")
