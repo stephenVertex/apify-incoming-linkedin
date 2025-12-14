@@ -1623,16 +1623,7 @@ class MainScreen(Screen):
         self.post_index_map.clear()
         
         for idx, post in enumerate(self.posts):
-            # Use pre-formatted data from the view
-            date_str = post.get("posted_at_formatted", "")
-            username = post.get("author_username", "")
-            text_preview = post.get("text_preview", "")
-            media_indicator = post.get("media_indicator", "")
-            marked_indicator = post.get("marked_indicator", "")
-            new_indicator = "🆕" if post.get("_is_new") else ""
-
-            row_key = table.add_row(date_str, username, text_preview, media_indicator, marked_indicator, new_indicator)
-            self.post_index_map[row_key] = idx
+            self._add_post_to_table(idx, post, table)
             
         self.update_status_bar(len(self.posts), total_loaded)
 
